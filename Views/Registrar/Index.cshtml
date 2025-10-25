@@ -1,0 +1,208 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="~/Utilidades/logoU.png" type="image/x-icon" />
+    <title>Registro de Egresado - UTEC</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+    <link href="~/CSS/Registro.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="modal fade show" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel"
+         aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg border-0">
+                <div class="modal-header text-center">
+                    <div class="w-100">
+                        <img src="~/Utilidades/logoU.png" alt="Logo UTEC" class="mx-auto d-block mb-2" width="70">
+                        <h5 class="modal-title fw-bold">Bienvenido Egresado UTEC</h5>
+                    </div>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="lead">Responde una breve encuesta para completar tu registro.</p>
+                    <h5 class="fw-bold">¿Usted actualmente está trabajando?</h5>
+                    <div class="d-flex justify-content-around mt-3">
+                        <button type="button" class="btn btn-success px-4" id="btnYes">
+                            <i class="fas fa-check-circle me-2"></i> Sí
+                        </button>
+                        <button type="button" class="btn btn-danger px-4" id="btnNo">
+                            <i class="fas fa-times-circle me-2"></i> No
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="VerificacionIdentidad" tabindex="-1" aria-labelledby="VerificacionIdentidadModalLabel"
+         aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content shadow-lg border-0">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title fw-bold">Paso 1: Verificación de Identidad</h5>
+                </div>
+                <div class="modal-body">
+
+                    <form id="formEgresado">
+                        @Html.AntiForgeryToken()
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Nombres</label>
+                                <input type="text" name="nombres" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Apellidos</label>
+                                <input type="text" name="apellidos" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Correo institucional</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Teléfono</label>
+                                <input type="text" name="telefono" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Número de Carnet / Documento</label>
+                                <input type="text" name="numero_documento" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Fecha de graduación</label>
+                                <input type="date" name="fecha_graduacion" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Promedio Académico</label>
+                                <input type="number" name="promedio_academico" step="0.01" min="0" max="10" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Años de experiencia</label>
+                                <input type="number" name="nivel_experiencia" step="0.0" min="0" max="50" value="0" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Carrera</label>
+                                <select name="id_carrera" id="selectCarrera" class="form-select" required>
+                                    <option value="">Seleccione...</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Certificaciones(opcional)</label>
+                                <button type="button" class="btn btn-outline-info" id="AddCertificaciones"> Agregar Certificaciones</button>
+                                <div id="certificacionesContainer" class="container"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Contraseña</label>
+                                <input type="password" name="password_hash" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Confirmar Contraseña</label>
+                                <input type="password" id="confirmarPSW" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="text-end mt-4">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-save me-2"></i>Registrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="PreferenciasYPrivacidad" tabindex="-1" aria-labelledby="PreferenciasYPrivacidadModalLabel"
+         aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content shadow-lg border-0">
+                <div class="modal-header bg-secondary text-white">
+                    <h5 class="modal-title fw-bold">Paso 2: Privacidad y Preferencias</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="formPreferencias">
+                        <div class="row g-3">
+                            <div class="col-12 mt-4">
+                                <h5 class="fw-bold">Consentimiento de Privacidad</h5>
+                                <div class="border rounded p-3 bg-light text-start" style="max-height:200px; overflow-y:auto;">
+                                    <p>
+                                        Acepto que mis datos personales sean utilizados por la Universidad Tecnológica de El Salvador (UTEC)
+                                        y sus aliados estratégicos con fines de registro, seguimiento laboral, contacto profesional
+                                        y generación de estadísticas, conforme a la Ley de Protección de Datos Personales.
+                                    </p>
+                                    <p>
+                                        Podré solicitar la eliminación o actualización de mis datos en cualquier momento,
+                                        enviando una solicitud formal al área correspondiente.
+                                    </p>
+                                </div>
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="chkConsentimiento" required>
+                                    <label class="form-check-label fw-bold" for="chkConsentimiento">
+                                        He leído y acepto la política de privacidad.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-end mt-4">
+                            <button type="submit" class="btn btn-success px-4" id="btnGuardarPreferencias" disabled>
+                                <i class="fas fa-save me-2"></i>Guardar preferencias
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalEncuesta" tabindex="-1" aria-labelledby="modalEncuestaModalLabel"
+         aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content shadow-lg border-0">
+                <div class="modal-header bg-secondary text-white">
+                    <h5 class="modal-title fw-bold">Paso 2: Privacidad y Preferencias</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <h4 class="mb-4"><i class="fas fa-clipboard-list me-2"></i> Encuesta de Registro</h4>
+                        <form id="formEncuesta">
+                            <div id="preguntasContainer" class="mb-4">
+
+                            </div>
+
+                            <div class="text-end">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ConfirmarCodigoModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="ConfirmarCodigoModalModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Confirma que eres tu!</h1>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Hemos enviado un código a tu correo institucional. Escríbelo aquí:</p>
+                    <input type="text" id="codigoVerificacion" class="form-control text-center fw-bold fs-5" maxlength="6" placeholder="Ingrese el código" autocomplete="off">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnVerificarCodigo">Verificar</button>
+                    <button type="button" class="btn btn-primary" id="btnReenviarCodigo">Volver a enviar codigo</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="~/JS/Registrar.js"></script>
+</body>
+</html>

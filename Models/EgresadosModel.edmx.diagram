@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ef36b1dc79604748b936c56d589ebd52" Name="Diagram1">
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Carrera" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Certificacione" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.CVs_Egresados" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Egresado_Idiomas" Width="1.5" PointX="8.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Egresado" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Empresa" Width="1.5" PointX="3" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Encuesta" Width="1.5" PointX="3.75" PointY="30.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Idioma" Width="1.5" PointX="6" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Logs_Sistema" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Notificacione" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Postulacione" Width="1.5" PointX="7.5" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Preferencias_Egresado" Width="1.5" PointX="5.25" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Preguntas_Encuesta" Width="1.5" PointX="6" PointY="30.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Preguntas_Predefinidas" Width="1.5" PointX="5.25" PointY="26.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Preguntas_Vacante" Width="1.5" PointX="7.5" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Respuestas_Encuesta" Width="1.5" PointX="8.25" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Respuestas_Postulante" Width="1.5" PointX="9.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Usuario" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Usuarios_Empresa" Width="1.5" PointX="5.25" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Vacante" Width="1.5" PointX="5.25" PointY="20" IsExpanded="true" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Egresados__id_ca__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Certifica__id_eg__7F2BE32F" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__CVs_Egres__id_eg__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Postulaci__id_cv__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Egresado___id_eg__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Egresado___id_id__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Postulaci__id_eg__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Preferenc__id_eg__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Respuesta__id_eg__114A936A" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Usuarios___id_em__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Vacantes__id_emp__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Preguntas__id_en__0B91BA14" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Postulaci__id_va__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Respuesta__id_po__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Respuesta__id_pr__10566F31" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Preguntas__id_pr__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Preguntas__id_va__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Respuesta__id_pr__75A278F5" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Visualizaciones_CV" Width="1.5" PointX="7.875" PointY="20.75" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_CV" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_Empresa" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_UsuarioEmpresa" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,1814 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SistemaEgresadosUtecModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Carreras">
+          <Key>
+            <PropertyRef Name="id_carrera" />
+          </Key>
+          <Property Name="id_carrera" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_carrera" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="facultad" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="duracion_semestres" Type="int" Nullable="false" />
+          <Property Name="activo" Type="bit" />
+          <Property Name="fecha_creacion" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Certificaciones">
+          <Key>
+            <PropertyRef Name="id_certificacion" />
+          </Key>
+          <Property Name="id_certificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_egresado" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="200" />
+          <Property Name="entidad_emisora" Type="nvarchar" MaxLength="200" />
+          <Property Name="fecha_emision" Type="date" />
+        </EntityType>
+        <EntityType Name="CVs_Egresados">
+          <Key>
+            <PropertyRef Name="id_cv" />
+          </Key>
+          <Property Name="id_cv" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_egresado" Type="int" Nullable="false" />
+          <Property Name="ruta_archivo" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="nombre_archivo" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="extension" Type="nvarchar" MaxLength="10" />
+          <Property Name="tamano_archivo" Type="bigint" />
+          <Property Name="experiencia_anos" Type="decimal" Precision="4" Scale="1" />
+          <Property Name="habilidades_principales" Type="nvarchar(max)" />
+          <Property Name="idiomas" Type="nvarchar(max)" />
+          <Property Name="certificaciones" Type="nvarchar(max)" />
+          <Property Name="disponible_busqueda" Type="bit" />
+          <Property Name="privacidad" Type="nvarchar" MaxLength="20" />
+          <Property Name="veces_visualizado" Type="int" />
+          <Property Name="fecha_subida" Type="datetime2" Precision="7" />
+          <Property Name="fecha_actualizacion" Type="datetime2" Precision="7" />
+          <Property Name="CartaPresentacion" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Egresado_Idiomas">
+          <Key>
+            <PropertyRef Name="id_eg_idioma" />
+          </Key>
+          <Property Name="id_eg_idioma" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_egresado" Type="int" Nullable="false" />
+          <Property Name="id_idioma" Type="int" Nullable="false" />
+          <Property Name="nivel" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Egresados">
+          <Key>
+            <PropertyRef Name="id_egresado" />
+          </Key>
+          <Property Name="id_egresado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="numero_documento" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="nombres" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="apellidos" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="telefono" Type="nvarchar" MaxLength="15" />
+          <Property Name="id_carrera" Type="int" Nullable="false" />
+          <Property Name="fecha_graduacion" Type="date" />
+          <Property Name="promedio_academico" Type="decimal" Precision="3" Scale="2" />
+          <Property Name="nivel_experiencia" Type="nvarchar" MaxLength="50" />
+          <Property Name="puntuacion_global" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="total_estrellas" Type="int" />
+          <Property Name="password_hash" Type="nvarchar" MaxLength="255" />
+          <Property Name="consentimiento_datos" Type="bit" />
+          <Property Name="estado_activo" Type="bit" />
+          <Property Name="fecha_registro" Type="datetime2" Precision="7" />
+          <Property Name="Trabaja" Type="bit" />
+        </EntityType>
+        <EntityType Name="Empresas">
+          <Key>
+            <PropertyRef Name="id_empresa" />
+          </Key>
+          <Property Name="id_empresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="razon_social" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="nit" Type="nvarchar" MaxLength="20" />
+          <Property Name="email_contacto" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="telefono" Type="nvarchar" MaxLength="15" />
+          <Property Name="direccion" Type="nvarchar" MaxLength="200" />
+          <Property Name="sector_economico" Type="nvarchar" MaxLength="100" />
+          <Property Name="tamano_empresa" Type="nvarchar" MaxLength="50" />
+          <Property Name="vinculada_universidad" Type="bit" />
+          <Property Name="puntuacion_empresa" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="estado_activo" Type="bit" />
+          <Property Name="fecha_registro" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Encuestas">
+          <Key>
+            <PropertyRef Name="id_encuesta" />
+          </Key>
+          <Property Name="id_encuesta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="titulo" Type="nvarchar" MaxLength="200" />
+          <Property Name="descripcion" Type="nvarchar(max)" />
+          <Property Name="fecha_creacion" Type="datetime2" Precision="7" />
+          <Property Name="activa" Type="bit" />
+        </EntityType>
+        <EntityType Name="Idiomas">
+          <Key>
+            <PropertyRef Name="id_idioma" />
+          </Key>
+          <Property Name="id_idioma" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logs_Sistema">
+          <Key>
+            <PropertyRef Name="id_log" />
+          </Key>
+          <Property Name="id_log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario_tipo" Type="nvarchar" MaxLength="20" />
+          <Property Name="id_usuario" Type="int" />
+          <Property Name="accion" Type="nvarchar" MaxLength="100" />
+          <Property Name="entidad" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_registro" Type="int" />
+          <Property Name="detalles" Type="nvarchar(max)" />
+          <Property Name="ip_address" Type="nvarchar" MaxLength="45" />
+          <Property Name="fecha_accion" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Notificaciones">
+          <Key>
+            <PropertyRef Name="id_notificacion" />
+          </Key>
+          <Property Name="id_notificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="destinatario_tipo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="id_destinatario" Type="int" Nullable="false" />
+          <Property Name="titulo" Type="nvarchar" MaxLength="200" />
+          <Property Name="mensaje" Type="nvarchar(max)" />
+          <Property Name="tipo" Type="nvarchar" MaxLength="50" />
+          <Property Name="leida" Type="bit" />
+          <Property Name="fecha_creacion" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Postulaciones">
+          <Key>
+            <PropertyRef Name="id_postulacion" />
+          </Key>
+          <Property Name="id_postulacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_vacante" Type="int" Nullable="false" />
+          <Property Name="id_egresado" Type="int" Nullable="false" />
+          <Property Name="id_cv" Type="int" />
+          <Property Name="fecha_postulacion" Type="datetime2" Precision="7" />
+          <Property Name="estado" Type="nvarchar" MaxLength="30" />
+          <Property Name="motivo_rechazo" Type="nvarchar(max)" />
+          <Property Name="fecha_actualizacion" Type="datetime2" Precision="7" />
+          <Property Name="fue_contactado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Preferencias_Egresado">
+          <Key>
+            <PropertyRef Name="id_pref" />
+          </Key>
+          <Property Name="id_pref" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_egresado" Type="int" Nullable="false" />
+          <Property Name="disponible_inmediata" Type="bit" />
+          <Property Name="modalidad_preferida" Type="nvarchar" MaxLength="30" />
+          <Property Name="jornada_preferida" Type="nvarchar" MaxLength="30" />
+          <Property Name="area_interes" Type="nvarchar" MaxLength="100" />
+          <Property Name="ubicacion_preferida" Type="nvarchar" MaxLength="100" />
+          <Property Name="salario_min" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="salario_max" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="notificar" Type="bit" />
+          <Property Name="fecha_actualizacion" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Preguntas_Encuesta">
+          <Key>
+            <PropertyRef Name="id_pregunta_encuesta" />
+          </Key>
+          <Property Name="id_pregunta_encuesta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_encuesta" Type="int" Nullable="false" />
+          <Property Name="texto_pregunta" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="tipo" Type="nvarchar" MaxLength="30" />
+          <Property Name="aplica_si_trabaja" Type="bit" />
+          <Property Name="orden" Type="int" />
+        </EntityType>
+        <EntityType Name="Preguntas_Predefinidas">
+          <Key>
+            <PropertyRef Name="id_pregunta" />
+          </Key>
+          <Property Name="id_pregunta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="texto_pregunta" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="tipo" Type="nvarchar" MaxLength="30" />
+          <Property Name="activa" Type="bit" />
+        </EntityType>
+        <EntityType Name="Preguntas_Vacante">
+          <Key>
+            <PropertyRef Name="id_pregunta_vacante" />
+          </Key>
+          <Property Name="id_pregunta_vacante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_vacante" Type="int" Nullable="false" />
+          <Property Name="id_pregunta" Type="int" />
+          <Property Name="personalizada" Type="bit" />
+          <Property Name="texto_personalizado" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Respuestas_Encuesta">
+          <Key>
+            <PropertyRef Name="id_respuesta_encuesta" />
+          </Key>
+          <Property Name="id_respuesta_encuesta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_pregunta_encuesta" Type="int" Nullable="false" />
+          <Property Name="id_egresado" Type="int" />
+          <Property Name="respuesta" Type="nvarchar(max)" />
+          <Property Name="fecha_respuesta" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Respuestas_Postulante">
+          <Key>
+            <PropertyRef Name="id_respuesta" />
+          </Key>
+          <Property Name="id_respuesta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_postulacion" Type="int" Nullable="false" />
+          <Property Name="id_pregunta_vacante" Type="int" Nullable="false" />
+          <Property Name="respuesta" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="id_usuario_global" />
+          </Key>
+          <Property Name="id_usuario_global" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="password_hash" Type="nvarchar" MaxLength="255" />
+          <Property Name="tipo_usuario" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="referencia_id" Type="int" />
+          <Property Name="nombre_completo" Type="nvarchar" MaxLength="200" />
+          <Property Name="activo" Type="bit" />
+          <Property Name="fecha_creacion" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Usuarios_Empresa">
+          <Key>
+            <PropertyRef Name="id_usuario_empresa" />
+          </Key>
+          <Property Name="id_usuario_empresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_empresa" Type="int" Nullable="false" />
+          <Property Name="nombre_usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="nombre_completo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="cargo" Type="nvarchar" MaxLength="100" />
+          <Property Name="password_hash" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="rol" Type="nvarchar" MaxLength="30" />
+          <Property Name="activo" Type="bit" />
+          <Property Name="fecha_creacion" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Vacantes">
+          <Key>
+            <PropertyRef Name="id_vacante" />
+          </Key>
+          <Property Name="id_vacante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_empresa" Type="int" Nullable="false" />
+          <Property Name="titulo" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar(max)" />
+          <Property Name="requisitos" Type="nvarchar(max)" />
+          <Property Name="salario_min" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="salario_max" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="salario_confidencial" Type="bit" />
+          <Property Name="modalidad" Type="nvarchar" MaxLength="30" />
+          <Property Name="tipo_contrato" Type="nvarchar" MaxLength="50" />
+          <Property Name="ubicacion" Type="nvarchar" MaxLength="150" />
+          <Property Name="area" Type="nvarchar" MaxLength="100" />
+          <Property Name="fecha_publicacion" Type="datetime2" Precision="7" />
+          <Property Name="fecha_cierre" Type="datetime2" Precision="7" />
+          <Property Name="estado" Type="nvarchar" MaxLength="20" />
+          <Property Name="creado_por" Type="int" />
+        </EntityType>
+        <EntityType Name="Visualizaciones_CV">
+          <Key>
+            <PropertyRef Name="id_visualizacion" />
+          </Key>
+          <Property Name="id_visualizacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_cv" Type="int" Nullable="false" />
+          <Property Name="id_empresa" Type="int" />
+          <Property Name="id_usuario_empresa" Type="int" />
+          <Property Name="fecha_visualizacion" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ip_address" Type="nvarchar" MaxLength="45" />
+          <Property Name="navegador" Type="nvarchar" MaxLength="200" />
+          <Property Name="observaciones" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <Association Name="FK__Certifica__id_eg__7F2BE32F">
+          <End Role="Egresados" Type="Self.Egresados" Multiplicity="1" />
+          <End Role="Certificaciones" Type="Self.Certificaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Certificaciones">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CVs_Egres__id_eg__571DF1D5">
+          <End Role="Egresados" Type="Self.Egresados" Multiplicity="1" />
+          <End Role="CVs_Egresados" Type="Self.CVs_Egresados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="CVs_Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Egresado___id_eg__7B5B524B">
+          <End Role="Egresados" Type="Self.Egresados" Multiplicity="1" />
+          <End Role="Egresado_Idiomas" Type="Self.Egresado_Idiomas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Egresado_Idiomas">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Egresado___id_id__7C4F7684">
+          <End Role="Idiomas" Type="Self.Idiomas" Multiplicity="1" />
+          <End Role="Egresado_Idiomas" Type="Self.Egresado_Idiomas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Idiomas">
+              <PropertyRef Name="id_idioma" />
+            </Principal>
+            <Dependent Role="Egresado_Idiomas">
+              <PropertyRef Name="id_idioma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Egresados__id_ca__3D5E1FD2">
+          <End Role="Carreras" Type="Self.Carreras" Multiplicity="1" />
+          <End Role="Egresados" Type="Self.Egresados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carreras">
+              <PropertyRef Name="id_carrera" />
+            </Principal>
+            <Dependent Role="Egresados">
+              <PropertyRef Name="id_carrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Postulaci__id_cv__66603565">
+          <End Role="CVs_Egresados" Type="Self.CVs_Egresados" Multiplicity="0..1" />
+          <End Role="Postulaciones" Type="Self.Postulaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CVs_Egresados">
+              <PropertyRef Name="id_cv" />
+            </Principal>
+            <Dependent Role="Postulaciones">
+              <PropertyRef Name="id_cv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Postulaci__id_eg__656C112C">
+          <End Role="Egresados" Type="Self.Egresados" Multiplicity="1" />
+          <End Role="Postulaciones" Type="Self.Postulaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Postulaciones">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Postulaci__id_va__6477ECF3">
+          <End Role="Vacantes" Type="Self.Vacantes" Multiplicity="1" />
+          <End Role="Postulaciones" Type="Self.Postulaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vacantes">
+              <PropertyRef Name="id_vacante" />
+            </Principal>
+            <Dependent Role="Postulaciones">
+              <PropertyRef Name="id_vacante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preferenc__id_eg__02084FDA">
+          <End Role="Egresados" Type="Self.Egresados" Multiplicity="1" />
+          <End Role="Preferencias_Egresado" Type="Self.Preferencias_Egresado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Preferencias_Egresado">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preguntas__id_en__0B91BA14">
+          <End Role="Encuestas" Type="Self.Encuestas" Multiplicity="1" />
+          <End Role="Preguntas_Encuesta" Type="Self.Preguntas_Encuesta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encuestas">
+              <PropertyRef Name="id_encuesta" />
+            </Principal>
+            <Dependent Role="Preguntas_Encuesta">
+              <PropertyRef Name="id_encuesta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preguntas__id_pr__70DDC3D8">
+          <End Role="Preguntas_Predefinidas" Type="Self.Preguntas_Predefinidas" Multiplicity="0..1" />
+          <End Role="Preguntas_Vacante" Type="Self.Preguntas_Vacante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Preguntas_Predefinidas">
+              <PropertyRef Name="id_pregunta" />
+            </Principal>
+            <Dependent Role="Preguntas_Vacante">
+              <PropertyRef Name="id_pregunta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preguntas__id_va__6FE99F9F">
+          <End Role="Vacantes" Type="Self.Vacantes" Multiplicity="1" />
+          <End Role="Preguntas_Vacante" Type="Self.Preguntas_Vacante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vacantes">
+              <PropertyRef Name="id_vacante" />
+            </Principal>
+            <Dependent Role="Preguntas_Vacante">
+              <PropertyRef Name="id_vacante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Respuesta__id_eg__114A936A">
+          <End Role="Egresados" Type="Self.Egresados" Multiplicity="0..1" />
+          <End Role="Respuestas_Encuesta" Type="Self.Respuestas_Encuesta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Respuestas_Encuesta">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Respuesta__id_po__74AE54BC">
+          <End Role="Postulaciones" Type="Self.Postulaciones" Multiplicity="1" />
+          <End Role="Respuestas_Postulante" Type="Self.Respuestas_Postulante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postulaciones">
+              <PropertyRef Name="id_postulacion" />
+            </Principal>
+            <Dependent Role="Respuestas_Postulante">
+              <PropertyRef Name="id_postulacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Respuesta__id_pr__10566F31">
+          <End Role="Preguntas_Encuesta" Type="Self.Preguntas_Encuesta" Multiplicity="1" />
+          <End Role="Respuestas_Encuesta" Type="Self.Respuestas_Encuesta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Preguntas_Encuesta">
+              <PropertyRef Name="id_pregunta_encuesta" />
+            </Principal>
+            <Dependent Role="Respuestas_Encuesta">
+              <PropertyRef Name="id_pregunta_encuesta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Respuesta__id_pr__75A278F5">
+          <End Role="Preguntas_Vacante" Type="Self.Preguntas_Vacante" Multiplicity="1" />
+          <End Role="Respuestas_Postulante" Type="Self.Respuestas_Postulante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Preguntas_Vacante">
+              <PropertyRef Name="id_pregunta_vacante" />
+            </Principal>
+            <Dependent Role="Respuestas_Postulante">
+              <PropertyRef Name="id_pregunta_vacante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuarios___id_em__5165187F">
+          <End Role="Empresas" Type="Self.Empresas" Multiplicity="1" />
+          <End Role="Usuarios_Empresa" Type="Self.Usuarios_Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresas">
+              <PropertyRef Name="id_empresa" />
+            </Principal>
+            <Dependent Role="Usuarios_Empresa">
+              <PropertyRef Name="id_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vacantes__id_emp__5EBF139D">
+          <End Role="Empresas" Type="Self.Empresas" Multiplicity="1" />
+          <End Role="Vacantes" Type="Self.Vacantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresas">
+              <PropertyRef Name="id_empresa" />
+            </Principal>
+            <Dependent Role="Vacantes">
+              <PropertyRef Name="id_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visualizaciones_CV_CV">
+          <End Role="CVs_Egresados" Type="Self.CVs_Egresados" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Visualizaciones_CV" Type="Self.Visualizaciones_CV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CVs_Egresados">
+              <PropertyRef Name="id_cv" />
+            </Principal>
+            <Dependent Role="Visualizaciones_CV">
+              <PropertyRef Name="id_cv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visualizaciones_CV_Empresa">
+          <End Role="Empresas" Type="Self.Empresas" Multiplicity="0..1" />
+          <End Role="Visualizaciones_CV" Type="Self.Visualizaciones_CV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresas">
+              <PropertyRef Name="id_empresa" />
+            </Principal>
+            <Dependent Role="Visualizaciones_CV">
+              <PropertyRef Name="id_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visualizaciones_CV_UsuarioEmpresa">
+          <End Role="Usuarios_Empresa" Type="Self.Usuarios_Empresa" Multiplicity="0..1" />
+          <End Role="Visualizaciones_CV" Type="Self.Visualizaciones_CV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios_Empresa">
+              <PropertyRef Name="id_usuario_empresa" />
+            </Principal>
+            <Dependent Role="Visualizaciones_CV">
+              <PropertyRef Name="id_usuario_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_PostularVacante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_vacante" Type="int" Mode="In" />
+          <Parameter Name="id_egresado" Type="int" Mode="In" />
+          <Parameter Name="id_cv" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_RegistrarVisualizacionCV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCV" Type="int" Mode="In" />
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="IdUsuarioEmpresa" Type="int" Mode="In" />
+          <Parameter Name="IpAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="Navegador" Type="nvarchar" Mode="In" />
+          <Parameter Name="Observaciones" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="SistemaEgresadosUtecModelStoreContainer">
+          <EntitySet Name="Carreras" EntityType="Self.Carreras" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Certificaciones" EntityType="Self.Certificaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CVs_Egresados" EntityType="Self.CVs_Egresados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Egresado_Idiomas" EntityType="Self.Egresado_Idiomas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Egresados" EntityType="Self.Egresados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresas" EntityType="Self.Empresas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Encuestas" EntityType="Self.Encuestas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Idiomas" EntityType="Self.Idiomas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs_Sistema" EntityType="Self.Logs_Sistema" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notificaciones" EntityType="Self.Notificaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Postulaciones" EntityType="Self.Postulaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preferencias_Egresado" EntityType="Self.Preferencias_Egresado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preguntas_Encuesta" EntityType="Self.Preguntas_Encuesta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preguntas_Predefinidas" EntityType="Self.Preguntas_Predefinidas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preguntas_Vacante" EntityType="Self.Preguntas_Vacante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Respuestas_Encuesta" EntityType="Self.Respuestas_Encuesta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Respuestas_Postulante" EntityType="Self.Respuestas_Postulante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios_Empresa" EntityType="Self.Usuarios_Empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vacantes" EntityType="Self.Vacantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visualizaciones_CV" EntityType="Self.Visualizaciones_CV" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Certifica__id_eg__7F2BE32F" Association="Self.FK__Certifica__id_eg__7F2BE32F">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="Certificaciones" EntitySet="Certificaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CVs_Egres__id_eg__571DF1D5" Association="Self.FK__CVs_Egres__id_eg__571DF1D5">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="CVs_Egresados" EntitySet="CVs_Egresados" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Egresado___id_eg__7B5B524B" Association="Self.FK__Egresado___id_eg__7B5B524B">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="Egresado_Idiomas" EntitySet="Egresado_Idiomas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Egresado___id_id__7C4F7684" Association="Self.FK__Egresado___id_id__7C4F7684">
+            <End Role="Idiomas" EntitySet="Idiomas" />
+            <End Role="Egresado_Idiomas" EntitySet="Egresado_Idiomas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Egresados__id_ca__3D5E1FD2" Association="Self.FK__Egresados__id_ca__3D5E1FD2">
+            <End Role="Carreras" EntitySet="Carreras" />
+            <End Role="Egresados" EntitySet="Egresados" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Postulaci__id_cv__66603565" Association="Self.FK__Postulaci__id_cv__66603565">
+            <End Role="CVs_Egresados" EntitySet="CVs_Egresados" />
+            <End Role="Postulaciones" EntitySet="Postulaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Postulaci__id_eg__656C112C" Association="Self.FK__Postulaci__id_eg__656C112C">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="Postulaciones" EntitySet="Postulaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Postulaci__id_va__6477ECF3" Association="Self.FK__Postulaci__id_va__6477ECF3">
+            <End Role="Vacantes" EntitySet="Vacantes" />
+            <End Role="Postulaciones" EntitySet="Postulaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preferenc__id_eg__02084FDA" Association="Self.FK__Preferenc__id_eg__02084FDA">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="Preferencias_Egresado" EntitySet="Preferencias_Egresado" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preguntas__id_en__0B91BA14" Association="Self.FK__Preguntas__id_en__0B91BA14">
+            <End Role="Encuestas" EntitySet="Encuestas" />
+            <End Role="Preguntas_Encuesta" EntitySet="Preguntas_Encuesta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preguntas__id_pr__70DDC3D8" Association="Self.FK__Preguntas__id_pr__70DDC3D8">
+            <End Role="Preguntas_Predefinidas" EntitySet="Preguntas_Predefinidas" />
+            <End Role="Preguntas_Vacante" EntitySet="Preguntas_Vacante" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preguntas__id_va__6FE99F9F" Association="Self.FK__Preguntas__id_va__6FE99F9F">
+            <End Role="Vacantes" EntitySet="Vacantes" />
+            <End Role="Preguntas_Vacante" EntitySet="Preguntas_Vacante" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Respuesta__id_eg__114A936A" Association="Self.FK__Respuesta__id_eg__114A936A">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="Respuestas_Encuesta" EntitySet="Respuestas_Encuesta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Respuesta__id_po__74AE54BC" Association="Self.FK__Respuesta__id_po__74AE54BC">
+            <End Role="Postulaciones" EntitySet="Postulaciones" />
+            <End Role="Respuestas_Postulante" EntitySet="Respuestas_Postulante" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Respuesta__id_pr__10566F31" Association="Self.FK__Respuesta__id_pr__10566F31">
+            <End Role="Preguntas_Encuesta" EntitySet="Preguntas_Encuesta" />
+            <End Role="Respuestas_Encuesta" EntitySet="Respuestas_Encuesta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Respuesta__id_pr__75A278F5" Association="Self.FK__Respuesta__id_pr__75A278F5">
+            <End Role="Preguntas_Vacante" EntitySet="Preguntas_Vacante" />
+            <End Role="Respuestas_Postulante" EntitySet="Respuestas_Postulante" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuarios___id_em__5165187F" Association="Self.FK__Usuarios___id_em__5165187F">
+            <End Role="Empresas" EntitySet="Empresas" />
+            <End Role="Usuarios_Empresa" EntitySet="Usuarios_Empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vacantes__id_emp__5EBF139D" Association="Self.FK__Vacantes__id_emp__5EBF139D">
+            <End Role="Empresas" EntitySet="Empresas" />
+            <End Role="Vacantes" EntitySet="Vacantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visualizaciones_CV_CV" Association="Self.FK_Visualizaciones_CV_CV">
+            <End Role="CVs_Egresados" EntitySet="CVs_Egresados" />
+            <End Role="Visualizaciones_CV" EntitySet="Visualizaciones_CV" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visualizaciones_CV_Empresa" Association="Self.FK_Visualizaciones_CV_Empresa">
+            <End Role="Empresas" EntitySet="Empresas" />
+            <End Role="Visualizaciones_CV" EntitySet="Visualizaciones_CV" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visualizaciones_CV_UsuarioEmpresa" Association="Self.FK_Visualizaciones_CV_UsuarioEmpresa">
+            <End Role="Usuarios_Empresa" EntitySet="Usuarios_Empresa" />
+            <End Role="Visualizaciones_CV" EntitySet="Visualizaciones_CV" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SistemaEgresadosUtecModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Carrera">
+          <Key>
+            <PropertyRef Name="id_carrera" />
+          </Key>
+          <Property Name="id_carrera" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_carrera" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="facultad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="duracion_semestres" Type="Int32" Nullable="false" />
+          <Property Name="activo" Type="Boolean" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Egresados" Relationship="Self.FK__Egresados__id_ca__3D5E1FD2" FromRole="Carreras" ToRole="Egresados" />
+        </EntityType>
+        <EntityType Name="Certificacione">
+          <Key>
+            <PropertyRef Name="id_certificacion" />
+          </Key>
+          <Property Name="id_certificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_egresado" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="entidad_emisora" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_emision" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Egresado" Relationship="Self.FK__Certifica__id_eg__7F2BE32F" FromRole="Certificaciones" ToRole="Egresados" />
+        </EntityType>
+        <EntityType Name="CVs_Egresados">
+          <Key>
+            <PropertyRef Name="id_cv" />
+          </Key>
+          <Property Name="id_cv" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_egresado" Type="Int32" Nullable="false" />
+          <Property Name="ruta_archivo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nombre_archivo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="extension" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="tamano_archivo" Type="Int64" />
+          <Property Name="experiencia_anos" Type="Decimal" Precision="4" Scale="1" />
+          <Property Name="habilidades_principales" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idiomas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="certificaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="disponible_busqueda" Type="Boolean" />
+          <Property Name="privacidad" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="veces_visualizado" Type="Int32" />
+          <Property Name="fecha_subida" Type="DateTime" Precision="7" />
+          <Property Name="fecha_actualizacion" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Egresado" Relationship="Self.FK__CVs_Egres__id_eg__571DF1D5" FromRole="CVs_Egresados" ToRole="Egresados" />
+          <NavigationProperty Name="Postulaciones" Relationship="Self.FK__Postulaci__id_cv__66603565" FromRole="CVs_Egresados" ToRole="Postulaciones" />
+          <NavigationProperty Name="Visualizaciones_CV" Relationship="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_CV" FromRole="CVs_Egresados" ToRole="Visualizaciones_CV" />
+          <Property Name="CartaPresentacion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Egresado_Idiomas">
+          <Key>
+            <PropertyRef Name="id_eg_idioma" />
+          </Key>
+          <Property Name="id_eg_idioma" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_egresado" Type="Int32" Nullable="false" />
+          <Property Name="id_idioma" Type="Int32" Nullable="false" />
+          <Property Name="nivel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Egresado" Relationship="Self.FK__Egresado___id_eg__7B5B524B" FromRole="Egresado_Idiomas" ToRole="Egresados" />
+          <NavigationProperty Name="Idioma" Relationship="Self.FK__Egresado___id_id__7C4F7684" FromRole="Egresado_Idiomas" ToRole="Idiomas" />
+        </EntityType>
+        <EntityType Name="Egresado">
+          <Key>
+            <PropertyRef Name="id_egresado" />
+          </Key>
+          <Property Name="id_egresado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="numero_documento" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nombres" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="id_carrera" Type="Int32" Nullable="false" />
+          <Property Name="fecha_graduacion" Type="DateTime" Precision="0" />
+          <Property Name="promedio_academico" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="nivel_experiencia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="puntuacion_global" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="total_estrellas" Type="Int32" />
+          <Property Name="password_hash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="consentimiento_datos" Type="Boolean" />
+          <Property Name="estado_activo" Type="Boolean" />
+          <Property Name="fecha_registro" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Carrera" Relationship="Self.FK__Egresados__id_ca__3D5E1FD2" FromRole="Egresados" ToRole="Carreras" />
+          <NavigationProperty Name="Certificaciones" Relationship="Self.FK__Certifica__id_eg__7F2BE32F" FromRole="Egresados" ToRole="Certificaciones" />
+          <NavigationProperty Name="CVs_Egresados" Relationship="Self.FK__CVs_Egres__id_eg__571DF1D5" FromRole="Egresados" ToRole="CVs_Egresados" />
+          <NavigationProperty Name="Egresado_Idiomas" Relationship="Self.FK__Egresado___id_eg__7B5B524B" FromRole="Egresados" ToRole="Egresado_Idiomas" />
+          <NavigationProperty Name="Postulaciones" Relationship="Self.FK__Postulaci__id_eg__656C112C" FromRole="Egresados" ToRole="Postulaciones" />
+          <NavigationProperty Name="Preferencias_Egresado" Relationship="Self.FK__Preferenc__id_eg__02084FDA" FromRole="Egresados" ToRole="Preferencias_Egresado" />
+          <NavigationProperty Name="Respuestas_Encuesta" Relationship="Self.FK__Respuesta__id_eg__114A936A" FromRole="Egresados" ToRole="Respuestas_Encuesta" />
+          <Property Name="Trabaja" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="id_empresa" />
+          </Key>
+          <Property Name="id_empresa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="razon_social" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="email_contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="sector_economico" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="tamano_empresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="vinculada_universidad" Type="Boolean" />
+          <Property Name="puntuacion_empresa" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="estado_activo" Type="Boolean" />
+          <Property Name="fecha_registro" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Usuarios_Empresa" Relationship="Self.FK__Usuarios___id_em__5165187F" FromRole="Empresas" ToRole="Usuarios_Empresa" />
+          <NavigationProperty Name="Vacantes" Relationship="Self.FK__Vacantes__id_emp__5EBF139D" FromRole="Empresas" ToRole="Vacantes" />
+          <NavigationProperty Name="Visualizaciones_CV" Relationship="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_Empresa" FromRole="Empresa" ToRole="Visualizaciones_CV" />
+        </EntityType>
+        <EntityType Name="Encuesta">
+          <Key>
+            <PropertyRef Name="id_encuesta" />
+          </Key>
+          <Property Name="id_encuesta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="titulo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="7" />
+          <Property Name="activa" Type="Boolean" />
+          <NavigationProperty Name="Preguntas_Encuesta" Relationship="Self.FK__Preguntas__id_en__0B91BA14" FromRole="Encuestas" ToRole="Preguntas_Encuesta" />
+        </EntityType>
+        <EntityType Name="Idioma">
+          <Key>
+            <PropertyRef Name="id_idioma" />
+          </Key>
+          <Property Name="id_idioma" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Egresado_Idiomas" Relationship="Self.FK__Egresado___id_id__7C4F7684" FromRole="Idiomas" ToRole="Egresado_Idiomas" />
+        </EntityType>
+        <EntityType Name="Logs_Sistema">
+          <Key>
+            <PropertyRef Name="id_log" />
+          </Key>
+          <Property Name="id_log" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="id_usuario" Type="Int32" />
+          <Property Name="accion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="entidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_registro" Type="Int32" />
+          <Property Name="detalles" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_accion" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="Notificacione">
+          <Key>
+            <PropertyRef Name="id_notificacion" />
+          </Key>
+          <Property Name="id_notificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="destinatario_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_destinatario" Type="Int32" Nullable="false" />
+          <Property Name="titulo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="leida" Type="Boolean" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="Postulacione">
+          <Key>
+            <PropertyRef Name="id_postulacion" />
+          </Key>
+          <Property Name="id_postulacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_vacante" Type="Int32" Nullable="false" />
+          <Property Name="id_egresado" Type="Int32" Nullable="false" />
+          <Property Name="id_cv" Type="Int32" />
+          <Property Name="fecha_postulacion" Type="DateTime" Precision="7" />
+          <Property Name="estado" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="motivo_rechazo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_actualizacion" Type="DateTime" Precision="7" />
+          <Property Name="fue_contactado" Type="Boolean" />
+          <NavigationProperty Name="CVs_Egresados" Relationship="Self.FK__Postulaci__id_cv__66603565" FromRole="Postulaciones" ToRole="CVs_Egresados" />
+          <NavigationProperty Name="Egresado" Relationship="Self.FK__Postulaci__id_eg__656C112C" FromRole="Postulaciones" ToRole="Egresados" />
+          <NavigationProperty Name="Vacante" Relationship="Self.FK__Postulaci__id_va__6477ECF3" FromRole="Postulaciones" ToRole="Vacantes" />
+          <NavigationProperty Name="Respuestas_Postulante" Relationship="Self.FK__Respuesta__id_po__74AE54BC" FromRole="Postulaciones" ToRole="Respuestas_Postulante" />
+        </EntityType>
+        <EntityType Name="Preferencias_Egresado">
+          <Key>
+            <PropertyRef Name="id_pref" />
+          </Key>
+          <Property Name="id_pref" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_egresado" Type="Int32" Nullable="false" />
+          <Property Name="disponible_inmediata" Type="Boolean" />
+          <Property Name="modalidad_preferida" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="jornada_preferida" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="area_interes" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ubicacion_preferida" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="salario_min" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="salario_max" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="notificar" Type="Boolean" />
+          <Property Name="fecha_actualizacion" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Egresado" Relationship="Self.FK__Preferenc__id_eg__02084FDA" FromRole="Preferencias_Egresado" ToRole="Egresados" />
+        </EntityType>
+        <EntityType Name="Preguntas_Encuesta">
+          <Key>
+            <PropertyRef Name="id_pregunta_encuesta" />
+          </Key>
+          <Property Name="id_pregunta_encuesta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_encuesta" Type="Int32" Nullable="false" />
+          <Property Name="texto_pregunta" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tipo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="aplica_si_trabaja" Type="Boolean" />
+          <Property Name="orden" Type="Int32" />
+          <NavigationProperty Name="Encuesta" Relationship="Self.FK__Preguntas__id_en__0B91BA14" FromRole="Preguntas_Encuesta" ToRole="Encuestas" />
+          <NavigationProperty Name="Respuestas_Encuesta" Relationship="Self.FK__Respuesta__id_pr__10566F31" FromRole="Preguntas_Encuesta" ToRole="Respuestas_Encuesta" />
+        </EntityType>
+        <EntityType Name="Preguntas_Predefinidas">
+          <Key>
+            <PropertyRef Name="id_pregunta" />
+          </Key>
+          <Property Name="id_pregunta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="texto_pregunta" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tipo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="activa" Type="Boolean" />
+          <NavigationProperty Name="Preguntas_Vacante" Relationship="Self.FK__Preguntas__id_pr__70DDC3D8" FromRole="Preguntas_Predefinidas" ToRole="Preguntas_Vacante" />
+        </EntityType>
+        <EntityType Name="Preguntas_Vacante">
+          <Key>
+            <PropertyRef Name="id_pregunta_vacante" />
+          </Key>
+          <Property Name="id_pregunta_vacante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_vacante" Type="Int32" Nullable="false" />
+          <Property Name="id_pregunta" Type="Int32" />
+          <Property Name="personalizada" Type="Boolean" />
+          <Property Name="texto_personalizado" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Preguntas_Predefinidas" Relationship="Self.FK__Preguntas__id_pr__70DDC3D8" FromRole="Preguntas_Vacante" ToRole="Preguntas_Predefinidas" />
+          <NavigationProperty Name="Vacante" Relationship="Self.FK__Preguntas__id_va__6FE99F9F" FromRole="Preguntas_Vacante" ToRole="Vacantes" />
+          <NavigationProperty Name="Respuestas_Postulante" Relationship="Self.FK__Respuesta__id_pr__75A278F5" FromRole="Preguntas_Vacante" ToRole="Respuestas_Postulante" />
+        </EntityType>
+        <EntityType Name="Respuestas_Encuesta">
+          <Key>
+            <PropertyRef Name="id_respuesta_encuesta" />
+          </Key>
+          <Property Name="id_respuesta_encuesta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_pregunta_encuesta" Type="Int32" Nullable="false" />
+          <Property Name="id_egresado" Type="Int32" />
+          <Property Name="respuesta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_respuesta" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Egresado" Relationship="Self.FK__Respuesta__id_eg__114A936A" FromRole="Respuestas_Encuesta" ToRole="Egresados" />
+          <NavigationProperty Name="Preguntas_Encuesta" Relationship="Self.FK__Respuesta__id_pr__10566F31" FromRole="Respuestas_Encuesta" ToRole="Preguntas_Encuesta" />
+        </EntityType>
+        <EntityType Name="Respuestas_Postulante">
+          <Key>
+            <PropertyRef Name="id_respuesta" />
+          </Key>
+          <Property Name="id_respuesta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_postulacion" Type="Int32" Nullable="false" />
+          <Property Name="id_pregunta_vacante" Type="Int32" Nullable="false" />
+          <Property Name="respuesta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Postulacione" Relationship="Self.FK__Respuesta__id_po__74AE54BC" FromRole="Respuestas_Postulante" ToRole="Postulaciones" />
+          <NavigationProperty Name="Preguntas_Vacante" Relationship="Self.FK__Respuesta__id_pr__75A278F5" FromRole="Respuestas_Postulante" ToRole="Preguntas_Vacante" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id_usuario_global" />
+          </Key>
+          <Property Name="id_usuario_global" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password_hash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="tipo_usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="referencia_id" Type="Int32" />
+          <Property Name="nombre_completo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="Usuarios_Empresa">
+          <Key>
+            <PropertyRef Name="id_usuario_empresa" />
+          </Key>
+          <Property Name="id_usuario_empresa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_empresa" Type="Int32" Nullable="false" />
+          <Property Name="nombre_usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nombre_completo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cargo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password_hash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="rol" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="activo" Type="Boolean" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK__Usuarios___id_em__5165187F" FromRole="Usuarios_Empresa" ToRole="Empresas" />
+          <NavigationProperty Name="Visualizaciones_CV" Relationship="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_UsuarioEmpresa" FromRole="Usuarios_Empresa" ToRole="Visualizaciones_CV" />
+        </EntityType>
+        <EntityType Name="Vacante">
+          <Key>
+            <PropertyRef Name="id_vacante" />
+          </Key>
+          <Property Name="id_vacante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_empresa" Type="Int32" Nullable="false" />
+          <Property Name="titulo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="requisitos" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="salario_min" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="salario_max" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="salario_confidencial" Type="Boolean" />
+          <Property Name="modalidad" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="tipo_contrato" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ubicacion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="area" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_publicacion" Type="DateTime" Precision="7" />
+          <Property Name="fecha_cierre" Type="DateTime" Precision="7" />
+          <Property Name="estado" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="creado_por" Type="Int32" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK__Vacantes__id_emp__5EBF139D" FromRole="Vacantes" ToRole="Empresas" />
+          <NavigationProperty Name="Postulaciones" Relationship="Self.FK__Postulaci__id_va__6477ECF3" FromRole="Vacantes" ToRole="Postulaciones" />
+          <NavigationProperty Name="Preguntas_Vacante" Relationship="Self.FK__Preguntas__id_va__6FE99F9F" FromRole="Vacantes" ToRole="Preguntas_Vacante" />
+        </EntityType>
+        <Association Name="FK__Egresados__id_ca__3D5E1FD2">
+          <End Role="Carreras" Type="Self.Carrera" Multiplicity="1" />
+          <End Role="Egresados" Type="Self.Egresado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carreras">
+              <PropertyRef Name="id_carrera" />
+            </Principal>
+            <Dependent Role="Egresados">
+              <PropertyRef Name="id_carrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Certifica__id_eg__7F2BE32F">
+          <End Role="Egresados" Type="Self.Egresado" Multiplicity="1" />
+          <End Role="Certificaciones" Type="Self.Certificacione" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Certificaciones">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CVs_Egres__id_eg__571DF1D5">
+          <End Role="Egresados" Type="Self.Egresado" Multiplicity="1" />
+          <End Role="CVs_Egresados" Type="Self.CVs_Egresados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="CVs_Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Postulaci__id_cv__66603565">
+          <End Role="CVs_Egresados" Type="Self.CVs_Egresados" Multiplicity="0..1" />
+          <End Role="Postulaciones" Type="Self.Postulacione" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CVs_Egresados">
+              <PropertyRef Name="id_cv" />
+            </Principal>
+            <Dependent Role="Postulaciones">
+              <PropertyRef Name="id_cv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Egresado___id_eg__7B5B524B">
+          <End Role="Egresados" Type="Self.Egresado" Multiplicity="1" />
+          <End Role="Egresado_Idiomas" Type="Self.Egresado_Idiomas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Egresado_Idiomas">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Egresado___id_id__7C4F7684">
+          <End Role="Idiomas" Type="Self.Idioma" Multiplicity="1" />
+          <End Role="Egresado_Idiomas" Type="Self.Egresado_Idiomas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Idiomas">
+              <PropertyRef Name="id_idioma" />
+            </Principal>
+            <Dependent Role="Egresado_Idiomas">
+              <PropertyRef Name="id_idioma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Postulaci__id_eg__656C112C">
+          <End Role="Egresados" Type="Self.Egresado" Multiplicity="1" />
+          <End Role="Postulaciones" Type="Self.Postulacione" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Postulaciones">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preferenc__id_eg__02084FDA">
+          <End Role="Egresados" Type="Self.Egresado" Multiplicity="1" />
+          <End Role="Preferencias_Egresado" Type="Self.Preferencias_Egresado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Preferencias_Egresado">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Respuesta__id_eg__114A936A">
+          <End Role="Egresados" Type="Self.Egresado" Multiplicity="0..1" />
+          <End Role="Respuestas_Encuesta" Type="Self.Respuestas_Encuesta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Respuestas_Encuesta">
+              <PropertyRef Name="id_egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuarios___id_em__5165187F">
+          <End Role="Empresas" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Usuarios_Empresa" Type="Self.Usuarios_Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresas">
+              <PropertyRef Name="id_empresa" />
+            </Principal>
+            <Dependent Role="Usuarios_Empresa">
+              <PropertyRef Name="id_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vacantes__id_emp__5EBF139D">
+          <End Role="Empresas" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Vacantes" Type="Self.Vacante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresas">
+              <PropertyRef Name="id_empresa" />
+            </Principal>
+            <Dependent Role="Vacantes">
+              <PropertyRef Name="id_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preguntas__id_en__0B91BA14">
+          <End Role="Encuestas" Type="Self.Encuesta" Multiplicity="1" />
+          <End Role="Preguntas_Encuesta" Type="Self.Preguntas_Encuesta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encuestas">
+              <PropertyRef Name="id_encuesta" />
+            </Principal>
+            <Dependent Role="Preguntas_Encuesta">
+              <PropertyRef Name="id_encuesta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Postulaci__id_va__6477ECF3">
+          <End Role="Vacantes" Type="Self.Vacante" Multiplicity="1" />
+          <End Role="Postulaciones" Type="Self.Postulacione" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vacantes">
+              <PropertyRef Name="id_vacante" />
+            </Principal>
+            <Dependent Role="Postulaciones">
+              <PropertyRef Name="id_vacante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Respuesta__id_po__74AE54BC">
+          <End Role="Postulaciones" Type="Self.Postulacione" Multiplicity="1" />
+          <End Role="Respuestas_Postulante" Type="Self.Respuestas_Postulante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postulaciones">
+              <PropertyRef Name="id_postulacion" />
+            </Principal>
+            <Dependent Role="Respuestas_Postulante">
+              <PropertyRef Name="id_postulacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Respuesta__id_pr__10566F31">
+          <End Role="Preguntas_Encuesta" Type="Self.Preguntas_Encuesta" Multiplicity="1" />
+          <End Role="Respuestas_Encuesta" Type="Self.Respuestas_Encuesta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Preguntas_Encuesta">
+              <PropertyRef Name="id_pregunta_encuesta" />
+            </Principal>
+            <Dependent Role="Respuestas_Encuesta">
+              <PropertyRef Name="id_pregunta_encuesta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preguntas__id_pr__70DDC3D8">
+          <End Role="Preguntas_Predefinidas" Type="Self.Preguntas_Predefinidas" Multiplicity="0..1" />
+          <End Role="Preguntas_Vacante" Type="Self.Preguntas_Vacante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Preguntas_Predefinidas">
+              <PropertyRef Name="id_pregunta" />
+            </Principal>
+            <Dependent Role="Preguntas_Vacante">
+              <PropertyRef Name="id_pregunta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preguntas__id_va__6FE99F9F">
+          <End Role="Vacantes" Type="Self.Vacante" Multiplicity="1" />
+          <End Role="Preguntas_Vacante" Type="Self.Preguntas_Vacante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vacantes">
+              <PropertyRef Name="id_vacante" />
+            </Principal>
+            <Dependent Role="Preguntas_Vacante">
+              <PropertyRef Name="id_vacante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Respuesta__id_pr__75A278F5">
+          <End Role="Preguntas_Vacante" Type="Self.Preguntas_Vacante" Multiplicity="1" />
+          <End Role="Respuestas_Postulante" Type="Self.Respuestas_Postulante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Preguntas_Vacante">
+              <PropertyRef Name="id_pregunta_vacante" />
+            </Principal>
+            <Dependent Role="Respuestas_Postulante">
+              <PropertyRef Name="id_pregunta_vacante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SistemaEgresadosUtecEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Carreras" EntityType="Self.Carrera" />
+          <EntitySet Name="Certificaciones" EntityType="Self.Certificacione" />
+          <EntitySet Name="CVs_Egresados" EntityType="Self.CVs_Egresados" />
+          <EntitySet Name="Egresado_Idiomas" EntityType="Self.Egresado_Idiomas" />
+          <EntitySet Name="Egresados" EntityType="Self.Egresado" />
+          <EntitySet Name="Empresas" EntityType="Self.Empresa" />
+          <EntitySet Name="Encuestas" EntityType="Self.Encuesta" />
+          <EntitySet Name="Idiomas" EntityType="Self.Idioma" />
+          <EntitySet Name="Logs_Sistema" EntityType="Self.Logs_Sistema" />
+          <EntitySet Name="Notificaciones" EntityType="Self.Notificacione" />
+          <EntitySet Name="Postulaciones" EntityType="Self.Postulacione" />
+          <EntitySet Name="Preferencias_Egresado" EntityType="Self.Preferencias_Egresado" />
+          <EntitySet Name="Preguntas_Encuesta" EntityType="Self.Preguntas_Encuesta" />
+          <EntitySet Name="Preguntas_Predefinidas" EntityType="Self.Preguntas_Predefinidas" />
+          <EntitySet Name="Preguntas_Vacante" EntityType="Self.Preguntas_Vacante" />
+          <EntitySet Name="Respuestas_Encuesta" EntityType="Self.Respuestas_Encuesta" />
+          <EntitySet Name="Respuestas_Postulante" EntityType="Self.Respuestas_Postulante" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <EntitySet Name="Usuarios_Empresa" EntityType="Self.Usuarios_Empresa" />
+          <EntitySet Name="Vacantes" EntityType="Self.Vacante" />
+          <AssociationSet Name="FK__Egresados__id_ca__3D5E1FD2" Association="Self.FK__Egresados__id_ca__3D5E1FD2">
+            <End Role="Carreras" EntitySet="Carreras" />
+            <End Role="Egresados" EntitySet="Egresados" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Certifica__id_eg__7F2BE32F" Association="Self.FK__Certifica__id_eg__7F2BE32F">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="Certificaciones" EntitySet="Certificaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CVs_Egres__id_eg__571DF1D5" Association="Self.FK__CVs_Egres__id_eg__571DF1D5">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="CVs_Egresados" EntitySet="CVs_Egresados" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Postulaci__id_cv__66603565" Association="Self.FK__Postulaci__id_cv__66603565">
+            <End Role="CVs_Egresados" EntitySet="CVs_Egresados" />
+            <End Role="Postulaciones" EntitySet="Postulaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Egresado___id_eg__7B5B524B" Association="Self.FK__Egresado___id_eg__7B5B524B">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="Egresado_Idiomas" EntitySet="Egresado_Idiomas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Egresado___id_id__7C4F7684" Association="Self.FK__Egresado___id_id__7C4F7684">
+            <End Role="Idiomas" EntitySet="Idiomas" />
+            <End Role="Egresado_Idiomas" EntitySet="Egresado_Idiomas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Postulaci__id_eg__656C112C" Association="Self.FK__Postulaci__id_eg__656C112C">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="Postulaciones" EntitySet="Postulaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preferenc__id_eg__02084FDA" Association="Self.FK__Preferenc__id_eg__02084FDA">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="Preferencias_Egresado" EntitySet="Preferencias_Egresado" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Respuesta__id_eg__114A936A" Association="Self.FK__Respuesta__id_eg__114A936A">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="Respuestas_Encuesta" EntitySet="Respuestas_Encuesta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuarios___id_em__5165187F" Association="Self.FK__Usuarios___id_em__5165187F">
+            <End Role="Empresas" EntitySet="Empresas" />
+            <End Role="Usuarios_Empresa" EntitySet="Usuarios_Empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vacantes__id_emp__5EBF139D" Association="Self.FK__Vacantes__id_emp__5EBF139D">
+            <End Role="Empresas" EntitySet="Empresas" />
+            <End Role="Vacantes" EntitySet="Vacantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preguntas__id_en__0B91BA14" Association="Self.FK__Preguntas__id_en__0B91BA14">
+            <End Role="Encuestas" EntitySet="Encuestas" />
+            <End Role="Preguntas_Encuesta" EntitySet="Preguntas_Encuesta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Postulaci__id_va__6477ECF3" Association="Self.FK__Postulaci__id_va__6477ECF3">
+            <End Role="Vacantes" EntitySet="Vacantes" />
+            <End Role="Postulaciones" EntitySet="Postulaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Respuesta__id_po__74AE54BC" Association="Self.FK__Respuesta__id_po__74AE54BC">
+            <End Role="Postulaciones" EntitySet="Postulaciones" />
+            <End Role="Respuestas_Postulante" EntitySet="Respuestas_Postulante" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Respuesta__id_pr__10566F31" Association="Self.FK__Respuesta__id_pr__10566F31">
+            <End Role="Preguntas_Encuesta" EntitySet="Preguntas_Encuesta" />
+            <End Role="Respuestas_Encuesta" EntitySet="Respuestas_Encuesta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preguntas__id_pr__70DDC3D8" Association="Self.FK__Preguntas__id_pr__70DDC3D8">
+            <End Role="Preguntas_Predefinidas" EntitySet="Preguntas_Predefinidas" />
+            <End Role="Preguntas_Vacante" EntitySet="Preguntas_Vacante" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preguntas__id_va__6FE99F9F" Association="Self.FK__Preguntas__id_va__6FE99F9F">
+            <End Role="Vacantes" EntitySet="Vacantes" />
+            <End Role="Preguntas_Vacante" EntitySet="Preguntas_Vacante" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Respuesta__id_pr__75A278F5" Association="Self.FK__Respuesta__id_pr__75A278F5">
+            <End Role="Preguntas_Vacante" EntitySet="Preguntas_Vacante" />
+            <End Role="Respuestas_Postulante" EntitySet="Respuestas_Postulante" />
+          </AssociationSet>
+          <FunctionImport Name="sp_PostularVacante">
+            <Parameter Name="id_vacante" Mode="In" Type="Int32" />
+            <Parameter Name="id_egresado" Mode="In" Type="Int32" />
+            <Parameter Name="id_cv" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="sysdiagrams" EntityType="SistemaEgresadosUtecModel.sysdiagram" />
+          <EntitySet Name="Visualizaciones_CV" EntityType="SistemaEgresadosUtecModel.Visualizaciones_CV" />
+          <AssociationSet Name="FK_Visualizaciones_CV_CV" Association="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_CV">
+            <End Role="CVs_Egresados" EntitySet="CVs_Egresados" />
+            <End Role="Visualizaciones_CV" EntitySet="Visualizaciones_CV" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visualizaciones_CV_Empresa" Association="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_Empresa">
+            <End Role="Empresa" EntitySet="Empresas" />
+            <End Role="Visualizaciones_CV" EntitySet="Visualizaciones_CV" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visualizaciones_CV_UsuarioEmpresa" Association="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_UsuarioEmpresa">
+            <End Role="Usuarios_Empresa" EntitySet="Usuarios_Empresa" />
+            <End Role="Visualizaciones_CV" EntitySet="Visualizaciones_CV" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SistemaEgresadosUtecModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SistemaEgresadosUtecModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_RegistrarVisualizacionCV">
+            <Parameter Name="IdCV" Mode="In" Type="Int32" />
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdUsuarioEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IpAddress" Mode="In" Type="String" />
+            <Parameter Name="Navegador" Mode="In" Type="String" />
+            <Parameter Name="Observaciones" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Visualizaciones_CV">
+          <Key>
+            <PropertyRef Name="id_visualizacion" />
+          </Key>
+          <Property Name="id_visualizacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_cv" Type="Int32" Nullable="false" />
+          <Property Name="id_empresa" Type="Int32" />
+          <Property Name="id_usuario_empresa" Type="Int32" />
+          <Property Name="fecha_visualizacion" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="navegador" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="observaciones" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CVs_Egresados" Relationship="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_CV" FromRole="Visualizaciones_CV" ToRole="CVs_Egresados" />
+          <NavigationProperty Name="Empresa" Relationship="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_Empresa" FromRole="Visualizaciones_CV" ToRole="Empresa" />
+          <NavigationProperty Name="Usuarios_Empresa" Relationship="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_UsuarioEmpresa" FromRole="Visualizaciones_CV" ToRole="Usuarios_Empresa" />
+        </EntityType>
+        <Association Name="FK_Visualizaciones_CV_CV">
+          <End Type="SistemaEgresadosUtecModel.CVs_Egresados" Role="CVs_Egresados" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SistemaEgresadosUtecModel.Visualizaciones_CV" Role="Visualizaciones_CV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CVs_Egresados">
+              <PropertyRef Name="id_cv" />
+            </Principal>
+            <Dependent Role="Visualizaciones_CV">
+              <PropertyRef Name="id_cv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visualizaciones_CV_Empresa">
+          <End Type="SistemaEgresadosUtecModel.Empresa" Role="Empresa" Multiplicity="0..1" />
+          <End Type="SistemaEgresadosUtecModel.Visualizaciones_CV" Role="Visualizaciones_CV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="id_empresa" />
+            </Principal>
+            <Dependent Role="Visualizaciones_CV">
+              <PropertyRef Name="id_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visualizaciones_CV_UsuarioEmpresa">
+          <End Type="SistemaEgresadosUtecModel.Usuarios_Empresa" Role="Usuarios_Empresa" Multiplicity="0..1" />
+          <End Type="SistemaEgresadosUtecModel.Visualizaciones_CV" Role="Visualizaciones_CV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios_Empresa">
+              <PropertyRef Name="id_usuario_empresa" />
+            </Principal>
+            <Dependent Role="Visualizaciones_CV">
+              <PropertyRef Name="id_usuario_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SistemaEgresadosUtecModelStoreContainer" CdmEntityContainer="SistemaEgresadosUtecEntities">
+          <EntitySetMapping Name="Carreras">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Carrera">
+              <MappingFragment StoreEntitySet="Carreras">
+                <ScalarProperty Name="id_carrera" ColumnName="id_carrera" />
+                <ScalarProperty Name="nombre_carrera" ColumnName="nombre_carrera" />
+                <ScalarProperty Name="facultad" ColumnName="facultad" />
+                <ScalarProperty Name="duracion_semestres" ColumnName="duracion_semestres" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Certificaciones">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Certificacione">
+              <MappingFragment StoreEntitySet="Certificaciones">
+                <ScalarProperty Name="id_certificacion" ColumnName="id_certificacion" />
+                <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="entidad_emisora" ColumnName="entidad_emisora" />
+                <ScalarProperty Name="fecha_emision" ColumnName="fecha_emision" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CVs_Egresados">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.CVs_Egresados">
+              <MappingFragment StoreEntitySet="CVs_Egresados">
+                <ScalarProperty Name="CartaPresentacion" ColumnName="CartaPresentacion" />
+                <ScalarProperty Name="id_cv" ColumnName="id_cv" />
+                <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+                <ScalarProperty Name="ruta_archivo" ColumnName="ruta_archivo" />
+                <ScalarProperty Name="nombre_archivo" ColumnName="nombre_archivo" />
+                <ScalarProperty Name="extension" ColumnName="extension" />
+                <ScalarProperty Name="tamano_archivo" ColumnName="tamano_archivo" />
+                <ScalarProperty Name="experiencia_anos" ColumnName="experiencia_anos" />
+                <ScalarProperty Name="habilidades_principales" ColumnName="habilidades_principales" />
+                <ScalarProperty Name="idiomas" ColumnName="idiomas" />
+                <ScalarProperty Name="certificaciones" ColumnName="certificaciones" />
+                <ScalarProperty Name="disponible_busqueda" ColumnName="disponible_busqueda" />
+                <ScalarProperty Name="privacidad" ColumnName="privacidad" />
+                <ScalarProperty Name="veces_visualizado" ColumnName="veces_visualizado" />
+                <ScalarProperty Name="fecha_subida" ColumnName="fecha_subida" />
+                <ScalarProperty Name="fecha_actualizacion" ColumnName="fecha_actualizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Egresado_Idiomas">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Egresado_Idiomas">
+              <MappingFragment StoreEntitySet="Egresado_Idiomas">
+                <ScalarProperty Name="id_eg_idioma" ColumnName="id_eg_idioma" />
+                <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+                <ScalarProperty Name="id_idioma" ColumnName="id_idioma" />
+                <ScalarProperty Name="nivel" ColumnName="nivel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Egresados">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Egresado">
+              <MappingFragment StoreEntitySet="Egresados">
+                <ScalarProperty Name="Trabaja" ColumnName="Trabaja" />
+                <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+                <ScalarProperty Name="numero_documento" ColumnName="numero_documento" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="id_carrera" ColumnName="id_carrera" />
+                <ScalarProperty Name="fecha_graduacion" ColumnName="fecha_graduacion" />
+                <ScalarProperty Name="promedio_academico" ColumnName="promedio_academico" />
+                <ScalarProperty Name="nivel_experiencia" ColumnName="nivel_experiencia" />
+                <ScalarProperty Name="puntuacion_global" ColumnName="puntuacion_global" />
+                <ScalarProperty Name="total_estrellas" ColumnName="total_estrellas" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="consentimiento_datos" ColumnName="consentimiento_datos" />
+                <ScalarProperty Name="estado_activo" ColumnName="estado_activo" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresas">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Empresa">
+              <MappingFragment StoreEntitySet="Empresas">
+                <ScalarProperty Name="id_empresa" ColumnName="id_empresa" />
+                <ScalarProperty Name="razon_social" ColumnName="razon_social" />
+                <ScalarProperty Name="nit" ColumnName="nit" />
+                <ScalarProperty Name="email_contacto" ColumnName="email_contacto" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="sector_economico" ColumnName="sector_economico" />
+                <ScalarProperty Name="tamano_empresa" ColumnName="tamano_empresa" />
+                <ScalarProperty Name="vinculada_universidad" ColumnName="vinculada_universidad" />
+                <ScalarProperty Name="puntuacion_empresa" ColumnName="puntuacion_empresa" />
+                <ScalarProperty Name="estado_activo" ColumnName="estado_activo" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Encuestas">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Encuesta">
+              <MappingFragment StoreEntitySet="Encuestas">
+                <ScalarProperty Name="id_encuesta" ColumnName="id_encuesta" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="activa" ColumnName="activa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Idiomas">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Idioma">
+              <MappingFragment StoreEntitySet="Idiomas">
+                <ScalarProperty Name="id_idioma" ColumnName="id_idioma" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs_Sistema">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Logs_Sistema">
+              <MappingFragment StoreEntitySet="Logs_Sistema">
+                <ScalarProperty Name="id_log" ColumnName="id_log" />
+                <ScalarProperty Name="usuario_tipo" ColumnName="usuario_tipo" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="accion" ColumnName="accion" />
+                <ScalarProperty Name="entidad" ColumnName="entidad" />
+                <ScalarProperty Name="id_registro" ColumnName="id_registro" />
+                <ScalarProperty Name="detalles" ColumnName="detalles" />
+                <ScalarProperty Name="ip_address" ColumnName="ip_address" />
+                <ScalarProperty Name="fecha_accion" ColumnName="fecha_accion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notificaciones">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Notificacione">
+              <MappingFragment StoreEntitySet="Notificaciones">
+                <ScalarProperty Name="id_notificacion" ColumnName="id_notificacion" />
+                <ScalarProperty Name="destinatario_tipo" ColumnName="destinatario_tipo" />
+                <ScalarProperty Name="id_destinatario" ColumnName="id_destinatario" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="leida" ColumnName="leida" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Postulaciones">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Postulacione">
+              <MappingFragment StoreEntitySet="Postulaciones">
+                <ScalarProperty Name="id_postulacion" ColumnName="id_postulacion" />
+                <ScalarProperty Name="id_vacante" ColumnName="id_vacante" />
+                <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+                <ScalarProperty Name="id_cv" ColumnName="id_cv" />
+                <ScalarProperty Name="fecha_postulacion" ColumnName="fecha_postulacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="motivo_rechazo" ColumnName="motivo_rechazo" />
+                <ScalarProperty Name="fecha_actualizacion" ColumnName="fecha_actualizacion" />
+                <ScalarProperty Name="fue_contactado" ColumnName="fue_contactado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Preferencias_Egresado">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Preferencias_Egresado">
+              <MappingFragment StoreEntitySet="Preferencias_Egresado">
+                <ScalarProperty Name="id_pref" ColumnName="id_pref" />
+                <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+                <ScalarProperty Name="disponible_inmediata" ColumnName="disponible_inmediata" />
+                <ScalarProperty Name="modalidad_preferida" ColumnName="modalidad_preferida" />
+                <ScalarProperty Name="jornada_preferida" ColumnName="jornada_preferida" />
+                <ScalarProperty Name="area_interes" ColumnName="area_interes" />
+                <ScalarProperty Name="ubicacion_preferida" ColumnName="ubicacion_preferida" />
+                <ScalarProperty Name="salario_min" ColumnName="salario_min" />
+                <ScalarProperty Name="salario_max" ColumnName="salario_max" />
+                <ScalarProperty Name="notificar" ColumnName="notificar" />
+                <ScalarProperty Name="fecha_actualizacion" ColumnName="fecha_actualizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Preguntas_Encuesta">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Preguntas_Encuesta">
+              <MappingFragment StoreEntitySet="Preguntas_Encuesta">
+                <ScalarProperty Name="id_pregunta_encuesta" ColumnName="id_pregunta_encuesta" />
+                <ScalarProperty Name="id_encuesta" ColumnName="id_encuesta" />
+                <ScalarProperty Name="texto_pregunta" ColumnName="texto_pregunta" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="aplica_si_trabaja" ColumnName="aplica_si_trabaja" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Preguntas_Predefinidas">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Preguntas_Predefinidas">
+              <MappingFragment StoreEntitySet="Preguntas_Predefinidas">
+                <ScalarProperty Name="id_pregunta" ColumnName="id_pregunta" />
+                <ScalarProperty Name="texto_pregunta" ColumnName="texto_pregunta" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="activa" ColumnName="activa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Preguntas_Vacante">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Preguntas_Vacante">
+              <MappingFragment StoreEntitySet="Preguntas_Vacante">
+                <ScalarProperty Name="id_pregunta_vacante" ColumnName="id_pregunta_vacante" />
+                <ScalarProperty Name="id_vacante" ColumnName="id_vacante" />
+                <ScalarProperty Name="id_pregunta" ColumnName="id_pregunta" />
+                <ScalarProperty Name="personalizada" ColumnName="personalizada" />
+                <ScalarProperty Name="texto_personalizado" ColumnName="texto_personalizado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Respuestas_Encuesta">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Respuestas_Encuesta">
+              <MappingFragment StoreEntitySet="Respuestas_Encuesta">
+                <ScalarProperty Name="id_respuesta_encuesta" ColumnName="id_respuesta_encuesta" />
+                <ScalarProperty Name="id_pregunta_encuesta" ColumnName="id_pregunta_encuesta" />
+                <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+                <ScalarProperty Name="respuesta" ColumnName="respuesta" />
+                <ScalarProperty Name="fecha_respuesta" ColumnName="fecha_respuesta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Respuestas_Postulante">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Respuestas_Postulante">
+              <MappingFragment StoreEntitySet="Respuestas_Postulante">
+                <ScalarProperty Name="id_respuesta" ColumnName="id_respuesta" />
+                <ScalarProperty Name="id_postulacion" ColumnName="id_postulacion" />
+                <ScalarProperty Name="id_pregunta_vacante" ColumnName="id_pregunta_vacante" />
+                <ScalarProperty Name="respuesta" ColumnName="respuesta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="id_usuario_global" ColumnName="id_usuario_global" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="tipo_usuario" ColumnName="tipo_usuario" />
+                <ScalarProperty Name="referencia_id" ColumnName="referencia_id" />
+                <ScalarProperty Name="nombre_completo" ColumnName="nombre_completo" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios_Empresa">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Usuarios_Empresa">
+              <MappingFragment StoreEntitySet="Usuarios_Empresa">
+                <ScalarProperty Name="id_usuario_empresa" ColumnName="id_usuario_empresa" />
+                <ScalarProperty Name="id_empresa" ColumnName="id_empresa" />
+                <ScalarProperty Name="nombre_usuario" ColumnName="nombre_usuario" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="nombre_completo" ColumnName="nombre_completo" />
+                <ScalarProperty Name="cargo" ColumnName="cargo" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vacantes">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Vacante">
+              <MappingFragment StoreEntitySet="Vacantes">
+                <ScalarProperty Name="id_vacante" ColumnName="id_vacante" />
+                <ScalarProperty Name="id_empresa" ColumnName="id_empresa" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="requisitos" ColumnName="requisitos" />
+                <ScalarProperty Name="salario_min" ColumnName="salario_min" />
+                <ScalarProperty Name="salario_max" ColumnName="salario_max" />
+                <ScalarProperty Name="salario_confidencial" ColumnName="salario_confidencial" />
+                <ScalarProperty Name="modalidad" ColumnName="modalidad" />
+                <ScalarProperty Name="tipo_contrato" ColumnName="tipo_contrato" />
+                <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="fecha_publicacion" ColumnName="fecha_publicacion" />
+                <ScalarProperty Name="fecha_cierre" ColumnName="fecha_cierre" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="creado_por" ColumnName="creado_por" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_PostularVacante" FunctionName="SistemaEgresadosUtecModel.Store.sp_PostularVacante" />
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visualizaciones_CV">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Visualizaciones_CV">
+              <MappingFragment StoreEntitySet="Visualizaciones_CV">
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+                <ScalarProperty Name="navegador" ColumnName="navegador" />
+                <ScalarProperty Name="ip_address" ColumnName="ip_address" />
+                <ScalarProperty Name="fecha_visualizacion" ColumnName="fecha_visualizacion" />
+                <ScalarProperty Name="id_usuario_empresa" ColumnName="id_usuario_empresa" />
+                <ScalarProperty Name="id_empresa" ColumnName="id_empresa" />
+                <ScalarProperty Name="id_cv" ColumnName="id_cv" />
+                <ScalarProperty Name="id_visualizacion" ColumnName="id_visualizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SistemaEgresadosUtecModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SistemaEgresadosUtecModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SistemaEgresadosUtecModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SistemaEgresadosUtecModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_RegistrarVisualizacionCV" FunctionName="SistemaEgresadosUtecModel.Store.SP_RegistrarVisualizacionCV" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SistemaEgresadosUtecModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

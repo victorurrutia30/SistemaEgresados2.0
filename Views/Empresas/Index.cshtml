@@ -1,0 +1,323 @@
+﻿@{
+    Layout = null;
+    string JWTToken = Session["TokenJWT"] as string ?? "";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="~/Utilidades/logoU.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechCorp - Panel de Empresa</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="~/CSS/Empresas.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">                
+                <div class="d-flex align-items-start gap-3">
+                    <img class="logo-utec" src="~/Utilidades/logoU.png" />
+                    <div class="mt-3">
+                        <h1 class="company-title mb-1"><label id="NombreEmpresa"></label> • Panel de Empresa</h1>
+                        <p class="company-subtitle mb-0"></p>
+                    </div>
+                </div>
+                <div class="d-none d-md-flex align-items-center gap-3">
+                    <div class="dropdown">
+                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-list"></i> Opciones
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Opción 1</a></li>
+                            <li><a class="dropdown-item" href="#">Opción 2</a></li>
+                            <li><a class="dropdown-item" href="#">Opción 3</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Index","Bienvenido")"><i class="bi bi-box-arrow-left"></i> Cerrar Sesion</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <div class="stat-card text-center">
+                    <div class="stat-icon mx-auto">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">Vacantes activas</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card text-center">
+                    <div class="stat-icon mx-auto">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="stat-value">42</div>
+                    <div class="stat-label">Total candidatos</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card text-center">
+                    <div class="stat-icon mx-auto">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="stat-value">9</div>
+                    <div class="stat-label">Entrevistas</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card text-center">
+                    <div class="stat-icon mx-auto">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-value">8.3</div>
+                    <div class="stat-label">Promedio evaluación</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-lg-6 mb-4">
+                <div class="stat-card">
+                    <h3 class="section-title">Pipeline por estado</h3>
+                    <p class="text-muted small mb-3">Distribución de procesos por Revision, Entrevista, Oferta, Contratado</p>
+                    <canvas id="pipelineChart" height="200"></canvas>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="stat-card">
+                    <h3 class="section-title">Top sectores de candidatos</h3>
+                    <p class="text-muted small mb-3">Sectores relacionados con: Software y Experiencia laboral</p>
+                    <div class="mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="small">Tecnología</span>
+                            <span class="small text-muted">65%</span>
+                        </div>
+                        <div class="progress progress-bar-custom mb-3">
+                            <div class="progress-bar" style="width: 65%; background-color: var(--primary-color);"></div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="small">Ingeniería</span>
+                            <span class="small text-muted">45%</span>
+                        </div>
+                        <div class="progress progress-bar-custom mb-3">
+                            <div class="progress-bar" style="width: 45%; background-color: var(--primary-color);"></div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="small">Consultoría</span>
+                            <span class="small text-muted">30%</span>
+                        </div>
+                        <div class="progress progress-bar-custom">
+                            <div class="progress-bar" style="width: 30%; background-color: var(--primary-color);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 mb-4">
+                <div class="stat-card">
+                    <h3 class="section-title">Vacantes recientes</h3>
+                    <div class="table-responsive">
+                        <table class="table table-custom mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Posición</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>DevOps Engineer</strong></td>
+                                    <td><span class="badge-custom badge-entrevista">Entrevista</span></td>
+                                    <td>05 Set, 2025</td>
+                                    <td><button class="btn-action">Ver Cambiar</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Desarrollador .NET</strong></td>
+                                    <td><span class="badge-custom badge-revision">En Revisión</span></td>
+                                    <td>31 ago 2025</td>
+                                    <td><button class="btn-action">Ver Cambiar</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>QA Engineer</strong></td>
+                                    <td><span class="badge-custom badge-oferta">Oferta</span></td>
+                                    <td>27 ago 2025</td>
+                                    <td><button class="btn-action">Ver Cambiar</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Data Engineer</strong></td>
+                                    <td><span class="badge-custom badge-contratado">Contratado</span></td>
+                                    <td>23 ago 2025</td>
+                                    <td><button class="btn-action">Ver Cambiar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="stat-card mt-4">
+                    <h3 class="section-title">Top candidatos en proceso</h3>
+                    <div class="table-responsive">
+                        <table class="table table-custom mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Candidato</th>
+                                    <th>Carrera</th>
+                                    <th>Match</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Ana Martínez</strong></td>
+                                    <td>Ing. Informática</td>
+                                    <td><span class="badge bg-success">90%</span></td>
+                                    <td><span class="badge-custom badge-entrevista">Entrevista</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Luis Pérez</strong></td>
+                                    <td>Ing. Sistemas</td>
+                                    <td><span class="badge bg-success">86%</span></td>
+                                    <td><span class="badge-custom badge-revision">En Revisión</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Karla López</strong></td>
+                                    <td>Ing. Industrial</td>
+                                    <td><span class="badge bg-warning">81%</span></td>
+                                    <td><span class="badge-custom badge-finalista">Ideals</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Jorge Castillo</strong></td>
+                                    <td>Ing. Informática</td>
+                                    <td><span class="badge bg-warning">79%</span></td>
+                                    <td><span class="badge-custom badge-contratado">Contratado</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="stat-card mb-4">
+                    <h3 class="section-title">Configuración de Matching</h3>
+                    <p class="text-muted small mb-3">Filtros actualizados (scores 100%)</p>
+                    <div>
+                        <div class="config-item">
+                            <span class="config-label">Experiencia</span>
+                            <div class="d-flex align-items-center">
+                                <div class="progress" style="width: 60px; height: 6px; margin-right: 10px;">
+                                    <div class="progress-bar" style="width: 35%; background-color: #007bff;"></div>
+                                </div>
+                                <span class="config-value">35% Habilidades</span>
+                            </div>
+                        </div>
+                        <div class="config-item">
+                            <span class="config-label">Calificaciones</span>
+                            <div class="d-flex align-items-center">
+                                <div class="progress" style="width: 60px; height: 6px; margin-right: 10px;">
+                                    <div class="progress-bar" style="width: 28%; background-color: #007bff;"></div>
+                                </div>
+                                <span class="config-value">28% Carrera</span>
+                            </div>
+                        </div>
+                        <div class="config-item">
+                            <span class="config-label">Idiomas</span>
+                            <div class="d-flex align-items-center">
+                                <div class="progress" style="width: 60px; height: 6px; margin-right: 10px;">
+                                    <div class="progress-bar" style="width: 10%; background-color: #007bff;"></div>
+                                </div>
+                                <span class="config-value">10%</span>
+                            </div>
+                        </div>
+                        <p class="text-muted small mt-3">Los resultados se actualizan al editar los factores de calibración</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h3 class="section-title">Notificaciones recientes</h3>
+                    <div>
+                        <div class="notification-item">
+                            <div class="notification-title">Revisión de CV</div>
+                            <div class="notification-text">Se han recibido 3 CVs para DevOps Engineer</div>
+                            <div class="notification-date">2025-05-08 10:11</div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-title">Entrevista iniciada</div>
+                            <div class="notification-text">Entrevista abierta para Desarrollador</div>
+                            <div class="notification-date">2025-02-06 18:48</div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-title">Matching listo</div>
+                            <div class="notification-text">El analisis de matching de candidatos</div>
+                            <div class="notification-date">2025-02-01 09:43</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        const JWT_TOKEN = '@JWTToken';
+    </script>
+    <script src="~/JS/Empresas.js"></script>
+    <script>
+        // Pipeline Chart
+        const ctx = document.getElementById('pipelineChart');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Revisión', 'Entrevista', 'Oferta', 'Contratado'],
+                datasets: [{
+                    label: 'Candidatos',
+                    data: [15, 12, 8, 7],
+                    backgroundColor: [
+                        '#dc3545',
+                        '#7c2d5e',
+                        '#ffc107',
+                        '#28a745'
+                    ],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 5
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

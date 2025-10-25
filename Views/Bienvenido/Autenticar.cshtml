@@ -1,0 +1,118 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="~/Utilidades/logoU.png" type="image/x-icon" />
+    <title>UTEC - Iniciar Sesión</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="~/CSS/Autenticacion.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-overlay"></div>
+
+        <div class="login-container">
+            <div class="logo-container">
+                <img src="~/Utilidades/logo-utec.png" alt="UTEC Logo" class="logo">
+            </div>
+            <form id="loginForm" method="post" action="/Autenticacion/Login">
+                <div class="form-group">
+                    <label class="form-label" for="username">Usuario o Correo</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text"
+                               id="username"
+                               name="username"
+                               class="form-control"
+                               placeholder="Ingresa tu usuario o correo"
+                               required
+                               autocomplete="username">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Contraseña</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               class="form-control"
+                               placeholder="Ingresa tu contraseña"
+                               required
+                               autocomplete="current-password">
+                    </div>
+                </div>
+
+                <div class="remember-section">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Recordar mi sesión</label>
+                </div>
+
+                <button type="button" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                </button>
+
+                <div class="login-links">
+                    <a href="#" id="btnRestablecer">¿Olvidaste tu contraseña?</a>
+                    <div class="divider">•</div>
+                    <a href="/Registrar/Index">¿No tienes cuenta? Regístrate aquí</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="ConfirmarCodigoModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="ConfirmarCodigoModalModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Confirma que eres tu!</h1>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Agrega tu correo institucional aqui:</p>
+                    <input type="text" id="emailRecuperar" class="form-control text-center fw-bold fs-5" placeholder="Ingrese el correo">
+
+                    <p>Hemos enviado un código a tu correo institucional. Escríbelo aquí:</p>
+                    <input type="text" id="codigoVerificacion" class="form-control text-center fw-bold fs-5" maxlength="12" autocomplete="off" placeholder="Ingrese el código">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnEmail">Verificar</button>
+                    <button type="button" class="btn btn-primary" id="btnVerificarCodigo" disabled>Verificar Codigo</button>
+                    <button type="button" class="btn btn-primary" id="btnReenviarCodigo" disabled>Volver a enviar codigo</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <div class="modal fade" id="ConfirmarContrasena" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="ConfirmarContrasenaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cambio de contraseña</h1>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Coloca tu contraseña:</p>
+                    <input type="password" id="contrasena" class="form-control text-center fw-bold fs-5" placeholder="Ingrese la contraseña">
+                    <p>Confirma tu contraseña</p>
+                    <input type="password" id="confirmarContrasena" class="form-control text-center fw-bold fs-5" placeholder="Confirme la contraseña">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnCambiar">Cambiar</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="~/JS/Autenticar.js"></script>
+</body>
+</html>

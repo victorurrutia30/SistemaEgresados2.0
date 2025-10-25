@@ -1,0 +1,255 @@
+﻿@{
+    Layout = null;
+    string JWTToken = Session["TokenJWT"] as string ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="~/Utilidades/logoU.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTEC Egresados - Perfil</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">    
+    <link href="~/CSS/Egresados.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="modal fade" id="VerMiCV" aria-hidden="true" aria-labelledby="VerMiCVToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="VerMiCVToggleLabel">Mi CV</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cv-container">
+                        <div class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Cargando CV...</span>
+                            </div>
+                            <p class="mt-2">Cargando CV...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <img class="logo-utec" src="~/Utilidades/logoU.png" />
+                </div>
+                <div class="col">
+                    <h5 class="mb-1">@Session["UsuarioNombre"]</h5>
+                    <p id="carreraText" style="font-size: 14px;"></p><small style="font-size: 14px;" class="d-block mb-2" id="PromedioGlobal"></small>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge-custom badge-empleado">
+                            <i class="fas fa-briefcase"></i> Buscando empleo
+                        </span>
+                        <span class="badge-custom badge-registrado">
+                            <i class="fas fa-check-circle"></i> Empresas registradas
+                        </span>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-4">
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card-custom">
+                    <div class="card-header-custom">
+                        <div class="icon-circle">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h6 class="mb-0">Mi CV (PDF)</h6>
+                        <div class="col-auto">
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fas fa-edit" id="editarPerfil"></i> Editar perfil
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <i class="fas fa-file-pdf file-icon"></i>
+                        <div class="flex-grow-1">
+                            <div class="fw-bold" id="NombreCV" style="font-size: 14px;"></div>
+                            <small id="CVPeso">181.2 KB</small> • <small id="CVFecha"> Subido el 01/06/2025, 2:45 p.</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mb-3">
+                        <button class="btn btn-sm btn-outline-secondary" id="VerCV">
+                            <i class="fas fa-eye"></i> Ver
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary" id="DescargarCV">
+                            <i class="fas fa-download"></i> Descargar
+                        </button>
+                        <button class="btn btn-sm btn-maroon">
+                            <i class="fas fa-sync"></i> Reemplazar
+                        </button>
+                    </div>
+
+                    <p class="info-text mb-3">
+                        <i class="fas fa-info-circle"></i> Solo se admite PDF (máx. 5 MB).
+                    </p>
+
+                    <button class="btn btn-outline-maroon btn-sm w-100 mb-2">
+                        <i class="fas fa-file-archive"></i> Arrastrar tu CV (PDF) aquí
+                    </button>
+                    <small class="text-muted d-block text-center">Haz clic aquí para seleccionar • Máx. 5 MB</small>
+
+                    <hr class="my-4">
+                    
+                    <h6 class="mb-3">Resumen (Esto lo veran las empresas)</h6>
+                    <p class="info-text mb-3">Escribe tu carta de presentacion:</p>
+                    <div class="d-flex gap-2 mb-3">
+                        <button class="btn btn-sm btn-info" id="EditCartaPresentacion">
+                            <label id="textBtnCarta"></label>
+                        </button>                        
+                        <button class="btn btn-sm btn-success" hidden id="TerminarEdicion">
+                            Guardar Cambios
+                        </button>                        
+                        <button class="btn btn-sm btn-danger" hidden id="cancelarEdicion">
+                            Cancelar
+                        </button>                        
+                    </div>
+
+                    <div class="mb-3" id="CartaEgresadoContainer">
+                        <textarea rows="15" cols="15" disabled class="form-control"  maxlength="250" id="CartaPresentacionEgresado" placeholder="Tu carta aparecera aqui!"></textarea>
+                    </div>                   
+
+                    <div class="mb-3">
+                        <div class="section-title" id="titleHabilidades"></div>
+                        
+                    </div>
+
+                    <div class="mb-3" id="">
+                        <div class="section-title"><p id="NumeroIdiomas"></p></div>
+                        <div id="SectionIdiomas">
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="section-title" id="TitleCertificaciones">Certificaciones • 1</div>
+                        <div class="container" id="CertificacionesContainer">
+
+                        </div>
+                    </div>
+
+                    <button class="btn btn-link text-decoration-none mt-3 p-0">
+                        <i class="fas fa-print"></i> Reportar algo incorrecto
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card-custom">
+                    <div class="card-header-custom">
+                        <div class="icon-circle icon-circle-error">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h6 class="mb-0">Privacidad del CV</h6>
+                    </div>
+                    <p class="info-text mb-3">Define quién puede encontrar y ver tu CV en búsquedas:</p>
+
+                    <div class="d-flex gap-2 mb-3 flex-wrap">
+                        <select class="form-select-sm" id="PrivacidadCV">
+                            <option value="Privada">Privado</option>
+                            <option value="Publica">Pública</option>
+                        </select>
+                    </div>                    
+                </div>
+
+                <div class="card-custom">
+                    <div class="card-header-custom">
+                        <div class="icon-circle icon-circle-error">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h6 class="mb-0">Vieron tu CV <label id="NumeroVisualizaciones"></label></h6>
+                    </div>
+                    <p class="info-text mb-3">Buscar en visualizaciones...</p>
+                    <div class="table table-responsive table-responsive-lg table-responsive-md table-responsive-sm table-responsive-xl table-responsive-xxl">
+                        <table class="table table-active" id="TablaVisualizaciones">
+                            <thead>
+                                <tr>
+                                    <th style="font-size: 13px;">Fecha</th>
+                                    <th style="font-size: 13px;">Empresa</th>
+                                    <th style="font-size: 13px;">Nombre Reclutador</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div id="paginacionVisualizaciones" class="d-flex justify-content-between align-items-center mt-3 p-3 border-top">
+                        <div>
+                            <small class="text-muted" id="infoPaginacion"></small>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <button id="btnAnterior" class="btn btn-sm btn-outline-primary" onclick="paginaAnterior()">
+                                <i class="fas fa-chevron-left"></i> Anterior
+                            </button>
+
+                            <span class="mx-2">
+                                <span id="paginaActual">1</span> / <span id="totalPaginas">1</span>
+                            </span>
+
+                            <button id="btnSiguiente" class="btn btn-sm btn-outline-primary" onclick="paginaSiguiente()">
+                                Siguiente <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-custom">
+                    <div class="card-header-custom">
+                        <div class="icon-circle icon-circle-info">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h6 class="mb-0">Preferencias de notificación</h6>
+                    </div>
+                    <p class="info-text mb-3">Te avisaremos en cada etapa importante: CV en revisión, entrevista, rechazo, tentativa.</p>                   
+
+                    <div class="notification-item">
+                        <label class="switch mb-0">
+                            <input type="checkbox" id="NotificarEmail">
+                            <span class="slider"></span>
+                        </label>
+                        <span style="font-size: 14px;">Email</span>
+                    </div>                   
+
+                    <div class="alert-custom mt-3">
+                        <i class="fas fa-info-circle"></i> Asegúrate de que tu email sea válido en "Editar perfil".
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-4">
+            <small>
+                <a href="#" class="text-decoration-none text-muted">Política de privacidad</a> •
+                <a href="#" class="text-decoration-none text-muted">Términos</a>
+            </small>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const JWT_TOKEN = '@JWTToken';
+    </script>
+    <script src="~/JS/Egresados.js"></script>
+</body>
+</html>

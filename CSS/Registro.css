@@ -1,0 +1,296 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('/Utilidades/Utec.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Capa semitransparente sobre la imagen */
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #8b1038;
+        opacity: 0.7;
+        z-index: -1;
+    }
+
+    /* Efecto de desenfoque opcional */
+    body::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: inherit;
+        filter: blur(3px);
+        z-index: -2;
+    }
+
+.modal-content {
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: none;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: #8b1038;
+    color: white;
+    border-bottom: none;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+.modal-body {
+    padding: 30px;
+    text-align: center;
+}
+
+    .modal-body h4 {
+        color: #333;
+        margin-bottom: 25px;
+        font-weight: 500;
+    }
+
+.btn-option {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-yes {
+    background-color: #28a745;
+    color: white;
+    border: 2px solid #28a745;
+}
+
+    .btn-yes:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+        transform: translateY(-2px);
+    }
+
+.btn-no {
+    background-color: #dc3545;
+    color: white;
+    border: 2px solid #dc3545;
+}
+
+    .btn-no:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+        transform: translateY(-2px);
+    }
+
+.utec-logo {
+    width: 150px;
+    height: 150px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+    .utec-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+    }
+
+.welcome-text {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.modal {
+    pointer-events: none;
+}
+
+.modal-dialog {
+    pointer-events: all;
+}
+
+/* Estilos para el formulario de encuesta */
+#encuestaContainer {    
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+    .form-control:focus {
+        border-color: #8b1038;
+        box-shadow: 0 0 0 0.2rem rgba(139, 16, 56, 0.25);
+    }
+
+.btn-primary {
+    background-color: #8b1038;
+    border-color: #8b1038;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+}
+
+    .btn-primary:hover {
+        background-color: #7a0e32;
+        border-color: #7a0e32;
+        transform: translateY(-2px);
+    }
+
+/* Animaciones */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #encuestaContainer {
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+}
+.stepper {
+    position: relative;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8px;
+}
+
+.step {
+    text-align: center;
+    position: relative;
+    padding-top: 28px;
+}
+
+    .step .dot {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--brand-primary);
+        background: #fff;
+        color: var(--brand-primary);
+        font-weight: 700;
+        font-size: .9rem;
+    }
+
+    .step.active .dot, .step.done .dot {
+        background: var(--brand-primary);
+        color: #fff;
+    }
+
+    .step .label {
+        font-weight: 700;
+        color: var(--brand-tertiary);
+        font-size: .9rem;
+    }
+
+    .step .desc {
+        font-size: .8rem;
+        color: #6c757d;
+    }
+
+.progress-rail {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    top: 13px;
+    height: 4px;
+    background: rgba(52,58,64,.15);
+    border-radius: 999px;
+}
+
+.progress-fill {
+    position: absolute;
+    left: 8%;
+    top: 13px;
+    height: 4px;
+    background: var(--brand-primary);
+    border-radius: 999px;
+    width: 0%;
+}
+
+.progress-33 .progress-fill {
+    width: 33%;
+}
+
+.progress-66 .progress-fill {
+    width: 66%;
+}
+
+.progress-100 .progress-fill {
+    width: 100%;
+}

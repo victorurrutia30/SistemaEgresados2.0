@@ -1,0 +1,220 @@
+﻿:root {
+    --primary-color: #7c2d5e;
+    --secondary-color: #f8f9fa;
+    --text-dark: #2c3e50;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.header {
+    background: #8b1038;
+    color:white;
+    padding: 20px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.logo-utec {
+    background: #6b1c3d;
+    color: white;
+    width: 90px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.company-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.company-subtitle {
+    font-size: 12px;
+    color: white;
+}
+
+.btn-matching {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+    .btn-matching:hover {
+        background-color: #621f4a;
+        color: white;
+    }
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.stat-icon {
+    background: var(--primary-color);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 10px 0 5px 0;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+.badge-custom {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge-entrevista {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.badge-revision {
+    background-color: #dc3545;
+    color: white;
+}
+
+.badge-contratado {
+    background-color: #28a745;
+    color: white;
+}
+
+.badge-finalista {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.badge-oferta {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.table-custom {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+    .table-custom thead {
+        background-color: #f8f9fa;
+    }
+
+    .table-custom th {
+        font-size: 13px;
+        font-weight: 600;
+        color: #6c757d;
+        border: none;
+        padding: 15px;
+    }
+
+    .table-custom td {
+        font-size: 14px;
+        padding: 15px;
+        vertical-align: middle;
+        border-top: 1px solid #f0f0f0;
+    }
+
+.progress-bar-custom {
+    height: 8px;
+    border-radius: 10px;
+}
+
+.btn-action {
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    border: 1px solid #dee2e6;
+    background: #8b1038;
+    color: white;
+}
+
+    .btn-action:hover {
+        background: #af194a;
+    }
+
+.notification-item {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+    .notification-item:last-child {
+        border-bottom: none;
+    }
+
+.notification-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.notification-text {
+    font-size: 12px;
+    color: #6c757d;
+    margin: 5px 0;
+}
+
+.notification-date {
+    font-size: 11px;
+    color: #adb5bd;
+}
+
+.config-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.config-label {
+    font-size: 13px;
+    color: var(--text-dark);
+}
+
+.config-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .stat-card {
+        margin-bottom: 15px;
+    }
+
+    .table-responsive {
+        font-size: 12px;
+    }
+}
