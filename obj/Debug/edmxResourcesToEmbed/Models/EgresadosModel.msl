@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SistemaEgresadosUtecModelStoreContainer" CdmEntityContainer="SistemaEgresadosUtecEntities">
+    <EntitySetMapping Name="Carreras">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Carrera">
+        <MappingFragment StoreEntitySet="Carreras">
+          <ScalarProperty Name="id_carrera" ColumnName="id_carrera" />
+          <ScalarProperty Name="nombre_carrera" ColumnName="nombre_carrera" />
+          <ScalarProperty Name="facultad" ColumnName="facultad" />
+          <ScalarProperty Name="duracion_semestres" ColumnName="duracion_semestres" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Certificaciones">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Certificacione">
+        <MappingFragment StoreEntitySet="Certificaciones">
+          <ScalarProperty Name="id_certificacion" ColumnName="id_certificacion" />
+          <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="entidad_emisora" ColumnName="entidad_emisora" />
+          <ScalarProperty Name="fecha_emision" ColumnName="fecha_emision" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CVs_Egresados">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.CVs_Egresados">
+        <MappingFragment StoreEntitySet="CVs_Egresados">
+          <ScalarProperty Name="CartaPresentacion" ColumnName="CartaPresentacion" />
+          <ScalarProperty Name="id_cv" ColumnName="id_cv" />
+          <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+          <ScalarProperty Name="ruta_archivo" ColumnName="ruta_archivo" />
+          <ScalarProperty Name="nombre_archivo" ColumnName="nombre_archivo" />
+          <ScalarProperty Name="extension" ColumnName="extension" />
+          <ScalarProperty Name="tamano_archivo" ColumnName="tamano_archivo" />
+          <ScalarProperty Name="experiencia_anos" ColumnName="experiencia_anos" />
+          <ScalarProperty Name="habilidades_principales" ColumnName="habilidades_principales" />
+          <ScalarProperty Name="idiomas" ColumnName="idiomas" />
+          <ScalarProperty Name="certificaciones" ColumnName="certificaciones" />
+          <ScalarProperty Name="disponible_busqueda" ColumnName="disponible_busqueda" />
+          <ScalarProperty Name="privacidad" ColumnName="privacidad" />
+          <ScalarProperty Name="veces_visualizado" ColumnName="veces_visualizado" />
+          <ScalarProperty Name="fecha_subida" ColumnName="fecha_subida" />
+          <ScalarProperty Name="fecha_actualizacion" ColumnName="fecha_actualizacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Egresado_Idiomas">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Egresado_Idiomas">
+        <MappingFragment StoreEntitySet="Egresado_Idiomas">
+          <ScalarProperty Name="id_eg_idioma" ColumnName="id_eg_idioma" />
+          <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+          <ScalarProperty Name="id_idioma" ColumnName="id_idioma" />
+          <ScalarProperty Name="nivel" ColumnName="nivel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Egresados">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Egresado">
+        <MappingFragment StoreEntitySet="Egresados">
+          <ScalarProperty Name="Trabaja" ColumnName="Trabaja" />
+          <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+          <ScalarProperty Name="numero_documento" ColumnName="numero_documento" />
+          <ScalarProperty Name="nombres" ColumnName="nombres" />
+          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="id_carrera" ColumnName="id_carrera" />
+          <ScalarProperty Name="fecha_graduacion" ColumnName="fecha_graduacion" />
+          <ScalarProperty Name="promedio_academico" ColumnName="promedio_academico" />
+          <ScalarProperty Name="nivel_experiencia" ColumnName="nivel_experiencia" />
+          <ScalarProperty Name="puntuacion_global" ColumnName="puntuacion_global" />
+          <ScalarProperty Name="total_estrellas" ColumnName="total_estrellas" />
+          <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+          <ScalarProperty Name="consentimiento_datos" ColumnName="consentimiento_datos" />
+          <ScalarProperty Name="estado_activo" ColumnName="estado_activo" />
+          <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empresas">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Empresa">
+        <MappingFragment StoreEntitySet="Empresas">
+          <ScalarProperty Name="id_empresa" ColumnName="id_empresa" />
+          <ScalarProperty Name="razon_social" ColumnName="razon_social" />
+          <ScalarProperty Name="nit" ColumnName="nit" />
+          <ScalarProperty Name="email_contacto" ColumnName="email_contacto" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="sector_economico" ColumnName="sector_economico" />
+          <ScalarProperty Name="tamano_empresa" ColumnName="tamano_empresa" />
+          <ScalarProperty Name="vinculada_universidad" ColumnName="vinculada_universidad" />
+          <ScalarProperty Name="puntuacion_empresa" ColumnName="puntuacion_empresa" />
+          <ScalarProperty Name="estado_activo" ColumnName="estado_activo" />
+          <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Encuestas">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Encuesta">
+        <MappingFragment StoreEntitySet="Encuestas">
+          <ScalarProperty Name="id_encuesta" ColumnName="id_encuesta" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="titulo" ColumnName="titulo" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+          <ScalarProperty Name="activa" ColumnName="activa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Idiomas">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Idioma">
+        <MappingFragment StoreEntitySet="Idiomas">
+          <ScalarProperty Name="id_idioma" ColumnName="id_idioma" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logs_Sistema">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Logs_Sistema">
+        <MappingFragment StoreEntitySet="Logs_Sistema">
+          <ScalarProperty Name="id_log" ColumnName="id_log" />
+          <ScalarProperty Name="usuario_tipo" ColumnName="usuario_tipo" />
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="accion" ColumnName="accion" />
+          <ScalarProperty Name="entidad" ColumnName="entidad" />
+          <ScalarProperty Name="id_registro" ColumnName="id_registro" />
+          <ScalarProperty Name="detalles" ColumnName="detalles" />
+          <ScalarProperty Name="ip_address" ColumnName="ip_address" />
+          <ScalarProperty Name="fecha_accion" ColumnName="fecha_accion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notificaciones">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Notificacione">
+        <MappingFragment StoreEntitySet="Notificaciones">
+          <ScalarProperty Name="id_notificacion" ColumnName="id_notificacion" />
+          <ScalarProperty Name="destinatario_tipo" ColumnName="destinatario_tipo" />
+          <ScalarProperty Name="id_destinatario" ColumnName="id_destinatario" />
+          <ScalarProperty Name="titulo" ColumnName="titulo" />
+          <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="leida" ColumnName="leida" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Postulaciones">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Postulacione">
+        <MappingFragment StoreEntitySet="Postulaciones">
+          <ScalarProperty Name="id_postulacion" ColumnName="id_postulacion" />
+          <ScalarProperty Name="id_vacante" ColumnName="id_vacante" />
+          <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+          <ScalarProperty Name="id_cv" ColumnName="id_cv" />
+          <ScalarProperty Name="fecha_postulacion" ColumnName="fecha_postulacion" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="motivo_rechazo" ColumnName="motivo_rechazo" />
+          <ScalarProperty Name="fecha_actualizacion" ColumnName="fecha_actualizacion" />
+          <ScalarProperty Name="fue_contactado" ColumnName="fue_contactado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preferencias_Egresado">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Preferencias_Egresado">
+        <MappingFragment StoreEntitySet="Preferencias_Egresado">
+          <ScalarProperty Name="id_pref" ColumnName="id_pref" />
+          <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+          <ScalarProperty Name="disponible_inmediata" ColumnName="disponible_inmediata" />
+          <ScalarProperty Name="modalidad_preferida" ColumnName="modalidad_preferida" />
+          <ScalarProperty Name="jornada_preferida" ColumnName="jornada_preferida" />
+          <ScalarProperty Name="area_interes" ColumnName="area_interes" />
+          <ScalarProperty Name="ubicacion_preferida" ColumnName="ubicacion_preferida" />
+          <ScalarProperty Name="salario_min" ColumnName="salario_min" />
+          <ScalarProperty Name="salario_max" ColumnName="salario_max" />
+          <ScalarProperty Name="notificar" ColumnName="notificar" />
+          <ScalarProperty Name="fecha_actualizacion" ColumnName="fecha_actualizacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preguntas_Encuesta">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Preguntas_Encuesta">
+        <MappingFragment StoreEntitySet="Preguntas_Encuesta">
+          <ScalarProperty Name="id_pregunta_encuesta" ColumnName="id_pregunta_encuesta" />
+          <ScalarProperty Name="id_encuesta" ColumnName="id_encuesta" />
+          <ScalarProperty Name="texto_pregunta" ColumnName="texto_pregunta" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="aplica_si_trabaja" ColumnName="aplica_si_trabaja" />
+          <ScalarProperty Name="orden" ColumnName="orden" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preguntas_Predefinidas">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Preguntas_Predefinidas">
+        <MappingFragment StoreEntitySet="Preguntas_Predefinidas">
+          <ScalarProperty Name="id_pregunta" ColumnName="id_pregunta" />
+          <ScalarProperty Name="texto_pregunta" ColumnName="texto_pregunta" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="activa" ColumnName="activa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preguntas_Vacante">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Preguntas_Vacante">
+        <MappingFragment StoreEntitySet="Preguntas_Vacante">
+          <ScalarProperty Name="id_pregunta_vacante" ColumnName="id_pregunta_vacante" />
+          <ScalarProperty Name="id_vacante" ColumnName="id_vacante" />
+          <ScalarProperty Name="id_pregunta" ColumnName="id_pregunta" />
+          <ScalarProperty Name="personalizada" ColumnName="personalizada" />
+          <ScalarProperty Name="texto_personalizado" ColumnName="texto_personalizado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Respuestas_Encuesta">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Respuestas_Encuesta">
+        <MappingFragment StoreEntitySet="Respuestas_Encuesta">
+          <ScalarProperty Name="id_respuesta_encuesta" ColumnName="id_respuesta_encuesta" />
+          <ScalarProperty Name="id_pregunta_encuesta" ColumnName="id_pregunta_encuesta" />
+          <ScalarProperty Name="id_egresado" ColumnName="id_egresado" />
+          <ScalarProperty Name="respuesta" ColumnName="respuesta" />
+          <ScalarProperty Name="fecha_respuesta" ColumnName="fecha_respuesta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Respuestas_Postulante">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Respuestas_Postulante">
+        <MappingFragment StoreEntitySet="Respuestas_Postulante">
+          <ScalarProperty Name="id_respuesta" ColumnName="id_respuesta" />
+          <ScalarProperty Name="id_postulacion" ColumnName="id_postulacion" />
+          <ScalarProperty Name="id_pregunta_vacante" ColumnName="id_pregunta_vacante" />
+          <ScalarProperty Name="respuesta" ColumnName="respuesta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="id_usuario_global" ColumnName="id_usuario_global" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+          <ScalarProperty Name="tipo_usuario" ColumnName="tipo_usuario" />
+          <ScalarProperty Name="referencia_id" ColumnName="referencia_id" />
+          <ScalarProperty Name="nombre_completo" ColumnName="nombre_completo" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios_Empresa">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Usuarios_Empresa">
+        <MappingFragment StoreEntitySet="Usuarios_Empresa">
+          <ScalarProperty Name="id_usuario_empresa" ColumnName="id_usuario_empresa" />
+          <ScalarProperty Name="id_empresa" ColumnName="id_empresa" />
+          <ScalarProperty Name="nombre_usuario" ColumnName="nombre_usuario" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="nombre_completo" ColumnName="nombre_completo" />
+          <ScalarProperty Name="cargo" ColumnName="cargo" />
+          <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+          <ScalarProperty Name="rol" ColumnName="rol" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vacantes">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Vacante">
+        <MappingFragment StoreEntitySet="Vacantes">
+          <ScalarProperty Name="id_vacante" ColumnName="id_vacante" />
+          <ScalarProperty Name="id_empresa" ColumnName="id_empresa" />
+          <ScalarProperty Name="titulo" ColumnName="titulo" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="requisitos" ColumnName="requisitos" />
+          <ScalarProperty Name="salario_min" ColumnName="salario_min" />
+          <ScalarProperty Name="salario_max" ColumnName="salario_max" />
+          <ScalarProperty Name="salario_confidencial" ColumnName="salario_confidencial" />
+          <ScalarProperty Name="modalidad" ColumnName="modalidad" />
+          <ScalarProperty Name="tipo_contrato" ColumnName="tipo_contrato" />
+          <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
+          <ScalarProperty Name="area" ColumnName="area" />
+          <ScalarProperty Name="fecha_publicacion" ColumnName="fecha_publicacion" />
+          <ScalarProperty Name="fecha_cierre" ColumnName="fecha_cierre" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="creado_por" ColumnName="creado_por" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_PostularVacante" FunctionName="SistemaEgresadosUtecModel.Store.sp_PostularVacante" />
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visualizaciones_CV">
+      <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Visualizaciones_CV">
+        <MappingFragment StoreEntitySet="Visualizaciones_CV">
+          <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+          <ScalarProperty Name="navegador" ColumnName="navegador" />
+          <ScalarProperty Name="ip_address" ColumnName="ip_address" />
+          <ScalarProperty Name="fecha_visualizacion" ColumnName="fecha_visualizacion" />
+          <ScalarProperty Name="id_usuario_empresa" ColumnName="id_usuario_empresa" />
+          <ScalarProperty Name="id_empresa" ColumnName="id_empresa" />
+          <ScalarProperty Name="id_cv" ColumnName="id_cv" />
+          <ScalarProperty Name="id_visualizacion" ColumnName="id_visualizacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SistemaEgresadosUtecModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SistemaEgresadosUtecModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SistemaEgresadosUtecModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SistemaEgresadosUtecModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_RegistrarVisualizacionCV" FunctionName="SistemaEgresadosUtecModel.Store.SP_RegistrarVisualizacionCV" />
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SistemaEgresadosUtecModel.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>
