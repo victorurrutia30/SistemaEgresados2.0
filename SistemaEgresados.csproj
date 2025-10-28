@@ -320,6 +320,7 @@
     <Content Include="CSS\Bienveido.css" />
     <Content Include="CSS\Egresados.css" />
     <Content Include="CSS\Empresas.css" />
+    <Content Include="CSS\Publicaciones.css" />
     <Content Include="CSS\Registro.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -328,7 +329,9 @@
     <Content Include="JS\Autenticar.js" />
     <Content Include="JS\Egresados.js" />
     <Content Include="JS\Empresas.js" />
+    <Content Include="JS\EmpresasPerfil.js" />
     <Content Include="JS\Layout.js" />
+    <Content Include="JS\Publicaciones.js" />
     <Content Include="JS\Registrar.js" />
     <Content Include="Models\EgresadosModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -391,6 +394,8 @@
     <Content Include="Views\Egresado\Index.cshtml" />
     <Content Include="Views\AccesoDenegado\Index.cshtml" />
     <Content Include="Views\Empresas\Index.cshtml" />
+    <Content Include="Views\Empresas\Perfil.cshtml" />
+    <Content Include="Views\Empresas\Publicaciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

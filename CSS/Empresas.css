@@ -218,3 +218,47 @@ body {
         font-size: 12px;
     }
 }
+
+
+/*Agregando estilos param a la sección de logo de la empresa
+*/
+.logo-preview {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border: 3px dashed #dee2e6;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #f8f9fa;
+}
+
+    .logo-preview img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+.info-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .info-item small {
+        display: block;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .info-item p {
+        font-size: 14px;
+        font-weight: 500;
+        color: #2c3e50;
+    }
