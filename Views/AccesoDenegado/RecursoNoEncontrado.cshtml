@@ -1,0 +1,87 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="~/Utilidades/logoU.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTEC - Recurso No Encontrado</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="~/CSS/RecursoNoEncontrado.css" rel="stylesheet" />
+</head>
+<body>
+    <section class="md_1">
+        <img src="~/Utilidades/logo-utec.png" alt="UTEC" class="logo">
+    </section>
+
+    <div class="error-container">
+        <div class="error-content">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">Recurso No Encontrado</h2>
+            <div class="divider"></div>
+            <p class="error-description">
+                Lo sentimos, la página que estás buscando no existe o ha sido movida.
+                Verifica la URL o regresa al inicio para continuar navegando.
+            </p>
+            @if (ViewBag.UrlSolicitada != null)
+            {
+                <div class="url-info">
+                    <p><strong>URL solicitada:</strong></p>
+                    <code class="url-code">@ViewBag.UrlSolicitada</code>
+                </div>
+            }
+            <div class="error-buttons">
+                <a class="btn btn-primary" href="@Url.Action("Index","Home")">
+                    <i class="fas fa-home"></i>
+                    Volver al Inicio
+                </a>
+                <a class="btn btn-secondary" href="javascript:history.back()">
+                    <i class="fas fa-arrow-left"></i>
+                    Página Anterior
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="home-footer">
+        <div class="footer-content">
+            <div class="footer-title">SISTEMA EGRESADOS UTEC</div>
+            <div class="footer-info">
+                <p>Universidad Tecnológica de El Salvador</p>
+                <p>Calle Arce 17 avenida Norte, edificio José Martí 2da. planta,</p>
+                <p>San Salvador, El Salvador, CA.</p>
+                <p>Tel. 2275-8888 ext. 8816, 8723, 8702</p>
+            </div>
+
+            <div class="footer-social">
+                <a class="social-icon" href="https://www.facebook.com/universidadtecnologica/" aria-label="Facebook" target="_blank">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                        <path d="M22 12.07C22 6.48 17.52 2 11.93 2 6.35 2 1.87 6.48 1.87 12.07c0 4.97 3.63 9.1 8.38 9.94v-7.03H7.9v-2.9h2.35V9.41c0-2.33 1.38-3.62 3.49-3.62.99 0 2.02.18 2.02.18v2.22h-1.14c-1.12 0-1.47.7-1.47 1.42v1.7h2.5l-.4 2.9h-2.1V22c4.75-.84 8.38-4.97 8.38-9.94z" />
+                    </svg>
+                </a>
+                <a class="social-icon" href="https://x.com/UTECedusv" aria-label="X" target="_blank">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+                <a class="social-icon" href="https://www.instagram.com/utecelsalvador/" aria-label="Instagram" target="_blank">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.2 2.6.5.7.3 1.2.7 1.7 1.2.5.5.9 1 1.2 1.7.3.7.4 1.4.5 2.6.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.9-.5 2.6a4.7 4.7 0 0 1-2.9 2.9c-.7.3-1.4.4-2.6.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.2-2.6-.5a4.7 4.7 0 0 1-2.9-2.9c-.3-.7-.4-1.4-.5-2.6C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.9.5-2.6.3-.7.7-1.2 1.2-1.7.5-.5 1-.9 1.7-1.2.7-.3 1.4-.4 2.6-.5C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.8.1-1 0-1.6.2-2 .4-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.2.4-.3 1-.4 2 0 1.3-.1 1.7-.1 4.8s0 3.5.1 4.8c0 1 .2 1.6.4 2 .2.5.4.8.7 1.1.3.3.6.5 1.1.7.4.2 1 .3 2 .4 1.3 0 1.7.1 4.8.1s3.5 0 4.8-.1c1 0 1.6-.2 2-.4.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.2-.4.3-1 .4-2 0-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c0-1-.2-1.6-.4-2a3 3 0 0 0-1.8-1.8c-.4-.2-1-.3-2-.4-1.3 0-1.7-.1-4.8-.1Zm0 3.1a6.9 6.9 0 1 1 0 13.8 6.9 6.9 0 0 1 0-13.8Zm0 1.8a5.1 5.1 0 1 0 0 10.2 5.1 5.1 0 0 0 0-10.2Zm5-2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -48,6 +48,9 @@
         <AssociationConnector Association="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_CV" />
         <AssociationConnector Association="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_Empresa" />
         <AssociationConnector Association="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_UsuarioEmpresa" />
+        <EntityTypeShape EntityType="SistemaEgresadosUtecModel.Puntuaciones_Empresas" Width="1.5" PointX="8.25" PointY="16.875" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Puntuacio__id_Eg__4F47C5E3" />
+        <AssociationConnector Association="SistemaEgresadosUtecModel.FK__Puntuacio__id_em__503BEA1C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

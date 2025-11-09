@@ -10,10 +10,11 @@
     <link rel="icon" href="~/Utilidades/logoU.png" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UTEC Egresados - Perfil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">    
-    <link href="~/CSS/Egresados.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="~/CSS/Egresados.css" rel="stylesheet" />
 </head>
 <body>
     <div class="modal fade" id="VerMiCV" aria-hidden="true" aria-labelledby="VerMiCVToggleLabel" tabindex="-1">
@@ -39,24 +40,253 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="VerMiInformacion" aria-hidden="true" aria-labelledby="VerMiInformacionLabel" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="VerMiInformacionLabel">Mi Información General</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyContent">
+                    <div class="text-center" id="loadingSpinner">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Por favor espere...</span>
+                        </div>
+                        <p class="mt-2">Cargando Información...</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="EditarInformacionPersonal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Información Personal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formInformacionPersonal">
+                        <input type="hidden" id="edit_id_egresado" name="id_egresado">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Número de Documento</label>
+                                <input type="text" class="form-control" id="edit_numero_documento" name="numero_documento" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nombres</label>
+                                <input type="text" class="form-control" id="edit_nombres" name="nombres" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Apellidos</label>
+                                <input type="text" class="form-control" id="edit_apellidos" name="apellidos" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="edit_telefono" name="telefono">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Fecha de Graduación</label>
+                                <input type="date" class="form-control" id="edit_fecha_graduacion" name="fecha_graduacion">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Promedio Académico</label>
+                                <input type="number" step="0.01" class="form-control" id="edit_promedio_academico" name="promedio_academico">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarInformacionPersonal()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="EditarIdiomas" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Idiomas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-success btn-sm mb-3" onclick="agregarIdiomaFila()">
+                        <i class="fas fa-plus"></i> Agregar Idioma
+                    </button>
+                    <div class="table-responsive">
+                        <table class="table" id="tablaIdiomas">
+                            <thead>
+                                <tr>
+                                    <th>Idioma</th>
+                                    <th>Nivel</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="idiomasBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarIdiomas()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="EditarCertificaciones" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Certificaciones</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-success btn-sm mb-3" onclick="agregarCertificacionFila()">
+                        <i class="fas fa-plus"></i> Agregar Certificación
+                    </button>
+                    <div class="table-responsive">
+                        <table class="table" id="tablaCertificaciones">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Entidad Emisora</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="certificacionesBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarCertificaciones()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="EditarPreferencias" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Preferencias Laborales</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formPreferencias">
+                        <input type="hidden" id="pref_id_pref" name="id_pref">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Modalidad Preferida</label>
+                                <select class="form-select" id="pref_modalidad_preferida" name="modalidad_preferida">
+                                    <option value="">Seleccione...</option>
+                                    <option value="Presencial">Presencial</option>
+                                    <option value="Remoto">Remoto</option>
+                                    <option value="Híbrido">Híbrido</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Jornada Preferida</label>
+                                <select class="form-select" id="pref_jornada_preferida" name="jornada_preferida">
+                                    <option value="">Seleccione...</option>
+                                    <option value="Tiempo Completo">Tiempo Completo</option>
+                                    <option value="Medio Tiempo">Medio Tiempo</option>
+                                    <option value="Por Proyecto">Por Proyecto</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Área de Interés</label>
+                                <input type="text" class="form-control" id="pref_area_interes" name="area_interes">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Ubicación Preferida</label>
+                                <input type="text" class="form-control" id="pref_ubicacion_preferida" name="ubicacion_preferida">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Salario Mínimo ($)</label>
+                                <input type="number" step="0.01" class="form-control" id="pref_salario_min" name="salario_min">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Salario Máximo ($)</label>
+                                <input type="number" step="0.01" class="form-control" id="pref_salario_max" name="salario_max">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarPreferencias()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="EditarHabilidades" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Habilidades Principales</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formHabilidades">
+                        <input type="hidden" id="habilidades_id_cv" name="id_cv">
+                        <div class="mb-3">
+                            <label class="form-label">Habilidades Principales</label>
+                            <textarea class="form-control" id="habilidades_principales" name="habilidades_principales"
+                                      rows="8" placeholder="Ingrese sus habilidades principales separadas por comas o en líneas diferentes..."></textarea>
+                            <small class="text-muted">Ejemplo: JavaScript, React, Node.js, SQL, Trabajo en equipo, Liderazgo</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarHabilidades()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="header-section">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-auto">
-                    <img class="logo-utec" src="~/Utilidades/logoU.png" />
-                </div>
-                <div class="col">
-                    <h5 class="mb-1">@Session["UsuarioNombre"]</h5>
-                    <p id="carreraText" style="font-size: 14px;"></p><small style="font-size: 14px;" class="d-block mb-2" id="PromedioGlobal"></small>
-                    <div class="d-flex flex-wrap gap-2">
-                        <span class="badge-custom badge-empleado">
-                            <i class="fas fa-briefcase"></i> Buscando empleo
-                        </span>
-                        <span class="badge-custom badge-registrado">
-                            <i class="fas fa-check-circle"></i> Empresas registradas
-                        </span>
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <img class="logo-utec me-3" src="~/Utilidades/logoU.png" />
+                    <div>
+                        <h5 class="mb-1">@Session["UsuarioNombre"]</h5>
+                        <p id="carreraText" style="font-size: 14px;"></p>
+                        <small style="font-size: 14px;" class="d-block mb-2" id="PromedioGlobal"></small>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge-custom badge-empleado">
+                                <i class="fas fa-briefcase"></i> Buscando empleo
+                            </span>
+                            <span class="badge-custom badge-registrado">
+                                <i class="fas fa-check-circle"></i> Empresas registradas
+                            </span>
+                        </div>
                     </div>
-                </div>                
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-vino btn-sm d-flex align-items-center gap-2 shadow-sm dropdown-toggle"
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-bars"></i> Opciones
+                    </button>
+                    <ul class="dropdown-menu animate__animated animate__fadeInDown dropdown-menu-end shadow border-0 rounded-3 animate-dropdown">
+                        <li><a class="dropdown-item" href="#" id="MisPostulaciones">Mis Postulaciones</a></li>
+                        <li><a class="dropdown-item" href="#">Opción 2</a></li>
+                        <li><a class="dropdown-item" href="#">Opción 3</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="@Url.Action("CerrarSesion","Egresado")" id="CerrarSesion"><i class="bi bi-box-arrow-left"></i> Cerrar Sesion</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -72,8 +302,8 @@
                         </div>
                         <h6 class="mb-0">Mi CV (PDF)</h6>
                         <div class="col-auto">
-                            <button class="btn btn-primary btn-sm">
-                                <i class="fas fa-edit" id="editarPerfil"></i> Editar perfil
+                            <button class="btn btn-primary btn-sm" id="editarPerfil">
+                                <i class="fas fa-edit"></i> Editar perfil
                             </button>
                         </div>
                     </div>
@@ -82,7 +312,7 @@
                         <i class="fas fa-file-pdf file-icon"></i>
                         <div class="flex-grow-1">
                             <div class="fw-bold" id="NombreCV" style="font-size: 14px;"></div>
-                            <small id="CVPeso">181.2 KB</small> • <small id="CVFecha"> Subido el 01/06/2025, 2:45 p.</small>
+                            <small id="CVPeso">181.2 KB</small> • <small id="CVFecha"> </small>
                         </div>
                     </div>
 
@@ -93,43 +323,46 @@
                         <button class="btn btn-sm btn-outline-secondary" id="DescargarCV">
                             <i class="fas fa-download"></i> Descargar
                         </button>
-                        <button class="btn btn-sm btn-maroon">
-                            <i class="fas fa-sync"></i> Reemplazar
-                        </button>
                     </div>
 
                     <p class="info-text mb-3">
+                        Quieres actualizar tu CV?
+                        Arrastra tu CV (PDF) para reemplazar tu CV actual. <br />
                         <i class="fas fa-info-circle"></i> Solo se admite PDF (máx. 5 MB).
                     </p>
 
-                    <button class="btn btn-outline-maroon btn-sm w-100 mb-2">
-                        <i class="fas fa-file-archive"></i> Arrastrar tu CV (PDF) aquí
-                    </button>
-                    <small class="text-muted d-block text-center">Haz clic aquí para seleccionar • Máx. 5 MB</small>
+                    <label id="dropZone" class="drop-zone btn btn-maroon btn-sm w-100 mb-2 d-flex align-items-center justify-content-center" style="height:72px; cursor:pointer;">
+                        <i class="fas fa-file-archive me-2"></i>
+                        <span id="dropZoneText">Arrastra tu CV (PDF) aquí o haz clic</span>
+                    </label>
+                    <input type="file" id="InputCV" accept=".pdf,application/pdf" style="display:none" />
+
+
+                    <div id="cv-container" class="mt-3"></div>
 
                     <hr class="my-4">
-                    
+
                     <h6 class="mb-3">Resumen (Esto lo veran las empresas)</h6>
                     <p class="info-text mb-3">Escribe tu carta de presentacion:</p>
                     <div class="d-flex gap-2 mb-3">
                         <button class="btn btn-sm btn-info" id="EditCartaPresentacion">
                             <label id="textBtnCarta"></label>
-                        </button>                        
+                        </button>
                         <button class="btn btn-sm btn-success" hidden id="TerminarEdicion">
                             Guardar Cambios
-                        </button>                        
+                        </button>
                         <button class="btn btn-sm btn-danger" hidden id="cancelarEdicion">
                             Cancelar
-                        </button>                        
+                        </button>
                     </div>
 
                     <div class="mb-3" id="CartaEgresadoContainer">
-                        <textarea rows="15" cols="15" disabled class="form-control"  maxlength="250" id="CartaPresentacionEgresado" placeholder="Tu carta aparecera aqui!"></textarea>
-                    </div>                   
+                        <textarea rows="15" cols="15" disabled class="form-control" maxlength="250" id="CartaPresentacionEgresado" placeholder="Tu carta aparecera aqui!"></textarea>
+                    </div>
 
                     <div class="mb-3">
                         <div class="section-title" id="titleHabilidades"></div>
-                        
+
                     </div>
 
                     <div class="mb-3" id="">
@@ -167,7 +400,7 @@
                             <option value="Privada">Privado</option>
                             <option value="Publica">Pública</option>
                         </select>
-                    </div>                    
+                    </div>
                 </div>
 
                 <div class="card-custom">
@@ -218,7 +451,7 @@
                         </div>
                         <h6 class="mb-0">Preferencias de notificación</h6>
                     </div>
-                    <p class="info-text mb-3">Te avisaremos en cada etapa importante: CV en revisión, entrevista, rechazo, tentativa.</p>                   
+                    <p class="info-text mb-3">Te avisaremos en cada etapa importante: CV en revisión, entrevista, rechazo, tentativa.</p>
 
                     <div class="notification-item">
                         <label class="switch mb-0">
@@ -226,7 +459,26 @@
                             <span class="slider"></span>
                         </label>
                         <span style="font-size: 14px;">Email</span>
-                    </div>                   
+                    </div>
+
+                    <div class="alert-custom mt-3">
+                        <i class="fas fa-info-circle"></i> Asegúrate de que tu email sea válido en "Editar perfil".
+                    </div>
+                </div>
+                <div class="card-custom">
+                    <div class="card-header-custom">
+                        <div class="icon-circle icon-circle-info">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <h6 class="mb-0">Ver ofertas</h6>
+                    </div>
+                    <p class="info-text mb-3">Te avisaremos en cada etapa importante: CV en revisión, entrevista, rechazo, tentativa.</p>
+
+                    <div class="notification-item">
+                        <button class="btn btn-maroon" id="abrirModalOfertas">
+                            <i class="fa-solid fa-briefcase"></i> Ver Ofertas Laborales
+                        </button>
+                    </div>
 
                     <div class="alert-custom mt-3">
                         <i class="fas fa-info-circle"></i> Asegúrate de que tu email sea válido en "Editar perfil".
@@ -235,7 +487,6 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <div class="text-center mt-4">
             <small>
                 <a href="#" class="text-decoration-none text-muted">Política de privacidad</a> •

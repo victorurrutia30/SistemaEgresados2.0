@@ -88,6 +88,10 @@ namespace SistemaEgresados.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult RegistrarEgresado(Egresado egresado)
         {
+            if (!egresado.email.Contains("@mail.utec.edu.sv"))
+            {
+                return Json(new { success = false, message = "El correo tiene que ser de nuestra institucion" }, JsonRequestBehavior.AllowGet);
+            }
             var resultado = _servicioRegistro.RegistrarEgresado(egresado);
             if (!resultado.Exito)
             {
@@ -106,45 +110,90 @@ namespace SistemaEgresados.Controllers
             return Json(new { success = true, message = resultado.Mensaje }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult ValidarCodigo(string codigo,string email)
+        public JsonResult ValidarCodigo(string codigo, string email)
         {
-            var resultado = _servicioRegistro.ValidarCodigo(email, codigo);
-            if (!resultado.Exito)
+            try
             {
-                return Json(new { success = false, message = resultado.Mensaje }, JsonRequestBehavior.AllowGet);
+                var resultado = _servicioRegistro.ValidarCodigo(email, codigo);
+                if (!resultado.Exito)
+                {
+                    return Json(new { success = false, message = resultado.Mensaje }, JsonRequestBehavior.AllowGet);
+                }
+
+                var usuario = _servicioAutenticar.ObtenerUsuario(email).Datos as Usuario;
+
+                if (usuario == null)
+                {
+                    return Json(new { success = false, message = "No se pudo obtener la información del usuario" }, JsonRequestBehavior.AllowGet);
+                }
+
+                Session["Usuario"] = usuario;
+                Session["UsuarioEmail"] = email;
+                Session["UsuarioId"] = usuario.referencia_id;
+                Session["UsuarioNombre"] = _servicioAutenticar.NombreyApellido(email).Datos;
+                Session.Timeout = 30;
+
+                bool recordarSesion = false; 
+                int duracionMinutos = recordarSesion ? 10080 : 1440;
+
+                string usuarioJson = JsonConvert.SerializeObject(usuario);
+
+                var ticket = new FormsAuthenticationTicket(
+                    1,
+                    email,
+                    DateTime.Now,
+                    DateTime.Now.AddMinutes(duracionMinutos),
+                    recordarSesion,
+                    usuarioJson,  
+                    FormsAuthentication.FormsCookiePath
+                );
+
+                string ticketEncriptado = FormsAuthentication.Encrypt(ticket);
+
+                var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, ticketEncriptado)
+                {
+                    HttpOnly = true,
+                    Secure = FormsAuthentication.RequireSSL,
+                    Path = FormsAuthentication.FormsCookiePath
+                };
+
+                if (recordarSesion)
+                {
+                    cookie.Expires = DateTime.Now.AddMinutes(duracionMinutos);
+                }
+
+                Response.Cookies.Add(cookie);
+
+                var tokenJWT = _servicioToken.GenerarToken(email, duracionMinutos);
+                Session["TokenJWT"] = tokenJWT;
+                HttpCookie tokenCookie = new HttpCookie("TokenJWT", tokenJWT);
+                tokenCookie.HttpOnly = true;
+                tokenCookie.Secure = true;
+                tokenCookie.Secure = FormsAuthentication.RequireSSL;
+                tokenCookie.SameSite = SameSiteMode.Strict;
+                tokenCookie.Path = "/";
+
+                if (recordarSesion)
+                {
+                    tokenCookie.Expires = DateTime.Now.AddMinutes(duracionMinutos);
+                }
+
+                Response.Cookies.Add(tokenCookie);
+
+                return Json(new
+                {
+                    success = true,
+                    message = resultado.Mensaje
+                }, JsonRequestBehavior.AllowGet);
             }
-            var usuario = _servicioAutenticar.ObtenerUsuario(email).Datos as Usuario;
-            Session["Usuario"] = usuario;
-            Session["UsuarioEmail"] = email;
-            Session["UsuarioId"] = usuario.referencia_id;
-            bool recordarSesion = false;
-            int duracionMinutos = recordarSesion ? 10080 : 1440;
-            var ticket = new FormsAuthenticationTicket(
-                1,
-                email,
-                DateTime.Now,
-                DateTime.Now.AddMinutes(duracionMinutos),
-                recordarSesion,
-                usuario.tipo_usuario,
-                FormsAuthentication.FormsCookiePath
-            );
-
-            string ticketEncriptado = FormsAuthentication.Encrypt(ticket);
-
-            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, ticketEncriptado)
+            catch (Exception ex)
             {
-                HttpOnly = true,
-                Secure = FormsAuthentication.RequireSSL,
-                Path = FormsAuthentication.FormsCookiePath
-            };
-
-            if (recordarSesion)
-                cookie.Expires = DateTime.Now.AddMinutes(duracionMinutos);
-
-            Response.Cookies.Add(cookie);
-            var tokenJWT = _servicioToken.GenerarToken(email, duracionMinutos);
-            Session["TokenJWT"] = tokenJWT;
-            return Json(new { success = true, message = resultado.Mensaje }, JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    success = false,
+                    message = "Error al validar código: " + ex.Message
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
         [HttpPost]        
         public JsonResult ReenviarCodigoVerificacion(string email)

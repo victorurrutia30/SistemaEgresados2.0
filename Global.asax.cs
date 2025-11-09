@@ -13,6 +13,7 @@ namespace SistemaEgresados
     {
         private static Timer _cleanupTimer;
         private readonly Servicios.Email _serviceEmail = new Servicios.Email();
+        private readonly Servicios.ProcesosAutomatizados _Procesos = new Servicios.ProcesosAutomatizados();
         private static readonly object _lock = new object();
         private readonly ServicioWebSocket.WebSocketService _webSocketService = ServicioWebSocket.WebSocketService.Instance;
         protected void Application_Start()
@@ -51,6 +52,8 @@ namespace SistemaEgresados
                     _serviceEmail.LimpiarTokensExpirados();
 
                     _serviceEmail.LimpiarCodigosExpirados();
+
+                    _Procesos.CerrarVacantes();
 
                     System.Diagnostics.Debug.WriteLine(
                         $"[{DateTime.Now}] Limpieza completada exitosamente."

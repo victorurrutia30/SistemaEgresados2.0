@@ -1,0 +1,43 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.vsconfig
+
+# Build
+bin/
+obj/
+*.dll
+*.exe
+
+# Rider / JetBrains
+
+
+cat > .gitignore <<'EOF'
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.vsconfig
+
+# Build
+bin/
+obj/
+*.dll
+*.exe
+
+# Rider / JetBrains
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# DB / tooling
+*.db
+*.log
+
+# Others
+node_modules/
+.DS_Store

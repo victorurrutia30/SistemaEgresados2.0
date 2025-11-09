@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <link rel="icon" href="~/Utilidades/logoU.png" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechCorp - Panel de Empresa</title>
+    <title>UTEC Empresas - Perfil</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,11 +18,11 @@
 <body>
     <div class="header">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center">                
+            <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-start gap-3">
                     <img class="logo-utec" src="~/Utilidades/logoU.png" />
                     <div class="mt-3">
-                        <h1 class="company-title mb-1"><label id="NombreEmpresa"></label> • Panel de Empresa</h1>
+                        <h5 class="mb-1">@Session["UsuarioNombre"]</h5>
                         <p class="company-subtitle mb-0"></p>
                     </div>
                 </div>
@@ -32,11 +32,11 @@
                             <i class="bi bi-list"></i> Opciones
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Opción 1</a></li>
-                            <li><a class="dropdown-item" href="#">Opción 2</a></li>
-                            <li><a class="dropdown-item" href="#">Opción 3</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="abrirModalBuscarEgresados(); return false;"><i class="bi bi-search"></i> Buscar Egresados</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalPublicarVacante"><i class="bi bi-briefcase-fill"></i> Publicar Vacante</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="abrirModalPerfil(); return false;"><i class="bi bi-building"></i> Mi Perfil</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="@Url.Action("Index","Bienvenido")"><i class="bi bi-box-arrow-left"></i> Cerrar Sesion</a></li>
+                            <li><a class="dropdown-item text-danger" href="@Url.Action("Index", "Bienvenido")"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a></li>
                         </ul>
                     </div>
                 </div>
@@ -45,93 +45,54 @@
     </div>
 
     <div class="container mt-4">
-        <div class="row">
-            <div class="col-6 col-md-3">
+        <div class="row justify-content-center mb-4">
+            <div class="col-6 col-md-4 col-lg-3">
                 <div class="stat-card text-center">
                     <div class="stat-icon mx-auto">
-                        <i class="fas fa-users"></i>
+                        <i class="fas fa-briefcase"></i>
                     </div>
-                    <div class="stat-value">7</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">Vacantes activas</div>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-md-4 col-lg-3">
                 <div class="stat-card text-center">
                     <div class="stat-icon mx-auto">
                         <i class="fas fa-user-check"></i>
                     </div>
-                    <div class="stat-value">42</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">Total candidatos</div>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-md-4 col-lg-3">
                 <div class="stat-card text-center">
                     <div class="stat-icon mx-auto">
                         <i class="fas fa-comments"></i>
                     </div>
-                    <div class="stat-value">9</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">Entrevistas</div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-card text-center">
-                    <div class="stat-icon mx-auto">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="stat-value">8.3</div>
-                    <div class="stat-label">Promedio evaluación</div>
                 </div>
             </div>
         </div>
 
-        <div class="row mt-3">
-            <div class="col-lg-6 mb-4">
+        <div class="row mb-4">
+            <div class="col-12">
                 <div class="stat-card">
-                    <h3 class="section-title">Pipeline por estado</h3>
-                    <p class="text-muted small mb-3">Distribución de procesos por Revision, Entrevista, Oferta, Contratado</p>
-                    <canvas id="pipelineChart" height="200"></canvas>
-                </div>
-            </div>
-
-            <div class="col-lg-6 mb-4">
-                <div class="stat-card">
-                    <h3 class="section-title">Top sectores de candidatos</h3>
-                    <p class="text-muted small mb-3">Sectores relacionados con: Software y Experiencia laboral</p>
-                    <div class="mt-3">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="small">Tecnología</span>
-                            <span class="small text-muted">65%</span>
-                        </div>
-                        <div class="progress progress-bar-custom mb-3">
-                            <div class="progress-bar" style="width: 65%; background-color: var(--primary-color);"></div>
-                        </div>
-
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="small">Ingeniería</span>
-                            <span class="small text-muted">45%</span>
-                        </div>
-                        <div class="progress progress-bar-custom mb-3">
-                            <div class="progress-bar" style="width: 45%; background-color: var(--primary-color);"></div>
-                        </div>
-
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="small">Consultoría</span>
-                            <span class="small text-muted">30%</span>
-                        </div>
-                        <div class="progress progress-bar-custom">
-                            <div class="progress-bar" style="width: 30%; background-color: var(--primary-color);"></div>
-                        </div>
+                    <h3 class="section-title">Pipeline por Estado</h3>
+                    <div style="position: relative; height: 300px;">
+                        <canvas id="pipelineChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-lg-8 mb-4">
-                <div class="stat-card">
-                    <h3 class="section-title">Vacantes recientes</h3>
+
+            <div class="container">
+                <div class="stat-card1">
+                    <h3 class="section-title1">Vacantes recientes</h3>
                     <div class="table-responsive">
-                        <table class="table table-custom mb-0">
+                        <table class="table table-custom1 mb-0" id="tablaVacantes">
                             <thead>
                                 <tr>
                                     <th>Posición</th>
@@ -141,71 +102,39 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><strong>DevOps Engineer</strong></td>
-                                    <td><span class="badge-custom badge-entrevista">Entrevista</span></td>
-                                    <td>05 Set, 2025</td>
-                                    <td><button class="btn-action">Ver Cambiar</button></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Desarrollador .NET</strong></td>
-                                    <td><span class="badge-custom badge-revision">En Revisión</span></td>
-                                    <td>31 ago 2025</td>
-                                    <td><button class="btn-action">Ver Cambiar</button></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>QA Engineer</strong></td>
-                                    <td><span class="badge-custom badge-oferta">Oferta</span></td>
-                                    <td>27 ago 2025</td>
-                                    <td><button class="btn-action">Ver Cambiar</button></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Data Engineer</strong></td>
-                                    <td><span class="badge-custom badge-contratado">Contratado</span></td>
-                                    <td>23 ago 2025</td>
-                                    <td><button class="btn-action">Ver Cambiar</button></td>
-                                </tr>
                             </tbody>
                         </table>
+                        <div id="vacantesContainer"></div>
                     </div>
                 </div>
+            </div>
 
-                <div class="stat-card mt-4">
-                    <h3 class="section-title">Top candidatos en proceso</h3>
+        </div>
+
+    </div>
+
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="stat-card">
+                    <h3 class="section-title">Top Candidatos en Proceso</h3>
                     <div class="table-responsive">
-                        <table class="table table-custom mb-0">
+                        <table class="table table-custom mb-0" id="tabla-candidatos">
                             <thead>
                                 <tr>
                                     <th>Candidato</th>
                                     <th>Carrera</th>
-                                    <th>Match</th>
-                                    <th>Estado</th>
+                                    <th>Vacante</th>
+                                    <th width="25%">Estado</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="candidatos-container">
                                 <tr>
-                                    <td><strong>Ana Martínez</strong></td>
-                                    <td>Ing. Informática</td>
-                                    <td><span class="badge bg-success">90%</span></td>
-                                    <td><span class="badge-custom badge-entrevista">Entrevista</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Luis Pérez</strong></td>
-                                    <td>Ing. Sistemas</td>
-                                    <td><span class="badge bg-success">86%</span></td>
-                                    <td><span class="badge-custom badge-revision">En Revisión</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Karla López</strong></td>
-                                    <td>Ing. Industrial</td>
-                                    <td><span class="badge bg-warning">81%</span></td>
-                                    <td><span class="badge-custom badge-finalista">Ideals</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Jorge Castillo</strong></td>
-                                    <td>Ing. Informática</td>
-                                    <td><span class="badge bg-warning">79%</span></td>
-                                    <td><span class="badge-custom badge-contratado">Contratado</span></td>
+                                    <td colspan="4" class="text-center py-3">
+                                        <div class="spinner-border spinner-border-sm text-muted" role="status"></div>
+                                        <p class="text-muted small mt-2">Cargando candidatos...</p>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -213,65 +142,778 @@
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="stat-card mb-4">
-                    <h3 class="section-title">Configuración de Matching</h3>
-                    <p class="text-muted small mb-3">Filtros actualizados (scores 100%)</p>
-                    <div>
-                        <div class="config-item">
-                            <span class="config-label">Experiencia</span>
-                            <div class="d-flex align-items-center">
-                                <div class="progress" style="width: 60px; height: 6px; margin-right: 10px;">
-                                    <div class="progress-bar" style="width: 35%; background-color: #007bff;"></div>
-                                </div>
-                                <span class="config-value">35% Habilidades</span>
-                            </div>
-                        </div>
-                        <div class="config-item">
-                            <span class="config-label">Calificaciones</span>
-                            <div class="d-flex align-items-center">
-                                <div class="progress" style="width: 60px; height: 6px; margin-right: 10px;">
-                                    <div class="progress-bar" style="width: 28%; background-color: #007bff;"></div>
-                                </div>
-                                <span class="config-value">28% Carrera</span>
-                            </div>
-                        </div>
-                        <div class="config-item">
-                            <span class="config-label">Idiomas</span>
-                            <div class="d-flex align-items-center">
-                                <div class="progress" style="width: 60px; height: 6px; margin-right: 10px;">
-                                    <div class="progress-bar" style="width: 10%; background-color: #007bff;"></div>
-                                </div>
-                                <span class="config-value">10%</span>
-                            </div>
-                        </div>
-                        <p class="text-muted small mt-3">Los resultados se actualizan al editar los factores de calibración</p>
-                    </div>
-                </div>
-
+            <div class="col-lg-6 mb-4">
                 <div class="stat-card">
-                    <h3 class="section-title">Notificaciones recientes</h3>
-                    <div>
-                        <div class="notification-item">
-                            <div class="notification-title">Revisión de CV</div>
-                            <div class="notification-text">Se han recibido 3 CVs para DevOps Engineer</div>
-                            <div class="notification-date">2025-05-08 10:11</div>
-                        </div>
-                        <div class="notification-item">
-                            <div class="notification-title">Entrevista iniciada</div>
-                            <div class="notification-text">Entrevista abierta para Desarrollador</div>
-                            <div class="notification-date">2025-02-06 18:48</div>
-                        </div>
-                        <div class="notification-item">
-                            <div class="notification-title">Matching listo</div>
-                            <div class="notification-text">El analisis de matching de candidatos</div>
-                            <div class="notification-date">2025-02-01 09:43</div>
+                    <h3 class="section-title">Top sectores de candidatos</h3>
+                    <p class="text-muted small mb-3">Sectores relacionados con: Software y Experiencia laboral</p>
+                    <div class="mt-3" id="sectores-container">
+                        <div class="text-center py-3">
+                            <div class="spinner-border spinner-border-sm text-muted" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                            <p class="text-muted small mt-2">Cargando sectores...</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="modalBuscarEgresados" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #8b1038; color: white;">
+                    <h5 class="modal-title">
+                        <i class="bi bi-search"></i> Buscar Egresados
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle"></i>
+                                Solo se muestran egresados con CV público que aceptan ser contactados
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label fw-bold">Filtrar por Carrera</label>
+                            <input type="text" class="form-control" id="filtroCarreraModal" placeholder="Ej: Ingeniería">
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label fw-bold">Filtrar por Habilidad</label>
+                            <input type="text" class="form-control" id="filtroHabilidadModal" placeholder="Ej: Python, Liderazgo">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold">&nbsp;</label>
+                            <button class="btn btn-matching w-100 mb-2" onclick="aplicarFiltrosModal()">
+                                <i class="bi bi-search"></i> Buscar
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary w-100" onclick="limpiarFiltrosModal()" title="Limpiar filtros">
+                                <i class="fas fa-times"></i> Limpiar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="paginacionEgresadosModalTop" class="mb-3"></div>
+
+                    <div class="text-center py-5" id="loadingEgresados" style="display: none;">
+                        <div class="spinner-border" style="color: #8b1038;" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <p class="mt-3">Buscando egresados...</p>
+                    </div>
+
+                    <div class="row" id="listaEgresadosModal">
+                    </div>
+
+                    <div class="text-center py-5" id="emptyStateModal" style="display: none;">
+                        <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                        <p class="mt-3 text-muted">No se encontraron egresados</p>
+                    </div>
+
+                    <div id="paginacionEgresadosModalBottom" class="mt-3"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPerfilCompleto" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #8b1038; color: white;">
+                    <h5 class="modal-title">
+                        <i class="bi bi-person-badge"></i> Perfil del Egresado
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="contenidoPerfilCompleto">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="VerCV" aria-hidden="true" aria-labelledby="VerMiCVToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="VerMiCVToggleLabel">Mi CV</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cv-container">
+                        <div class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Cargando CV...</span>
+                            </div>
+                            <p class="mt-2">Cargando CV...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalContactarEgresado" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #8b1038; color: white;">
+                    <h5 class="modal-title">
+                        <i class="bi bi-envelope"></i> Contactar Egresado
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="idEgresadoContactarModal">
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Asunto</label>
+                        <input type="text" class="form-control" id="asuntoMensajeModal"
+                               placeholder="Ej: Oportunidad Laboral">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Mensaje</label>
+                        <textarea class="form-control" id="textoMensajeModal" rows="6"
+                                  placeholder="Escribe tu mensaje aquí..."></textarea>
+                        <small class="text-muted">Mínimo 20 caracteres</small>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i>
+                        El egresado recibirá este mensaje por correo electrónico
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-matching" onclick="enviarMensajeModal()">
+                        <i class="bi bi-send"></i> Enviar Mensaje
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPerfilEmpresa" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #8b1038; color: white;">
+                    <h5 class="modal-title">
+                        <i class="bi bi-building"></i> Mi Perfil de Empresa
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle"></i>
+                                Actualiza la información de tu empresa. Los campos marcados con <span class="text-danger">*</span> son obligatorios
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center py-5" id="loadingPerfil" style="display: none;">
+                        <div class="spinner-border" style="color: #8b1038;" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <p class="mt-3">Cargando información...</p>
+                    </div>
+
+                    <form id="formPerfil" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="razonSocial" class="form-label fw-bold">
+                                    Razón Social <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="razonSocial"
+                                       placeholder="Nombre de la empresa" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="nit" class="form-label fw-bold">
+                                    NIT <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="nit"
+                                       placeholder="0000-000000-000-0" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="emailContacto" class="form-label fw-bold">
+                                    Email de Contacto <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control" id="emailContacto"
+                                           placeholder="contacto@empresa.com" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="telefono" class="form-label fw-bold">
+                                    Teléfono <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                                    <input type="text" class="form-control" id="telefono"
+                                           placeholder="0000-0000" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label for="direccion" class="form-label fw-bold">
+                                    Dirección
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                    <input type="text" class="form-control" id="direccion"
+                                           placeholder="Dirección física de la empresa">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="sectorEconomico" class="form-label fw-bold">
+                                    Sector Económico
+                                </label>
+                                <input type="text" class="form-control" id="sectorEconomico"
+                                       placeholder="Ej: Tecnología, Servicios, etc.">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="tamanoEmpresa" class="form-label fw-bold">
+                                    Tamaño de Empresa
+                                </label>
+                                <select class="form-select" id="tamanoEmpresa">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="Microempresa">Microempresa (1-10 empleados)</option>
+                                    <option value="Pequeña">Pequeña (11-50 empleados)</option>
+                                    <option value="Mediana">Mediana (51-200 empleados)</option>
+                                    <option value="Grande">Grande (201-1000 empleados)</option>
+                                    <option value="Corporación">Corporación (+1000 empleados)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </button>
+                    <button type="button" class="btn btn-matching" onclick="guardarPerfilEmpresa()">
+                        <i class="bi bi-save"></i> Guardar Cambios
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPublicarVacante" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(135deg, #8b1038 0%, #6b0d2b 100%); color: white;">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-briefcase-fill" style="font-size: 2rem;"></i>
+                        <div>
+                            <h5 class="modal-title mb-0">Publicar Nueva Vacante</h5>
+                            <small class="opacity-75">Complete los datos para publicar una nueva oferta laboral</small>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body" style="background-color: #f8f9fa;">
+                    <div class="carousel-section mb-4">
+                        <div id="carouselVacantes" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselVacantes" data-bs-slide-to="0" class="active"></button>
+                                <button type="button" data-bs-target="#carouselVacantes" data-bs-slide-to="1"></button>
+                                <button type="button" data-bs-target="#carouselVacantes" data-bs-slide-to="2"></button>
+                            </div>
+
+                            <div class="carousel-inner" style="border-radius: 12px; overflow: hidden;">
+                                <div class="carousel-item active">
+                                    <img src="~/Utilidades/IMG5.jpg" style="height: 300px; width: 100%; object-fit: cover;" alt="Paso 1">
+                                    <div class="position-absolute top-0 start-0 m-3 badge bg-primary" style="font-size: 1rem;">
+                                        <i class="bi bi-1-circle-fill"></i> Paso 1
+                                    </div>
+                                    <div class="carousel-caption">
+                                        <h5><i class="bi bi-file-text-fill"></i> Define la Vacante</h5>
+                                        <p>Completa el título, requisitos, salario y detalles del puesto</p>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img src="~/Utilidades/IMG6.jpg" style="height: 300px; width: 100%; object-fit: cover;" alt="Paso 2">
+                                    <div class="position-absolute top-0 start-0 m-3 badge bg-primary" style="font-size: 1rem;">
+                                        <i class="bi bi-2-circle-fill"></i> Paso 2
+                                    </div>
+                                    <div class="carousel-caption">
+                                        <h5><i class="bi bi-gear-fill"></i> Configura los Detalles</h5>
+                                        <p>Establece ubicación, modalidad, tipo de contrato y fecha de cierre</p>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img src="~/Utilidades/IMG7.jpg" style="height: 300px; width: 100%; object-fit: cover;" alt="Paso 3">
+                                    <div class="position-absolute top-0 start-0 m-3 badge bg-primary" style="font-size: 1rem;">
+                                        <i class="bi bi-3-circle-fill"></i> Paso 3
+                                    </div>
+                                    <div class="carousel-caption">
+                                        <h5><i class="bi bi-rocket-takeoff-fill"></i> Publica y Recibe Candidatos</h5>
+                                        <p>Tu vacante estará visible para todos los egresados</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselVacantes" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselVacantes" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="progress mb-4" style="height: 6px;">
+                        <div class="progress-bar" id="progressBarVacante" role="progressbar" style="width: 0%; background-color: #8b1038;"></div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <form id="formVacante">
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-pencil-fill text-primary"></i> Título de la vacante <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" id="titulo" name="titulo" class="form-control form-control-lg" maxlength="100" placeholder="Ej: Desarrollador Full Stack Senior">
+                                <small class="text-muted"><i class="bi bi-info-circle"></i> Sea específico y atractivo en el título</small>
+                            </div>
+
+                            <div class="border-start border-4 border-warning ps-3 mb-4">
+                                <h6 class="text-uppercase text-muted mb-3"><i class="bi bi-currency-dollar"></i> Información Salarial</h6>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <label class="form-label fw-bold">Salario mínimo (USD) <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+                                            <input type="number" id="salario_min" name="SalarioMin" class="form-control" placeholder="1200" step="0.01" min="0">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Salario máximo (USD) <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+                                            <input type="number" id="salario_max" name="SalarioMax" class="form-control" placeholder="1800" step="0.01" min="0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        <i class="bi bi-shield-lock-fill"></i> ¿Mantener salario confidencial?
+                                    </label>
+                                    <select id="salario_confidencial" name="SalarioConfidencial" class="form-select">
+                                        <option value="false">No - Mostrar rango salarial públicamente</option>
+                                        <option value="true">Sí - Mantener confidencial</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="border-start border-4 border-info ps-3 mb-4">
+                                <h6 class="text-uppercase text-muted mb-3"><i class="bi bi-list-check"></i> Requisitos y Detalles</h6>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        <i class="bi bi-briefcase-fill"></i> Área de trabajo <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text"
+                                           id="area_trabajo"
+                                           name="AreaTrabajo"
+                                           class="form-control"
+                                           placeholder="Ejemplo: Tecnología, Ventas, Marketing, Recursos Humanos, etc."
+                                           maxlength="100"
+                                           required>
+                                    <small class="text-muted">
+                                        <i class="bi bi-info-circle"></i> Especifica el departamento o área de la empresa donde trabajará el candidato
+                                    </small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Requisitos del candidato <span class="text-danger">*</span></label>
+                                    <textarea id="requisitos" name="Requisitos" class="form-control" rows="5" maxlength="1000" placeholder="Ejemplo:&#10;• Experiencia mínima de 2-3 años en desarrollo web&#10;• Dominio de JavaScript, React y Node.js&#10;• Título universitario en Ingeniería o carrera afín&#10;• Inglés intermedio/avanzado"></textarea>
+                                    <small class="text-muted"><i class="bi bi-lightbulb-fill"></i> Usa viñetas (•) o guiones (-) para mejor legibilidad</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        <i class="bi bi-clock-fill"></i> Tipo de contrato <span class="text-danger">*</span>
+                                    </label>
+                                    <select id="tipo_contrato" name="TipoContrato" class="form-select">
+                                        <option value="">-- Seleccionar --</option>
+                                        <option value="Tiempo completo"> Tiempo completo</option>
+                                        <option value="Medio tiempo"> Medio tiempo</option>
+                                        <option value="Por proyecto"> Por proyecto</option>
+                                        <option value="Temporal"> Temporal</option>
+                                        <option value="Pasantía"> Pasantía</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="border-start border-4 border-success ps-3 mb-4">
+                                <h6 class="text-uppercase text-muted mb-3"><i class="bi bi-geo-alt-fill"></i> Ubicación y Modalidad</h6>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Ubicación <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-map-fill"></i></span>
+                                        <input type="text" id="ubicacion" name="Ubicacion" class="form-control" placeholder="Ej: San Salvador, El Salvador">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        <i class="bi bi-laptop-fill"></i> Modalidad de trabajo <span class="text-danger">*</span>
+                                    </label>
+                                    <select id="modalidad" name="Modalidad" class="form-select">
+                                        <option value="">-- Seleccionar --</option>
+                                        <option value="Presencial"> Presencial</option>
+                                        <option value="Remoto"> Remoto</option>
+                                        <option value="Híbrido"> Híbrido</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="border-start border-4 border-danger ps-3 mb-4">
+                                <h6 class="text-uppercase text-muted mb-3"><i class="bi bi-calendar-check"></i> Publicación</h6>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">
+                                            <i class="bi bi-calendar-x-fill"></i> Fecha de cierre <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="date" id="fecha_cierre" name="FechaCierre" class="form-control">
+                                        <small class="text-muted">Fecha límite para recibir postulaciones</small>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">
+                                            <i class="bi bi-toggle-on"></i> Estado inicial <span class="text-danger">*</span>
+                                        </label>
+                                        <select id="estado" name="Estado" class="form-select">
+                                            <option value="Activa"> Activa - Publicar inmediatamente</option>
+                                            <option value="Borrador"> Borrador - Guardar sin publicar</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="id_empresa" name="IdEmpresa" value="1">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="guardarVacante()" style="background-color: #8b1038; border-color: #8b1038;">
+                        <i class="bi bi-check-circle"></i> Publicar Vacante
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalCambiarEstado" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-arrow-repeat"></i> Cambiar Estado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Vacante:</label>
+                        <p class="mb-0" id="modalCambioVacante"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Estado actual:</label>
+                        <p><span class="badge-custom" id="modalCambioEstadoActual"></span></p>
+                    </div>
+                    <hr>
+                    <div class="mb-3">
+                        <label for="selectEstado" class="form-label fw-bold">Seleccionar nuevo estado:</label>
+                        <select class="form-select" id="selectEstado">
+                            <option value="Abierta">Abierta</option>
+                            <option value="En Revisión">En Revisión</option>
+                            <option value="Entrevista">Entrevista</option>
+                            <option value="Oferta">Oferta</option>
+                            <option value="Contratado">Contratado</option>
+                            <option value="Cerrada">Cerrada</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmarCambioEstado()">
+                        <i class="bi bi-check-circle"></i> Confirmar Cambio
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalVerDetalles" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #8b1038; color: white;">
+                    <h5 class="modal-title">
+                        <i class="bi bi-eye"></i> Detalles de la Vacante
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="contenidoDetallesVacante">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEditarVacante" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #8b1038; color: white;">
+                    <h5 class="modal-title">
+                        <i class="bi bi-pencil-square"></i> Editar Vacante
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" style="background-color: #f8f9fa;">
+                    <form id="formEditarVacante">
+                        <input type="hidden" id="edit_id_vacante">
+
+                        <div class="bg-white p-4 rounded shadow-sm mb-3">
+                            <h6 class="text-uppercase text-muted mb-3">
+                                <i class="bi bi-file-text"></i> Información Básica
+                            </h6>
+
+                            <div class="mb-3">
+                                <label for="edit_titulo" class="form-label fw-bold">
+                                    Título de la vacante <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" id="edit_titulo" class="form-control" maxlength="100">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit_descripcion" class="form-label fw-bold">
+                                    Descripción
+                                </label>
+                                <textarea id="edit_descripcion" class="form-control" rows="3" maxlength="500"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit_requisitos" class="form-label fw-bold">
+                                    Requisitos <span class="text-danger">*</span>
+                                </label>
+                                <textarea id="edit_requisitos" class="form-control" rows="5" maxlength="1000"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit_area" class="form-label fw-bold">
+                                    Área de trabajo <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" id="edit_area" class="form-control" maxlength="100">
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-4 rounded shadow-sm mb-3">
+                            <h6 class="text-uppercase text-muted mb-3">
+                                <i class="bi bi-currency-dollar"></i> Información Salarial
+                            </h6>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit_salario_min" class="form-label fw-bold">
+                                        Salario mínimo (USD) <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" id="edit_salario_min" class="form-control" step="0.01" min="0">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit_salario_max" class="form-label fw-bold">
+                                        Salario máximo (USD) <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" id="edit_salario_max" class="form-control" step="0.01" min="0">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="edit_salario_confidencial" class="form-label fw-bold">
+                                    ¿Salario confidencial?
+                                </label>
+                                <select id="edit_salario_confidencial" class="form-select">
+                                    <option value="false">No - Mostrar rango salarial</option>
+                                    <option value="true">Sí - Mantener confidencial</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-4 rounded shadow-sm mb-3">
+                            <h6 class="text-uppercase text-muted mb-3">
+                                <i class="bi bi-geo-alt"></i> Ubicación y Modalidad
+                            </h6>
+
+                            <div class="mb-3">
+                                <label for="edit_ubicacion" class="form-label fw-bold">
+                                    Ubicación <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" id="edit_ubicacion" class="form-control">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit_modalidad" class="form-label fw-bold">
+                                        Modalidad <span class="text-danger">*</span>
+                                    </label>
+                                    <select id="edit_modalidad" class="form-select">
+                                        <option value="">-- Seleccionar --</option>
+                                        <option value="Presencial"> Presencial</option>
+                                        <option value="Remoto"> Remoto</option>
+                                        <option value="Híbrido"> Híbrido</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit_tipo_contrato" class="form-label fw-bold">
+                                        Tipo de contrato <span class="text-danger">*</span>
+                                    </label>
+                                    <select id="edit_tipo_contrato" class="form-select">
+                                        <option value="">-- Seleccionar --</option>
+                                        <option value="Tiempo completo"> Tiempo completo</option>
+                                        <option value="Medio tiempo"> Medio tiempo</option>
+                                        <option value="Por proyecto"> Por proyecto</option>
+                                        <option value="Temporal"> Temporal</option>
+                                        <option value="Pasantía"> Pasantía</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-4 rounded shadow-sm">
+                            <h6 class="text-uppercase text-muted mb-3">
+                                <i class="bi bi-calendar-check"></i> Fechas y Estado
+                            </h6>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit_fecha_cierre" class="form-label fw-bold">
+                                        Fecha de cierre <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="date" id="edit_fecha_cierre" class="form-control">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit_estado" class="form-label fw-bold">
+                                        Estado <span class="text-danger">*</span>
+                                    </label>
+                                    <select id="edit_estado" class="form-select">
+                                        <option value="Abierta"> Abierta</option>
+                                        <option value="Borrador"> Borrador</option>
+                                        <option value="En Revisión"> En Revisión</option>
+                                        <option value="Entrevista"> Entrevista</option>
+                                        <option value="Oferta"> Oferta</option>
+                                        <option value="Contratado">Contratado</option>
+                                        <option value="Cerrado"> Cerrado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="guardarEdicionVacante()"
+                            style="background-color: #8b1038; border-color: #8b1038;">
+                        <i class="bi bi-save"></i> Guardar Cambios
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalVerCandidatos" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-people"></i> Candidatos Aplicados</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Vacante: <span id="modalCandidatosVacante"></span></h6>
+                        <p class="text-muted">Total de candidatos: <span id="modalCandidatosTotal"></span></p>
+                    </div>
+                    <hr>
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> Esta funcionalidad mostraría la lista completa de candidatos aplicados a esta vacante.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEliminarVacante" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle"></i> Eliminar Vacante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-circle"></i> Esta acción no se puede deshacer.
+                    </div>
+                    <p class="mb-3">¿Estás seguro de que deseas eliminar la vacante?</p>
+                    <div class="alert alert-danger mb-0">
+                        <strong id="modalEliminarNombre"></strong>
+                        <p class="mb-0 mt-2 small">Candidatos asociados: <span id="modalEliminarCandidatos"></span></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmarEliminacion()">
+                        <i class="bi bi-trash"></i> Sí, Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -281,43 +923,5 @@
         const JWT_TOKEN = '@JWTToken';
     </script>
     <script src="~/JS/Empresas.js"></script>
-    <script>
-        // Pipeline Chart
-        const ctx = document.getElementById('pipelineChart');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Revisión', 'Entrevista', 'Oferta', 'Contratado'],
-                datasets: [{
-                    label: 'Candidatos',
-                    data: [15, 12, 8, 7],
-                    backgroundColor: [
-                        '#dc3545',
-                        '#7c2d5e',
-                        '#ffc107',
-                        '#28a745'
-                    ],
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 5
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 </html>

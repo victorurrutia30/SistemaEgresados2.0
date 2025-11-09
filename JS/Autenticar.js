@@ -41,8 +41,8 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (response) {
                 if (response.success) {
-                    $('.btn-login').removeClass('loading').prop('disabled', false);
-                    $('.btn-login').html('<i class="fas fa-sign-in-alt"></i> Iniciar Sesión');
+                    $('.btn-login').removeClass('loading').prop('disabled', true);
+                    $('.btn-login').html('<i class="fas fa-sign-in-alt"></i> Autenticado Exitosamente');
 
                     Swal.fire({
                         icon: 'success',

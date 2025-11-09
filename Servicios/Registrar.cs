@@ -45,13 +45,29 @@ namespace SistemaEgresados.Servicios
                 {
                     return Resultado.error(_encriptador.VerificarSeguridad(egresado.password_hash).Mensaje);
                 }
-
+                var usuarioPrincipal = _db.Usuarios.FirstOrDefault(u=>u.email == egresado.email && u.activo == true && u.tipo_usuario == "Egresado");
+                if (usuarioPrincipal != null) {
+                    return Resultado.error("No se pudo crear el usuario principal,Ya existe un usuario con ese correo");
+                }
+                 
                 egresado.password_hash = _encriptador.HashContrasena(egresado.password_hash).Datos.ToString();
                 egresado.fecha_registro = DateTime.Now;
-                egresado.estado_activo = true;
-
+                egresado.estado_activo = true;                
                 _db.Egresados.Add(egresado);
-                _db.SaveChanges();               
+                _db.SaveChanges();
+                Usuario usuario = new Usuario
+                {
+                    username = ObtenerPrimerNombreYApellido(egresado.nombres, egresado.apellidos),
+                    email = egresado.email,
+                    password_hash = egresado.password_hash,
+                    tipo_usuario = "Egresado",
+                    referencia_id = egresado.id_egresado,
+                    nombre_completo = egresado.nombres + " " + egresado.apellidos,
+                    activo = true,
+                    fecha_creacion = DateTime.Now
+                };
+                _db.Usuarios.Add(usuario);
+                _db.SaveChanges();
 
                 if (!_email.EnviarMensajeAutentificacion(egresado.email).Exito)
                 {
@@ -74,24 +90,7 @@ namespace SistemaEgresados.Servicios
                 {
                     return Resultado.error(resultado.Mensaje);
                 }
-                var existEgresado = _db.Egresados.FirstOrDefault(u => u.email == email);
-                var existUsuario = _db.Usuarios.FirstOrDefault(u => u.email == existEgresado.email);
-                if (existUsuario == null)
-                {
-                    Usuario usuario = new Usuario
-                    {
-                        username = existEgresado.nombres +','+ existEgresado.apellidos,
-                        email = existEgresado.email,
-                        password_hash = existEgresado.password_hash,
-                        tipo_usuario = "Egresado",
-                        referencia_id = existEgresado.id_egresado,
-                        nombre_completo = existEgresado.nombres + ',' + existEgresado.apellidos,
-                        activo = true,
-                        fecha_creacion = DateTime.Now
-                    };
-                    _db.Usuarios.Add(usuario);
-                    _db.SaveChanges();
-                }
+                
                 return Resultado.exito("Código verificado correctamente.");
             }
             catch (Exception ex)

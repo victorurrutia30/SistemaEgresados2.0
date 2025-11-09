@@ -184,7 +184,7 @@ $(document).on('click', '.btnRemoveCertificacion', function () {
     const nombre = entry.find('.nombre-certificacion').val();
     const entidad = entry.find('.entidad-certificacion').val();
     certificacionesAgregadas = certificacionesAgregadas.filter(c =>
-        !(c.nombre === nombre && c.entidad === entidad)
+        !(c.nombre === nombre && c.entidad_emisora === entidad)
     );
     entry.remove();
 });
@@ -197,7 +197,7 @@ function guardarCertificaciones() {
         if (nombre) {
             certificacionesAgregadas.push({
                 nombre: nombre,
-                entidad: entidad
+                entidad_emisora: entidad
             });
         }
     });

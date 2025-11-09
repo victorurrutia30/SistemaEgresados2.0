@@ -11,20 +11,21 @@ namespace SistemaEgresados.Filters
     public class AutenticacionFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
-        
         {
             string controllerName = filterContext.RouteData.Values["controller"].ToString();
             string actionName = filterContext.RouteData.Values["action"].ToString();
 
-            if (filterContext.HttpContext.Session["Usuario"] != null)
+            if (controllerName.Equals("Bienvenido", StringComparison.OrdinalIgnoreCase) &&
+                (actionName.Equals("Index", StringComparison.OrdinalIgnoreCase) ||
+                 actionName.Equals("Autenticar", StringComparison.OrdinalIgnoreCase)))
             {
-                RedirigirSegunTipoUsuario(filterContext);
-                return;
-            }
+                if (filterContext.HttpContext.Session["Usuario"] != null)
+                {
+                    RedirigirSegunTipoUsuario(filterContext);
+                    return;
+                }
 
-            if (IntentarRestaurarSesionDesdeCookie(filterContext))
-            {
-                if (actionName.Equals("Autenticar", StringComparison.OrdinalIgnoreCase))
+                if (IntentarRestaurarSesionDesdeCookie(filterContext))
                 {
                     RedirigirSegunTipoUsuario(filterContext);
                     return;
@@ -34,13 +35,14 @@ namespace SistemaEgresados.Filters
                 return;
             }
 
-            if (actionName.Equals("Autenticar", StringComparison.OrdinalIgnoreCase))
+
+            if (filterContext.HttpContext.Session["Usuario"] != null)
             {
                 base.OnActionExecuting(filterContext);
                 return;
             }
 
-            if (controllerName.Equals("Bienvenido", StringComparison.OrdinalIgnoreCase))
+            if (IntentarRestaurarSesionDesdeCookie(filterContext))
             {
                 base.OnActionExecuting(filterContext);
                 return;
@@ -49,8 +51,8 @@ namespace SistemaEgresados.Filters
             filterContext.Result = new RedirectToRouteResult(
                 new RouteValueDictionary
                 {
-                    { "controller", "Bienvenido" },
-                    { "action", "Index" }
+                { "controller", "Bienvenido" },
+                { "action", "Autenticar" }
                 }
             );
         }
@@ -67,32 +69,38 @@ namespace SistemaEgresados.Filters
                     {
                         Usuario usuario = JsonConvert.DeserializeObject<Usuario>(ticket.UserData);
 
-                        filterContext.HttpContext.Session["Usuario"] = usuario;
-                        filterContext.HttpContext.Session["UsuarioEmail"] = ticket.Name;
-
-                        if (ticket.IsPersistent)
+                        if (usuario != null)
                         {
-                            FormsAuthenticationTicket nuevoTicket = FormsAuthentication.RenewTicketIfOld(ticket);
-                            if (nuevoTicket != ticket)
+                            filterContext.HttpContext.Session["Usuario"] = usuario;
+                            filterContext.HttpContext.Session["UsuarioEmail"] = ticket.Name;
+                            filterContext.HttpContext.Session["UsuarioId"] = usuario.referencia_id;
+
+                            if (ticket.IsPersistent)
                             {
-                                string ticketEncriptado = FormsAuthentication.Encrypt(nuevoTicket);
-                                HttpCookie nuevaCookie = new HttpCookie(FormsAuthentication.FormsCookieName, ticketEncriptado)
+                                FormsAuthenticationTicket nuevoTicket = FormsAuthentication.RenewTicketIfOld(ticket);
+                                if (nuevoTicket != ticket)
                                 {
-                                    HttpOnly = true,
-                                    Secure = FormsAuthentication.RequireSSL,
-                                    Path = FormsAuthentication.FormsCookiePath,
-                                    Expires = nuevoTicket.Expiration
-                                };
-                                filterContext.HttpContext.Response.Cookies.Add(nuevaCookie);
+                                    string ticketEncriptado = FormsAuthentication.Encrypt(nuevoTicket);
+                                    HttpCookie nuevaCookie = new HttpCookie(FormsAuthentication.FormsCookieName, ticketEncriptado)
+                                    {
+                                        HttpOnly = true,
+                                        Secure = FormsAuthentication.RequireSSL,
+                                        Path = FormsAuthentication.FormsCookiePath,
+                                        Expires = nuevoTicket.Expiration
+                                    };
+                                    filterContext.HttpContext.Response.Cookies.Add(nuevaCookie);
+                                }
                             }
+
+                            return true;
                         }
-                        return true;
                     }
                 }
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine($"Error restaurando sesión: {ex.Message}");
                     FormsAuthentication.SignOut();
+                    filterContext.HttpContext.Session.Clear();
                 }
             }
             return false;
@@ -103,45 +111,49 @@ namespace SistemaEgresados.Filters
             var usuario = filterContext.HttpContext.Session["Usuario"] as Usuario;
             if (usuario == null) return;
 
-            string controllerName = filterContext.RouteData.Values["controller"].ToString();
-            string actionName = filterContext.RouteData.Values["action"].ToString();
+            string controllerActual = filterContext.RouteData.Values["controller"].ToString();
 
-            if ((usuario.tipo_usuario == "Egresado" && controllerName.Equals("Egresado", StringComparison.OrdinalIgnoreCase)) ||
-                (usuario.tipo_usuario == "Administrador" && controllerName.Equals("Home", StringComparison.OrdinalIgnoreCase)))
+            switch (usuario.tipo_usuario)
             {
-                base.OnActionExecuting(filterContext);
-                return;
-            }
+                case "Egresado":
+                    if (!controllerActual.Equals("Egresado", StringComparison.OrdinalIgnoreCase))
+                    {
+                        filterContext.Result = new RedirectToRouteResult(
+                            new RouteValueDictionary
+                            {
+                            { "controller", "Egresado" },
+                            { "action", "Index" }
+                            }
+                        );
+                    }
+                    break;
 
-            if (usuario.tipo_usuario == "Egresado")
-            {
-                filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary
+                case "UsuarioEmpresa":
+                    if (!controllerActual.Equals("Empresas", StringComparison.OrdinalIgnoreCase))
                     {
-                        { "controller", "Egresado" },
-                        { "action", "Index" }
+                        filterContext.Result = new RedirectToRouteResult(
+                            new RouteValueDictionary
+                            {
+                            { "controller", "Empresas" },
+                            { "action", "Index" }
+                            }
+                        );
                     }
-                );
-            }
-            else if (usuario.tipo_usuario == "UsuarioEmpresa")
-            {
-                filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary
+                    break;
+
+                case "Administrador":
+                    if (!controllerActual.Equals("Administracion", StringComparison.OrdinalIgnoreCase) &&
+                        !controllerActual.Equals("Home", StringComparison.OrdinalIgnoreCase))
                     {
-                        { "controller", "Empresas" },
-                        { "action", "Index" }
+                        filterContext.Result = new RedirectToRouteResult(
+                            new RouteValueDictionary
+                            {
+                            { "controller", "Administracion" },
+                            { "action", "Index" }
+                            }
+                        );
                     }
-                );
-            }
-            else if (usuario.tipo_usuario == "Administrador")
-            {
-                filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary
-                    {
-                        { "controller", "Home" },
-                        { "action", "Index" }
-                    }
-                );
+                    break;
             }
         }
     }

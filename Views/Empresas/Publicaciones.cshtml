@@ -1,0 +1,190 @@
+﻿@{
+    ViewBag.Title = "Gestión de Publicaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/CSS/Publicaciones.css" rel="stylesheet" />
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="header mb-4">
+                <div class="container">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="logo-utec">UTEC</div>
+                            <div>
+                                <h5 class="company-title mb-0">Gestin de Publicaciones</h5>
+                                <p class="company-subtitle mb-0">Administra tus vacantes laborales</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-light" onclick="window.location.href='/Empresas/Index'">
+                                <i class="fas fa-arrow-left me-2"></i>Regresar
+                            </button>
+                            <button class="btn btn-custom" onclick="abrirModalCrear()">
+                                <i class="fas fa-plus me-2"></i>Nueva Publicación
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="mb-0">
+                            <i class="fas fa-briefcase me-2"></i>Mis Publicaciones
+                        </h5>
+                        <div class="input-group" style="width: 300px;">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <input type="text" class="form-control" id="buscarPublicacion" placeholder="Buscar por título...">
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="tablaPublicaciones">
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Modalidad</th>
+                                    <th>Ubicación</th>
+                                    <th>Postulantes</th>
+                                    <th>Estado</th>
+                                    <th>Fecha Publicación</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodyPublicaciones">
+                                <tr>
+                                    <td colspan="7" class="text-center">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Cargando..</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalPublicacion" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModal">
+                    <i class="fas fa-briefcase me-2"></i>Nueva Publicacin
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formPublicacion">
+                    <input type="hidden" id="idVacante" name="id_vacante">
+
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label">Título de la Vacante *</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="area" class="form-label">Área *</label>
+                            <select class="form-select" id="area" name="area" required>
+                                <option value="">Seleccione algun</option>
+                                <option value="Tecnología">Tecnología</option>
+                                <option value="Administración">Administración</option>
+                                <option value="Ventas">Ventas</option>
+                                <option value="Recursos Humanos">Recursos Humanos</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Finanzas">Finanzas</option>
+                                <option value="Operaciones">Operaciones</option>
+                                <option value="Servicio al Cliente">Servicio al Cliente</option>
+                                <option value="Logística">Logística</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="ubicacion" class="form-label">Ubicación *</label>
+                            <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="modalidad" class="form-label">Modalidad *</label>
+                            <select class="form-select" id="modalidad" name="modalidad" required>
+                                <option value="">Seleccione..</option>
+                                <option value="Presencial">Presencial</option>
+                                <option value="Remoto">Remoto</option>
+                                <option value="Híbrido">Híbrido</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="tipoContrato" class="form-label">Tipo de Contrato *</label>
+                            <select class="form-select" id="tipoContrato" name="tipo_contrato" required>
+                                <option value="">Seleccione...</option>
+                                <option value="Tiempo Completo">Tiempo Completo</option>
+                                <option value="Medio Tiempo">Medio Tiempo</option>
+                                <option value="Por Proyecto">Por Proyecto</option>
+                                <option value="Temporal">Temporal</option>
+                                <option value="Pasantía">Pasantía</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Rango Salarial</label>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="salarioConfidencial" name="salario_confidencial">
+                            <label class="form-check-label" for="salarioConfidencial">
+                                Salario confidencial
+                            </label>
+                        </div>
+                        <div class="row" id="rangoSalarial">
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" id="salarioMin" name="salario_min" placeholder="Salario mínimo" step="0.01">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" id="salarioMax" name="salario_max" placeholder="Salario máximo" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción de la Vacante *</label>
+                        <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="requisitos" class="form-label">Requisitos *</label>
+                        <textarea class="form-control" id="requisitos" name="requisitos" rows="4" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fechaCierre" class="form-label">Fecha de Cierre (Opcional)</label>
+                        <input type="date" class="form-control" id="fechaCierre" name="fecha_cierre">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-custom" onclick="guardarPublicacion()">
+                    <i class="fas fa-save me-2"></i>Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/JS/Publicaciones.js"></script>
+}

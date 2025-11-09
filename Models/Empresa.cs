@@ -20,6 +20,7 @@ namespace SistemaEgresados.Models
             this.Usuarios_Empresa = new HashSet<Usuarios_Empresa>();
             this.Vacantes = new HashSet<Vacante>();
             this.Visualizaciones_CV = new HashSet<Visualizaciones_CV>();
+            this.Puntuaciones_Empresas = new HashSet<Puntuaciones_Empresas>();
         }
     
         public int id_empresa { get; set; }
@@ -41,5 +42,7 @@ namespace SistemaEgresados.Models
         public virtual ICollection<Vacante> Vacantes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Visualizaciones_CV> Visualizaciones_CV { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Puntuaciones_Empresas> Puntuaciones_Empresas { get; set; }
     }
 }
