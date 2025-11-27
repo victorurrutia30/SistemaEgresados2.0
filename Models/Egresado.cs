@@ -23,6 +23,7 @@ namespace SistemaEgresados.Models
             this.Postulaciones = new HashSet<Postulacione>();
             this.Preferencias_Egresado = new HashSet<Preferencias_Egresado>();
             this.Respuestas_Encuesta = new HashSet<Respuestas_Encuesta>();
+            this.Puntuaciones_Empresas = new HashSet<Puntuaciones_Empresas>();
         }
     
         public int id_egresado { get; set; }
@@ -56,5 +57,7 @@ namespace SistemaEgresados.Models
         public virtual ICollection<Preferencias_Egresado> Preferencias_Egresado { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Respuestas_Encuesta> Respuestas_Encuesta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Puntuaciones_Empresas> Puntuaciones_Empresas { get; set; }
     }
 }

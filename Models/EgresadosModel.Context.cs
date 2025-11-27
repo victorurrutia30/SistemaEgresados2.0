@@ -49,6 +49,7 @@ namespace SistemaEgresados.Models
         public virtual DbSet<Vacante> Vacantes { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Visualizaciones_CV> Visualizaciones_CV { get; set; }
+        public virtual DbSet<Puntuaciones_Empresas> Puntuaciones_Empresas { get; set; }
     
         public virtual int sp_PostularVacante(Nullable<int> id_vacante, Nullable<int> id_egresado, Nullable<int> id_cv)
         {
@@ -197,6 +198,35 @@ namespace SistemaEgresados.Models
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual ObjectResult<SP_RegistrarVisualizacionCV1_Result> SP_RegistrarVisualizacionCV1(Nullable<int> id_cv, Nullable<int> id_empresa, Nullable<int> id_usuario_empresa, string ip_address, string navegador, string observaciones)
+        {
+            var id_cvParameter = id_cv.HasValue ?
+                new ObjectParameter("id_cv", id_cv) :
+                new ObjectParameter("id_cv", typeof(int));
+    
+            var id_empresaParameter = id_empresa.HasValue ?
+                new ObjectParameter("id_empresa", id_empresa) :
+                new ObjectParameter("id_empresa", typeof(int));
+    
+            var id_usuario_empresaParameter = id_usuario_empresa.HasValue ?
+                new ObjectParameter("id_usuario_empresa", id_usuario_empresa) :
+                new ObjectParameter("id_usuario_empresa", typeof(int));
+    
+            var ip_addressParameter = ip_address != null ?
+                new ObjectParameter("ip_address", ip_address) :
+                new ObjectParameter("ip_address", typeof(string));
+    
+            var navegadorParameter = navegador != null ?
+                new ObjectParameter("navegador", navegador) :
+                new ObjectParameter("navegador", typeof(string));
+    
+            var observacionesParameter = observaciones != null ?
+                new ObjectParameter("observaciones", observaciones) :
+                new ObjectParameter("observaciones", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_RegistrarVisualizacionCV1_Result>("SP_RegistrarVisualizacionCV1", id_cvParameter, id_empresaParameter, id_usuario_empresaParameter, ip_addressParameter, navegadorParameter, observacionesParameter);
         }
     }
 }

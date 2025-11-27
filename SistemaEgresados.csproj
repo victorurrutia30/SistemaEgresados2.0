@@ -56,6 +56,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>packages\EPPlus.4.5.3.3\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Fleck, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Fleck.1.2.0\lib\net45\Fleck.dll</HintPath>
     </Reference>
@@ -81,6 +84,7 @@
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=8.14.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.IdentityModel.Tokens.8.14.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -101,6 +105,7 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -187,16 +192,18 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ClasesAuxiliares\VacanteDTO.cs" />
     <Compile Include="Controllers\AccesoDenegadoController.cs" />
+    <Compile Include="Controllers\AdministracionController.cs" />
     <Compile Include="Controllers\BienvenidoController.cs" />
     <Compile Include="Controllers\EgresadoController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegistrarController.cs" />
+    <Compile Include="Controllers\UrlTempController.cs" />
     <Compile Include="DTO\Resultado.cs" />
     <Compile Include="Filters\AutenticacionFilter.cs" />
-    <Compile Include="Filters\AutorizacionEgresadoAdminFilter .cs" />
-    <Compile Include="Filters\AutorizacionEmpresas.cs" />
+    <Compile Include="Filters\AutorizacionRolesFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -260,6 +267,9 @@
     <Compile Include="Models\Preguntas_Vacante.cs">
       <DependentUpon>EgresadosModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Puntuaciones_Empresas.cs">
+      <DependentUpon>EgresadosModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Respuestas_Encuesta.cs">
       <DependentUpon>EgresadosModel.tt</DependentUpon>
     </Compile>
@@ -270,6 +280,9 @@
       <DependentUpon>EgresadosModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>EgresadosModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_RegistrarVisualizacionCV1_Result.cs">
       <DependentUpon>EgresadosModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
@@ -288,14 +301,18 @@
       <DependentUpon>EgresadosModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servicios\Administracion.cs" />
     <Compile Include="Servicios\Autenticar.cs" />
     <Compile Include="Servicios\EgresadoServicio.cs" />
     <Compile Include="Servicios\Email.cs" />
     <Compile Include="Servicios\Empresas.cs" />
     <Compile Include="Servicios\Encriptador.cs" />
+    <Compile Include="Servicios\GenerarExcel.cs" />
     <Compile Include="Servicios\Preguntas.cs" />
+    <Compile Include="Servicios\ProcesosAutomatizados.cs" />
     <Compile Include="Servicios\Registrar.cs" />
     <Compile Include="Servicios\TokenService.cs" />
+    <Compile Include="Servicios\UrlTemp.cs" />
     <Compile Include="ServicioWebSocket\WebSocketService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -316,23 +333,25 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="CSS\AccesoDenegado.css" />
+    <Content Include="CSS\Administracion.css" />
     <Content Include="CSS\Autenticacion.css" />
     <Content Include="CSS\Bienveido.css" />
     <Content Include="CSS\Egresados.css" />
     <Content Include="CSS\Empresas.css" />
-    <Content Include="CSS\Publicaciones.css" />
+    <Content Include="CSS\RecursoNoEncontrado.css" />
     <Content Include="CSS\Registro.css" />
+    <Content Include="CSS\RegistroEmpresa.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Info\Archivo egresado model.txt" />
+    <Content Include="JS\Administracion.js" />
     <Content Include="JS\Autenticar.js" />
     <Content Include="JS\Egresados.js" />
     <Content Include="JS\Empresas.js" />
-    <Content Include="JS\EmpresasPerfil.js" />
     <Content Include="JS\Layout.js" />
-    <Content Include="JS\Publicaciones.js" />
     <Content Include="JS\Registrar.js" />
+    <Content Include="JS\RegistrarEmpresa.js" />
     <Content Include="Models\EgresadosModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EgresadosModel.edmx</DependentUpon>
@@ -367,9 +386,13 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Utilidades\administrator_solid_icon_236304.ico" />
     <Content Include="Utilidades\IMG1.jpg" />
     <Content Include="Utilidades\IMG2.jpg" />
     <Content Include="Utilidades\IMG3.jpg" />
+    <Content Include="Utilidades\IMG5.jpg" />
+    <Content Include="Utilidades\IMG6.jpg" />
+    <Content Include="Utilidades\IMG7.jpg" />
     <Content Include="Utilidades\IMG_P.png" />
     <Content Include="Utilidades\logo-utec.png" />
     <Content Include="Utilidades\logoU.png" />
@@ -394,8 +417,9 @@
     <Content Include="Views\Egresado\Index.cshtml" />
     <Content Include="Views\AccesoDenegado\Index.cshtml" />
     <Content Include="Views\Empresas\Index.cshtml" />
-    <Content Include="Views\Empresas\Perfil.cshtml" />
-    <Content Include="Views\Empresas\Publicaciones.cshtml" />
+    <Content Include="Views\Administracion\Index.cshtml" />
+    <Content Include="Views\UrlTemp\Index.cshtml" />
+    <Content Include="Views\AccesoDenegado\RecursoNoEncontrado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

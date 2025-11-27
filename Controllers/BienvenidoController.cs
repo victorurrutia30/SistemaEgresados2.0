@@ -1,4 +1,5 @@
-﻿using SistemaEgresados.Filters;
+﻿using Newtonsoft.Json;
+using SistemaEgresados.Filters;
 using SistemaEgresados.Models;
 using System;
 using System.Collections.Generic;
@@ -9,16 +10,18 @@ using System.Web.Security;
 
 namespace SistemaEgresados.Controllers
 {
-    [AutenticacionFilter]
+    
     public class BienvenidoController : Controller
     {
         private readonly Servicios.Autenticar _servicioAutenticar = new Servicios.Autenticar();
         private readonly Servicios.Email _servicioEmail = new Servicios.Email();
         private readonly Servicios.TokenService _servicioToken = new Servicios.TokenService();
+        [AutenticacionFilter]
         public ActionResult Index()
         {
             return View();
         }
+        [AutenticacionFilter]
         public ActionResult Autenticar()
         {
             return View();
@@ -31,32 +34,30 @@ namespace SistemaEgresados.Controllers
             {
                 var resultado = _servicioAutenticar.AutenticarUsuario(email, password);
                 string url = "";
+
                 if (resultado.Exito)
                 {
-                    Session["Usuario"] = resultado.Datos;
+                    var usuario = resultado.Datos as Usuario;
+
+                    Session["Usuario"] = usuario;
                     Session["UsuarioEmail"] = email;
-                    Session["UsuarioId"] = resultado.Datos;                    
+                    Session["UsuarioId"] = usuario.referencia_id;
+                    Session["UsuarioNombre"] = _servicioAutenticar.NombreyApellido(email).Datos;
 
+                    Session.Timeout = 30; 
 
-                    if (recordarSesion)
-                    {
-                        Session.Timeout = 10080; 
-                    }
-                    else
-                    {
-                        Session.Timeout = 1440; 
-                    }
+                    string usuarioJson = JsonConvert.SerializeObject(usuario);
 
-                    int duracionMinutos = recordarSesion ? 10080 : 1440;
+                    int duracionMinutos = recordarSesion ? 10080 : 1440; 
 
                     FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
-                        1,                                     
-                        email,                                  
-                        DateTime.Now,                           
-                        DateTime.Now.AddMinutes(duracionMinutos), 
-                        recordarSesion,                         
-                        resultado.Datos.ToString(),             
-                        FormsAuthentication.FormsCookiePath     
+                        1,
+                        email,
+                        DateTime.Now,
+                        DateTime.Now.AddMinutes(duracionMinutos),
+                        recordarSesion, 
+                        usuarioJson,    
+                        FormsAuthentication.FormsCookiePath
                     );
 
                     string ticketEncriptado = FormsAuthentication.Encrypt(ticket);
@@ -72,38 +73,62 @@ namespace SistemaEgresados.Controllers
                     }
 
                     Response.Cookies.Add(cookie);
+
                     var tokenJWT = _servicioToken.GenerarToken(email, duracionMinutos);
                     Session["TokenJWT"] = tokenJWT;
-                    var usuario = resultado.Datos as Usuario;
-                    Session["UsuarioNombre"] = _servicioAutenticar.NombreyApellido(email).Datos;
-                    if (usuario.tipo_usuario == "Egresado")
+                    HttpCookie tokenCookie = new HttpCookie("TokenJWT", tokenJWT);
+                    tokenCookie.HttpOnly = true;
+                    tokenCookie.Secure = true;
+                    tokenCookie.Secure = FormsAuthentication.RequireSSL;
+                    tokenCookie.SameSite = SameSiteMode.Strict;
+                    tokenCookie.Path = "/";
+
+                    if (recordarSesion)
                     {
-                        url = "/Egresado/Index";
+                        tokenCookie.Expires = DateTime.Now.AddMinutes(duracionMinutos);
                     }
-                    else if (usuario.tipo_usuario == "Administrador")
+
+                    Response.Cookies.Add(tokenCookie);
+                    switch (usuario.tipo_usuario)
                     {
-                        url = "/Admin/Index";
+                        case "Egresado":
+                            url = "/Egresado/Index";
+                            break;
+                        case "Administrador":
+                            url = "/Administracion/Index";
+                            break;
+                        case "UsuarioEmpresa":
+                            url = "/Empresas/Index";
+                            break;
+                        default:
+                            url = "/Bienvenido/Index";
+                            break;
                     }
-                    else if (usuario.tipo_usuario == "UsuarioEmpresa")
-                    {
-                        url = "/Empresas/Index";
-                    }
+
                     return Json(new
                     {
                         success = true,
                         mensaje = resultado.Mensaje,
                         usuario = resultado.Datos,
-                        redirigir = url 
+                        redirigir = url
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
-                {                    
-                    return Json(new { success = false, message = resultado.Mensaje }, JsonRequestBehavior.AllowGet);
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = resultado.Mensaje
+                    }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Error al autenticar usuario: " + ex.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    success = false,
+                    message = "Error al autenticar usuario: " + ex.Message
+                }, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpPost]
@@ -206,6 +231,17 @@ namespace SistemaEgresados.Controllers
             Session.Abandon();
 
             FormsAuthentication.SignOut();
+
+            if (Request.Cookies[FormsAuthentication.FormsCookieName] != null)
+            {
+                HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName);
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(cookie);
+            }
+            if (Response.Cookies["TokenJWT"] != null)
+            {
+                Response.Cookies["TokenJWT"].Expires = DateTime.Now.AddDays(-1);
+            }
 
             return RedirectToAction("Autenticar");
         }

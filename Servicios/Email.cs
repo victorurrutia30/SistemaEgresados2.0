@@ -1,4 +1,5 @@
 ﻿using SistemaEgresados.DTO;
+using SistemaEgresados.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,7 @@ namespace SistemaEgresados.Servicios
                                 overflow: hidden;
                             }}
                             .header {{
-                                background: #0d6efd;
+                                background: #5D0A28;
                                 color: white;
                                 padding: 20px;
                                 text-align: center;
@@ -270,7 +271,7 @@ namespace SistemaEgresados.Servicios
                                     overflow: hidden;
                                 }}
                                 .header {{
-                                    background: linear-gradient(135deg, #0d6efd, #8b1038);
+                                    background: #5D0A28;
                                     color: white;
                                     padding: 30px;
                                     text-align: center;
@@ -321,7 +322,7 @@ namespace SistemaEgresados.Servicios
                                 }}
                                 .boton {{
                                     display: inline-block;
-                                    background: #0d6efd;
+                                    background: green;
                                     color: white;
                                     padding: 12px 30px;
                                     text-decoration: none;
@@ -398,7 +399,8 @@ namespace SistemaEgresados.Servicios
                                 
                                 <div class='footer'>
                                     <strong>Universidad Tecnológica de El Salvador</strong><br>
-                                    Final Avenida Norte, San Salvador, El Salvador<br>
+                                    Calle Arce 17 avenida Norte, edificio José Martí 2da. planta,
+                                    San Salvador, El Salvador, CA.<br>
                                     © {DateTime.Now.Year} Universidad Tecnológica de El Salvador — Todos los derechos reservados.<br>
                                     <small>Este es un mensaje automático, por favor no respondas a este correo.</small>
                                 </div>
@@ -430,6 +432,2222 @@ namespace SistemaEgresados.Servicios
                 return Resultado.error("Error al enviar el correo de bienvenida: " + ex.Message);
             }
         }
+
+        public Resultado EnviarNotificacionPostulacionEmpresa(string emailEmpresa, string nombreReclutador,
+            string tituloVacante, string nombreEgresado, string carreraEgresado, DateTime fechaPostulacion)
+        {
+            try
+            {
+                string asunto = $"📥 Nueva postulación para: {tituloVacante}";
+
+                string cuerpo = $@"
+                    <html>
+                    <head>
+                        <style>
+                            body {{
+                                font-family: 'Segoe UI', Arial, sans-serif;
+                                background-color: #f8f9fa;
+                                color: #212529;
+                                padding: 30px;
+                            }}
+                            .container {{
+                                max-width: 600px;
+                                margin: 0 auto;
+                                background: #ffffff;
+                                border-radius: 8px;
+                                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                                overflow: hidden;
+                            }}
+                            .header {{
+                                background: #8b1038;
+                                color: white;
+                                padding: 25px;
+                                text-align: center;
+                            }}
+                            .logo {{
+                                font-size: 24px;
+                                font-weight: bold;
+                                margin-bottom: 5px;
+                            }}
+                            .subtitle {{
+                                font-size: 16px;
+                                opacity: 0.9;
+                            }}
+                            .content {{
+                                padding: 30px;
+                                line-height: 1.6;
+                            }}
+                            .saludo {{
+                                font-size: 18px;
+                                color: #0d6efd;
+                                margin-bottom: 20px;
+                                font-weight: bold;
+                            }}
+                            .info-postulacion {{
+                                background: #f8f9fa;
+                                padding: 20px;
+                                border-radius: 8px;
+                                margin: 20px 0;
+                                border-left: 4px solid #0d6efd;
+                            }}
+                            .info-item {{
+                                margin-bottom: 10px;
+                                display: flex;
+                                align-items: center;
+                            }}
+                            .info-label {{
+                                font-weight: bold;
+                                color: #8b1038;
+                                min-width: 120px;
+                            }}
+                            .candidato-info {{
+                                background: #e7f3ff;
+                                padding: 20px;
+                                border-radius: 8px;
+                                margin: 20px 0;
+                                border: 1px solid #0d6efd;
+                            }}
+                            .boton {{
+                                display: inline-block;
+                                background: green;
+                                color: white;
+                                padding: 12px 30px;
+                                text-decoration: none;
+                                border-radius: 5px;
+                                font-weight: bold;
+                                margin: 10px 0;
+                            }}
+                            .footer {{
+                                background: #f1f3f5;
+                                padding: 20px;
+                                text-align: center;
+                                font-size: 12px;
+                                color: #6c757d;
+                                line-height: 1.5;
+                            }}
+                            .badge {{
+                                background: #8b1038;
+                                color: white;
+                                padding: 4px 8px;
+                                border-radius: 4px;
+                                font-size: 12px;
+                                font-weight: bold;
+                            }}
+                            .urgente {{
+                                background: #dc3545;
+                                color: white;
+                                padding: 10px;
+                                border-radius: 5px;
+                                text-align: center;
+                                margin: 15px 0;
+                            }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class='container'>
+                            <div class='header'>
+                                <div class='logo'>Sistema de Egresados UTEC</div>
+                                <div class='subtitle'>Plataforma de Empleabilidad</div>
+                            </div>
+                            
+                            <div class='content'>
+                                <div class='saludo'>¡Hola {WebUtility.HtmlEncode(nombreReclutador)}!</div>
+                                
+                                <p>Has recibido una nueva postulación para tu vacante a través del Sistema de Egresados UTEC.</p>
+                                
+                                <div class='info-postulacion'>
+                                    <h3 style='color: #8b1038; margin-top: 0;'>📋 Información de la Vacante</h3>
+                                    <div class='info-item'>
+                                        <span class='info-label'>Puesto:</span>
+                                        <span>{WebUtility.HtmlEncode(tituloVacante)}</span>
+                                    </div>
+                                    <div class='info-item'>
+                                        <span class='info-label'>Fecha postulación:</span>
+                                        <span>{fechaPostulacion:dd/MM/yyyy 'a las' hh:mm tt}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class='candidato-info'>
+                                    <h3 style='color: #0d6efd; margin-top: 0;'>Información del Candidato</h3>
+                                    <div class='info-item'>
+                                        <span class='info-label'>Nombre:</span>
+                                        <span>{WebUtility.HtmlEncode(nombreEgresado)}</span>
+                                    </div>
+                                    <div class='info-item'>
+                                        <span class='info-label'>Carrera:</span>
+                                        <span>{WebUtility.HtmlEncode(carreraEgresado)}</span>
+                                    </div>
+                                    <div class='info-item'>
+                                        <span class='info-label'>Estatus:</span>
+                                        <span class='badge'>Egresado UTEC</span>
+                                    </div>
+                                </div>
+                                
+                                <div class='urgente'>
+                                    <strong> ¡No dejes esperando al talento!</strong>
+                                    <p style='margin: 5px 0 0 0; font-size: 14px;'>
+                                        Revisa esta postulación pronto para no perder a un candidato calificado.
+                                    </p>
+                                </div>
+                                
+                                <p><strong>Acción recomendada:</strong></p>
+                                <p>Te recomendamos revisar el perfil completo del candidato en el sistema para evaluar su postulación.</p>
+                                
+                                <div style='text-align: center; margin: 25px 0;'>
+                                    <a href='#' class='boton'>Revisar Postulación en el Sistema</a>
+                                </div>
+                                
+                                <p style='font-size: 14px; color: #6c757d;'>
+                                    <i>Este es un mensaje automático generado por el Sistema de Egresados UTEC. 
+                                    Por favor no respondas a este correo.</i>
+                                </p>
+                            </div>
+                            
+                            <div class='footer'>
+                                <strong>Universidad Tecnológica de El Salvador</strong><br>
+                                Calle Arce 17 avenida Norte, edificio José Martí 2da. planta,
+                                San Salvador, El Salvador, CA.<br>
+                                Teléfono: (503) 2275-8888 ext. 8816, 8723, 8702 | Email: egresados@utec.edu.sv<br>
+                                © {DateTime.Now.Year} Universidad Tecnológica de El Salvador — Todos los derechos reservados.
+                            </div>
+                        </div>
+                    </body>
+                    </html>";
+
+                using (SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    cliente.Credentials = new NetworkCredential(remitente, contraseña);
+                    cliente.EnableSsl = true;
+
+                    using (MailMessage mensaje = new MailMessage())
+                    {
+                        mensaje.From = new MailAddress(remitente, "Sistema de Egresados UTEC");
+                        mensaje.To.Add(emailEmpresa);
+                        mensaje.Subject = asunto;
+                        mensaje.Body = cuerpo;
+                        mensaje.IsBodyHtml = true;
+
+                        cliente.Send(mensaje);
+                    }
+                }
+
+                return Resultado.exito("Notificación de postulación enviada correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return Resultado.error("Error al enviar la notificación de postulación: " + ex.Message);
+            }
+        }
+
+        public Resultado EnviarCorreoVacanteRecomendada(string email, string nombreEgresado, Vacante vacante, string nombreEmpresa)
+        {
+            try
+            {
+                string asunto = $"💼 Nueva vacante recomendada: {vacante.titulo}";
+
+                string rangoSalarial = "";
+                if (vacante.salario_confidencial == true)
+                {
+                    rangoSalarial = "<span style='color: #6c757d;'>Salario confidencial</span>";
+                }
+                else if (vacante.salario_min.HasValue && vacante.salario_max.HasValue)
+                {
+                    rangoSalarial = $"<strong>${vacante.salario_min:N2} - ${vacante.salario_max:N2}</strong>";
+                }
+
+                string fechaCierre = vacante.fecha_cierre.HasValue
+                    ? vacante.fecha_cierre.Value.ToString("dd/MM/yyyy")
+                    : "No especificada";
+
+                string cuerpo = $@"
+                <html>
+                <head>
+                    <style>
+                        body {{
+                            font-family: 'Segoe UI', Arial, sans-serif;
+                            background-color: #f8f9fa;
+                            color: #212529;
+                            padding: 30px;
+                        }}
+                        .container {{
+                            max-width: 650px;
+                            margin: 0 auto;
+                            background: #ffffff;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                            overflow: hidden;
+                        }}
+                        .header {{
+                            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                            color: white;
+                            padding: 30px;
+                            text-align: center;
+                        }}
+                        .header-icon {{
+                            font-size: 48px;
+                            margin-bottom: 10px;
+                        }}
+                        .logo {{
+                            font-size: 24px;
+                            font-weight: bold;
+                            margin-bottom: 5px;
+                        }}
+                        .subtitle {{
+                            font-size: 16px;
+                            opacity: 0.9;
+                        }}
+                        .content {{
+                            padding: 30px;
+                            line-height: 1.6;
+                        }}
+                        .saludo {{
+                            font-size: 20px;
+                            color: #10b981;
+                            margin-bottom: 20px;
+                            font-weight: bold;
+                        }}
+                        .vacante-card {{
+                            background: #f8f9fa;
+                            padding: 25px;
+                            border-radius: 8px;
+                            margin: 20px 0;
+                            border-left: 4px solid #10b981;
+                        }}
+                        .vacante-titulo {{
+                            font-size: 24px;
+                            color: #5D0A28;
+                            margin: 0 0 10px 0;
+                            font-weight: bold;
+                        }}
+                        .empresa {{
+                            font-size: 18px;
+                            color: #6c757d;
+                            margin-bottom: 20px;
+                            font-weight: 500;
+                        }}
+                        .detalle {{
+                            display: flex;
+                            align-items: center;
+                            margin: 12px 0;
+                            padding: 10px;
+                            background: white;
+                            border-radius: 5px;
+                        }}
+                        .detalle-icon {{
+                            font-size: 20px;
+                            margin-right: 10px;
+                            min-width: 30px;
+                        }}
+                        .detalle-label {{
+                            font-weight: 600;
+                            color: #495057;
+                            min-width: 120px;
+                        }}
+                        .detalle-value {{
+                            color: #212529;
+                        }}
+                        .descripcion {{
+                            background: white;
+                            padding: 20px;
+                            border-radius: 8px;
+                            margin: 20px 0;
+                            border: 1px solid #dee2e6;
+                        }}
+                        .descripcion h3 {{
+                            color: #5D0A28;
+                            margin-top: 0;
+                            font-size: 18px;
+                        }}
+                        .requisitos {{
+                            background: #fff3cd;
+                            padding: 20px;
+                            border-radius: 8px;
+                            margin: 20px 0;
+                            border: 1px solid #ffc107;
+                        }}
+                        .requisitos h3 {{
+                            color: #856404;
+                            margin-top: 0;
+                            font-size: 18px;
+                        }}
+                        .requisitos ul {{
+                            margin: 10px 0;
+                            padding-left: 20px;
+                        }}
+                        .requisitos li {{
+                            margin-bottom: 8px;
+                        }}
+                        .cta-section {{
+                            background: linear-gradient(135deg, #e7f3ff 0%, #d4edff 100%);
+                            padding: 25px;
+                            border-radius: 8px;
+                            margin: 25px 0;
+                            text-align: center;
+                            border: 2px solid #0d6efd;
+                        }}
+                        .cta-section h3 {{
+                            color: #5D0A28;
+                            margin-top: 0;
+                        }}
+                        .boton {{
+                            display: inline-block;
+                            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                            color: white;
+                            padding: 15px 40px;
+                            text-decoration: none;
+                            border-radius: 5px;
+                            font-weight: bold;
+                            margin: 15px 0;
+                            font-size: 16px;
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                        }}
+                        .alerta {{
+                            background: #fff3cd;
+                            padding: 15px;
+                            border-radius: 5px;
+                            margin: 20px 0;
+                            border-left: 4px solid #ffc107;
+                            font-size: 14px;
+                        }}
+                        .footer {{
+                            background: #f1f3f5;
+                            padding: 20px;
+                            text-align: center;
+                            font-size: 12px;
+                            color: #6c757d;
+                            line-height: 1.5;
+                        }}
+                        .destacado {{
+                            color: #10b981;
+                            font-weight: bold;
+                        }}
+                        .badge {{
+                            display: inline-block;
+                            padding: 5px 12px;
+                            background: #10b981;
+                            color: white;
+                            border-radius: 20px;
+                            font-size: 12px;
+                            font-weight: 600;
+                            margin: 5px 3px;
+                        }}
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            <div class='header-icon'>💼</div>
+                            <div class='logo'>¡Nueva Oportunidad Laboral!</div>
+                            <div class='subtitle'>Vacante que coincide con tu perfil</div>
+                        </div>
+                        
+                        <div class='content'>
+                            <div class='saludo'>¡Hola {WebUtility.HtmlEncode(nombreEgresado)}!</div>
+                            
+                            <p>Tenemos excelentes noticias para ti. Hemos encontrado una <strong>nueva vacante</strong> que coincide con tus preferencias y perfil profesional.</p>
+                            
+                            <div class='vacante-card'>
+                                <div class='vacante-titulo'>{WebUtility.HtmlEncode(vacante.titulo)}</div>
+                                <div class='empresa'> {WebUtility.HtmlEncode(nombreEmpresa)}</div>
+                                
+                                <div class='detalle'>
+                                    <span class='detalle-icon'>📍</span>
+                                    <span class='detalle-label'>Ubicación:</span>
+                                    <span class='detalle-value'>{WebUtility.HtmlEncode(vacante.ubicacion ?? "No especificada")}</span>
+                                </div>
+                                
+                                <div class='detalle'>
+                                    <span class='detalle-icon'>💻</span>
+                                    <span class='detalle-label'>Modalidad:</span>
+                                    <span class='detalle-value'>{WebUtility.HtmlEncode(vacante.modalidad ?? "No especificada")}</span>
+                                </div>
+                                
+                                <div class='detalle'>
+                                    <span class='detalle-icon'>📋</span>
+                                    <span class='detalle-label'>Tipo de contrato:</span>
+                                    <span class='detalle-value'>{WebUtility.HtmlEncode(vacante.tipo_contrato ?? "No especificado")}</span>
+                                </div>
+                                
+                                <div class='detalle'>
+                                    <span class='detalle-icon'>🎯</span>
+                                    <span class='detalle-label'>Área:</span>
+                                    <span class='detalle-value'>{WebUtility.HtmlEncode(vacante.area ?? "No especificada")}</span>
+                                </div>
+                                
+                                <div class='detalle'>
+                                    <span class='detalle-icon'>💰</span>
+                                    <span class='detalle-label'>Salario:</span>
+                                    <span class='detalle-value'>{rangoSalarial}</span>
+                                </div>
+                                
+                                <div class='detalle'>
+                                    <span class='detalle-icon'>⏰</span>
+                                    <span class='detalle-label'>Cierra:</span>
+                                    <span class='detalle-value'>{fechaCierre}</span>
+                                </div>
+                            </div>
+                            
+                            {(!string.IsNullOrEmpty(vacante.descripcion) ? $@"
+                            <div class='descripcion'>
+                                <h3>📄 Descripción del puesto</h3>
+                                <p>{WebUtility.HtmlEncode(vacante.descripcion)}</p>
+                            </div>
+                            " : "")}
+                            
+                            <div class='requisitos'>
+                                <h3>✅ Requisitos</h3>
+                                <p>{WebUtility.HtmlEncode(vacante.requisitos)}</p>
+                            </div>
+                            
+                            <div class='cta-section'>
+                                <h3>¿Te interesa esta oportunidad?</h3>
+                                <p>Ingresa al sistema para ver más detalles y postularte</p>
+                                <a href='#' class='boton'>Ver Vacante y Postularme</a>
+                                <p style='margin-top: 15px; font-size: 14px; color: #6c757d;'>
+                                    <em>No pierdas esta oportunidad, las plazas son limitadas</em>
+                                </p>
+                            </div>
+                            
+                            <div class='alerta'>
+                                <strong>💡 Consejo:</strong> Asegúrate de que tu CV esté actualizado antes de postularte. 
+                                Un perfil completo aumenta tus posibilidades de ser seleccionado.
+                            </div>
+                            
+                            <p>Recuerda que puedes ajustar tus <strong>preferencias de notificación</strong> en cualquier momento desde tu perfil en el sistema.</p>
+                            
+                            <p style='margin-top: 30px;'>¡Mucho éxito en tu postulación!<br>
+                            <strong>Equipo del Sistema de Egresados UTEC</strong></p>
+                        </div>
+                        
+                        <div class='footer'>
+                            <strong>Universidad Tecnológica de El Salvador</strong><br>
+                            Sistema de Egresados - Conectando talento con oportunidades<br>
+                            Calle Arce 17 avenida Norte, edificio José Martí 2da. planta,
+                            San Salvador, El Salvador, CA.<br>
+                            © {DateTime.Now.Year} Universidad Tecnológica de El Salvador<br>
+                            <small>Este correo es automático. Si no deseas recibir estas notificaciones, 
+                            puedes desactivarlas desde tu perfil en el sistema.</small>
+                        </div>
+                    </div>
+                </body>
+                </html>";
+
+                using (SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    cliente.Credentials = new NetworkCredential(remitente, contraseña);
+                    cliente.EnableSsl = true;
+
+                    using (MailMessage mensaje = new MailMessage())
+                    {
+                        mensaje.From = new MailAddress(remitente, "Sistema de Egresados UTEC");
+                        mensaje.To.Add(email);
+                        mensaje.Subject = asunto;
+                        mensaje.Body = cuerpo;
+                        mensaje.IsBodyHtml = true;
+
+                        cliente.Send(mensaje);
+                    }
+                }
+
+                return Resultado.exito("Correo de vacante recomendada enviado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return Resultado.error("Error al enviar el correo de vacante: " + ex.Message);
+            }
+        }
+
+        public Resultado EnviarCorreoContactoDirecto(
+        string emailEgresado,
+        string nombreEgresado,
+        string nombreEmpresa,
+        string emailEmpresa,
+        string telefonoEmpresa,
+        string nombreVacante,
+        string asunto,
+        string mensaje)
+        {
+            try
+            {
+                string asuntoCompleto = $"{nombreEmpresa} desea contactarte: {asunto}";
+
+                string cuerpo = $@"
+                    <html>
+                    <head>
+                        <style>
+                            body {{
+                                font-family: 'Segoe UI', Arial, sans-serif;
+                                background-color: #f5f5f5;
+                                color: #2b2b2b;
+                                padding: 30px;
+                                margin: 0;
+                            }}
+                            .container {{
+                                max-width: 750px;
+                                margin: 0 auto;
+                                background: #ffffff;
+                                border-radius: 10px;
+                                border: 1px solid #e1e1e1;
+                                box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+                                overflow: hidden;
+                            }}
+                            .header {{
+                                background-color: #6b1c3d;
+                                color: #ffffff;
+                                padding: 35px 30px;
+                                text-align: center;
+                            }}
+                            .header-title {{
+                                font-size: 26px;
+                                font-weight: 600;
+                                margin: 0;
+                            }}
+                            .header-subtitle {{
+                                margin-top: 8px;
+                                font-size: 15px;
+                                opacity: 0.9;
+                            }}
+                            .content {{
+                                padding: 40px 35px;
+                                line-height: 1.6;
+                                font-size: 15px;
+                            }}
+                            .saludo {{
+                                font-size: 20px;
+                                color: #6b1c3d;
+                                font-weight: 600;
+                                margin-bottom: 20px;
+                            }}
+                            .empresa-info {{
+                                border: 1px solid #6b1c3d;
+                                padding: 20px;
+                                border-radius: 8px;
+                                margin-top: 25px;
+                            }}
+                            .empresa-nombre {{
+                                font-size: 20px;
+                                font-weight: 600;
+                                color: #6b1c3d;
+                                margin-bottom: 10px;
+                            }}
+                            .campo {{
+                                margin: 8px 0;
+                                padding: 8px 12px;
+                                background: #f8f8f8;
+                                border-radius: 6px;
+                                border-left: 4px solid #6b1c3d;
+                            }}
+                            .campo strong {{
+                                color: #6b1c3d;
+                            }}
+                            .mensaje-empresa {{
+                                margin-top: 30px;
+                                border: 1px solid #dedede;
+                                padding: 20px;
+                                border-radius: 8px;
+                            }}
+                            .mensaje-empresa h3 {{
+                                margin: 0 0 12px 0;
+                                color: #6b1c3d;
+                                font-size: 18px;
+                            }}
+                            .mensaje-texto {{
+                                background: #fafafa;
+                                padding: 15px;
+                                border-radius: 6px;
+                                border-left: 4px solid #6b1c3d;
+                                white-space: pre-line;
+                            }}
+                            .cta {{
+                                margin-top: 35px;
+                                text-align: center;
+                            }}
+                            .boton {{
+                                background-color: #6b1c3d;
+                                color: #ffffff;
+                                padding: 14px 40px;
+                                text-decoration: none;
+                                border-radius: 6px;
+                                font-weight: bold;
+                                display: inline-block;
+                            }}
+                            .footer {{
+                                background-color: #6b1c3d;
+                                color: white;
+                                text-align: center;
+                                padding: 25px;
+                                font-size: 13px;
+                                margin-top: 40px;
+                            }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class='container'>
+                            <div class='header'>
+                                <div class='header-title'>Nuevo mensaje de contacto</div>
+                                <div class='header-subtitle'>Una empresa ha mostrado interés en tu perfil profesional</div>
+                            </div>
+
+                            <div class='content'>
+                                <div class='saludo'>Estimado/a {WebUtility.HtmlEncode(nombreEgresado)},</div>
+
+                                <p>
+                                    Te informamos que una empresa ha revisado tu información y desea comunicarse contigo directamente. 
+                                    Te recomendamos leer cuidadosamente la información proporcionada.
+                                </p>
+
+                                <div class='empresa-info'>
+                                    <div class='empresa-nombre'>{WebUtility.HtmlEncode(nombreEmpresa)}</div>
+
+                                    {(!string.IsNullOrEmpty(nombreVacante) ?
+                                                $"<div class='campo'><strong>Vacante:</strong> {WebUtility.HtmlEncode(nombreVacante)}</div>" : "")}
+
+                                    {(!string.IsNullOrEmpty(emailEmpresa) ?
+                                                $"<div class='campo'><strong>Correo de contacto:</strong> {WebUtility.HtmlEncode(emailEmpresa)}</div>" : "")}
+
+                                    {(!string.IsNullOrEmpty(telefonoEmpresa) ?
+                                                $"<div class='campo'><strong>Teléfono:</strong> {WebUtility.HtmlEncode(telefonoEmpresa)}</div>" : "")}
+                                </div>
+
+                                <div class='mensaje-empresa'>
+                                    <h3>Mensaje enviado desde la empresa</h3>
+                                    <div class='campo'><strong>Asunto:</strong> {WebUtility.HtmlEncode(asunto)}</div>
+                                    <div class='mensaje-texto'>{WebUtility.HtmlEncode(mensaje)}</div>
+                                </div>
+
+                                <div class='cta'>
+                                    <p style='margin-bottom: 12px;'>Puedes consultar más información ingresando al sistema de egresados.</p>
+                                    <a href='#' class='boton'>Ingresar al Sistema</a>
+                                </div>
+
+                                <p style='margin-top: 30px; font-size: 14px; color: #555;'>
+                                    Este mensaje ha sido enviado directamente por la empresa interesada.  
+                                    Por favor responde utilizando los datos de contacto proporcionados arriba.
+                                </p>
+
+                                <p style='margin-top: 25px;'>
+                                    Atentamente,<br>
+                                    <strong style='color:#6b1c3d;'>Equipo del Sistema de Egresados – UTEC</strong>
+                                </p>
+                            </div>
+
+                            <div class='footer'>
+                                Universidad Tecnológica de El Salvador<br>
+                                Sistema de Egresados – Conectando talento con oportunidades<br>
+                                © {DateTime.Now.Year} Universidad Tecnológica de El Salvador
+                            </div>
+                        </div>
+                    </body>
+                    </html>";
+
+                using (SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    cliente.Credentials = new NetworkCredential(remitente, contraseña);
+                    cliente.EnableSsl = true;
+
+                    using (MailMessage mensajeEmail = new MailMessage())
+                    {
+                        mensajeEmail.From = new MailAddress(remitente, "Sistema de Egresados UTEC");
+                        mensajeEmail.To.Add(emailEgresado);
+                        mensajeEmail.Subject = asuntoCompleto;
+                        mensajeEmail.Body = cuerpo;
+                        mensajeEmail.IsBodyHtml = true;
+
+                        if (!string.IsNullOrEmpty(emailEmpresa))
+                            mensajeEmail.ReplyToList.Add(new MailAddress(emailEmpresa, nombreEmpresa));
+
+                        cliente.Send(mensajeEmail);
+                    }
+                }
+
+                return Resultado.exito("Correo enviado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return Resultado.error("Error al enviar el correo: " + ex.Message);
+            }
+        }
+
+        public Resultado EnviarCorreoContactoDirectoBusqueda(
+        string emailEgresado,
+        string nombreEgresado,
+        string nombreEmpresa,
+        string emailEmpresa,
+        string telefonoEmpresa,
+        string asunto,
+        string mensaje)
+        {
+            try
+            {
+                string asuntoCompleto = $"{nombreEmpresa} está interesado en tu perfil: {asunto}";
+
+                string cuerpo = $@"
+                    <html>
+                    <head>
+                        <style>
+                            body {{
+                                font-family: 'Segoe UI', Arial, sans-serif;
+                                background-color: #f5f5f5;
+                                color: #2b2b2b;
+                                padding: 30px;
+                                margin: 0;
+                            }}
+                            .container {{
+                                max-width: 750px;
+                                margin: 0 auto;
+                                background: #ffffff;
+                                border-radius: 10px;
+                                border: 1px solid #e1e1e1;
+                                box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+                                overflow: hidden;
+                            }}
+                            .header {{
+                                background-color: #6b1c3d;
+                                color: #ffffff;
+                                padding: 35px 30px;
+                                text-align: center;
+                            }}
+                            .header-title {{
+                                font-size: 26px;
+                                font-weight: 600;
+                                margin: 0;
+                            }}
+                            .header-subtitle {{
+                                margin-top: 8px;
+                                font-size: 15px;
+                                opacity: 0.9;
+                            }}
+                            .content {{
+                                padding: 40px 35px;
+                                line-height: 1.6;
+                                font-size: 15px;
+                            }}
+                            .saludo {{
+                                font-size: 20px;
+                                color: #6b1c3d;
+                                font-weight: 600;
+                                margin-bottom: 20px;
+                            }}
+                            .highlight-box {{
+                                background: linear-gradient(135deg, #6b1c3d 0%, #8b2a52 100%);
+                                color: white;
+                                padding: 25px;
+                                border-radius: 10px;
+                                margin: 25px 0;
+                                text-align: center;
+                            }}
+                            .highlight-box h2 {{
+                                margin: 0 0 10px 0;
+                                font-size: 22px;
+                                font-weight: 600;
+                            }}
+                            .highlight-box p {{
+                                margin: 0;
+                                font-size: 15px;
+                                opacity: 0.95;
+                            }}
+                            .empresa-info {{
+                                border: 1px solid #6b1c3d;
+                                padding: 20px;
+                                border-radius: 8px;
+                                margin-top: 25px;
+                            }}
+                            .empresa-nombre {{
+                                font-size: 20px;
+                                font-weight: 600;
+                                color: #6b1c3d;
+                                margin-bottom: 15px;
+                            }}
+                            .campo {{
+                                margin: 8px 0;
+                                padding: 8px 12px;
+                                background: #f8f8f8;
+                                border-radius: 6px;
+                                border-left: 4px solid #6b1c3d;
+                            }}
+                            .campo strong {{
+                                color: #6b1c3d;
+                            }}
+                            .mensaje-empresa {{
+                                margin-top: 30px;
+                                border: 1px solid #dedede;
+                                padding: 20px;
+                                border-radius: 8px;
+                            }}
+                            .mensaje-empresa h3 {{
+                                margin: 0 0 12px 0;
+                                color: #6b1c3d;
+                                font-size: 18px;
+                            }}
+                            .mensaje-texto {{
+                                background: #fafafa;
+                                padding: 15px;
+                                border-radius: 6px;
+                                border-left: 4px solid #6b1c3d;
+                                white-space: pre-line;
+                            }}
+                            .cta {{
+                                margin-top: 35px;
+                                text-align: center;
+                            }}
+                            .boton {{
+                                background-color: #6b1c3d;
+                                color: #ffffff;
+                                padding: 14px 40px;
+                                text-decoration: none;
+                                border-radius: 6px;
+                                font-weight: bold;
+                                display: inline-block;
+                                transition: background-color 0.3s;
+                            }}
+                            .boton:hover {{
+                                background-color: #8b2a52;
+                            }}
+                            .info-note {{
+                                background: #fff9e6;
+                                border-left: 4px solid #ffc107;
+                                padding: 15px;
+                                margin: 25px 0;
+                                border-radius: 6px;
+                                font-size: 14px;
+                            }}
+                            .footer {{
+                                background-color: #6b1c3d;
+                                color: white;
+                                text-align: center;
+                                padding: 25px;
+                                font-size: 13px;
+                                margin-top: 40px;
+                            }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class='container'>
+                            <div class='header'>
+                                <div class='header-title'>¡Una empresa ha encontrado tu perfil!</div>
+                                <div class='header-subtitle'>Tu experiencia y habilidades han llamado la atención</div>
+                            </div>
+
+                            <div class='content'>
+                                <div class='saludo'>¡Hola {WebUtility.HtmlEncode(nombreEgresado)}!</div>
+
+                                <div class='highlight-box'>
+                                    <h2>📢 Oportunidad Profesional</h2>
+                                    <p>Una empresa ha revisado tu perfil en el Sistema de Egresados y está interesada en contactarte</p>
+                                </div>
+
+                                <p>
+                                    Nos complace informarte que <strong>{WebUtility.HtmlEncode(nombreEmpresa)}</strong> 
+                                    ha encontrado tu perfil profesional y desea establecer comunicación contigo 
+                                    para explorar una posible oportunidad laboral.
+                                </p>
+
+                                <div class='empresa-info'>
+                                    <div class='empresa-nombre'>{WebUtility.HtmlEncode(nombreEmpresa)}</div>
+
+                                    {(!string.IsNullOrEmpty(emailEmpresa) ?
+                                                        $"<div class='campo'><strong>📧 Correo de contacto:</strong> {WebUtility.HtmlEncode(emailEmpresa)}</div>" : "")}
+
+                                    {(!string.IsNullOrEmpty(telefonoEmpresa) ?
+                                                        $"<div class='campo'><strong>📞 Teléfono:</strong> {WebUtility.HtmlEncode(telefonoEmpresa)}</div>" : "")}
+                                </div>
+
+                                <div class='mensaje-empresa'>
+                                    <h3>💬 Mensaje de la empresa</h3>
+                                    <div class='campo'><strong>Asunto:</strong> {WebUtility.HtmlEncode(asunto)}</div>
+                                    <div class='mensaje-texto'>{WebUtility.HtmlEncode(mensaje)}</div>
+                                </div>
+
+                                <div class='info-note'>
+                                    <strong>💡 Nota importante:</strong> Esta empresa encontró tu perfil a través del 
+                                    Sistema de Egresados. Te recomendamos revisar los datos de contacto y responder 
+                                    a la brevedad si estás interesado en la oportunidad.
+                                </div>
+
+                                <div class='cta'>
+                                    <p style='margin-bottom: 12px;'>Actualiza tu perfil y revisa más oportunidades</p>
+                                    <a href='#' class='boton'>Ingresar al Sistema</a>
+                                </div>
+
+                                <p style='margin-top: 30px; font-size: 14px; color: #555;'>
+                                    Para responder a esta oportunidad, comunícate directamente con la empresa 
+                                    utilizando los datos de contacto proporcionados arriba.
+                                </p>
+
+                                <p style='margin-top: 25px;'>
+                                    ¡Mucho éxito!<br>
+                                    <strong style='color:#6b1c3d;'>Equipo del Sistema de Egresados – UTEC</strong>
+                                </p>
+                            </div>
+
+                            <div class='footer'>
+                                Universidad Tecnológica de El Salvador<br>
+                                Sistema de Egresados – Conectando talento con oportunidades<br>
+                                © {DateTime.Now.Year} Universidad Tecnológica de El Salvador
+                            </div>
+                        </div>
+                    </body>
+                    </html>";
+
+                using (SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    cliente.Credentials = new NetworkCredential(remitente, contraseña);
+                    cliente.EnableSsl = true;
+
+                    using (MailMessage mensajeEmail = new MailMessage())
+                    {
+                        mensajeEmail.From = new MailAddress(remitente, "Sistema de Egresados UTEC");
+                        mensajeEmail.To.Add(emailEgresado);
+                        mensajeEmail.Subject = asuntoCompleto;
+                        mensajeEmail.Body = cuerpo;
+                        mensajeEmail.IsBodyHtml = true;
+
+                        if (!string.IsNullOrEmpty(emailEmpresa))
+                            mensajeEmail.ReplyToList.Add(new MailAddress(emailEmpresa, nombreEmpresa));
+
+                        cliente.Send(mensajeEmail);
+                    }
+                }
+
+                return Resultado.exito("Correo enviado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return Resultado.error("Error al enviar el correo: " + ex.Message);
+            }
+        }
+
+        public Resultado EnviarNotificacionVisualizacionCV(
+        string emailEgresado,
+        string nombreEgresado,
+        string nombreEmpresa,
+        string vacante = null)
+        {
+            try
+            {
+                string asuntoCompleto = $"¡{nombreEmpresa} ha visualizado tu CV!";
+
+                string cuerpo = $@"
+                    <html>
+                    <head>
+                        <style>
+                            body {{
+                                font-family: 'Segoe UI', Arial, sans-serif;
+                                background-color: #f5f5f5;
+                                color: #2b2b2b;
+                                padding: 30px;
+                                margin: 0;
+                            }}
+                            .container {{
+                                max-width: 750px;
+                                margin: 0 auto;
+                                background: #ffffff;
+                                border-radius: 10px;
+                                border: 1px solid #e1e1e1;
+                                box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+                                overflow: hidden;
+                            }}
+                            .header {{
+                                background: linear-gradient(135deg, #6b1c3d 0%, #8b2a52 100%);
+                                color: #ffffff;
+                                padding: 35px 30px;
+                                text-align: center;
+                            }}
+                            .header-icon {{
+                                font-size: 48px;
+                                margin-bottom: 10px;
+                            }}
+                            .header-title {{
+                                font-size: 26px;
+                                font-weight: 600;
+                                margin: 0;
+                            }}
+                            .header-subtitle {{
+                                margin-top: 8px;
+                                font-size: 15px;
+                                opacity: 0.95;
+                            }}
+                            .content {{
+                                padding: 40px 35px;
+                                line-height: 1.6;
+                                font-size: 15px;
+                            }}
+                            .saludo {{
+                                font-size: 20px;
+                                color: #6b1c3d;
+                                font-weight: 600;
+                                margin-bottom: 20px;
+                            }}
+                            .notification-box {{
+                                background: linear-gradient(135deg, #fff9e6 0%, #fff3d6 100%);
+                                border: 2px solid #ffc107;
+                                border-radius: 10px;
+                                padding: 25px;
+                                margin: 25px 0;
+                                text-align: center;
+                            }}
+                            .notification-box .icon {{
+                                font-size: 42px;
+                                margin-bottom: 10px;
+                            }}
+                            .notification-box h2 {{
+                                color: #6b1c3d;
+                                margin: 10px 0;
+                                font-size: 22px;
+                            }}
+                            .notification-box .empresa {{
+                                font-size: 24px;
+                                font-weight: bold;
+                                color: #6b1c3d;
+                                margin: 15px 0;
+                            }}
+                            .notification-box .fecha {{
+                                color: #666;
+                                font-size: 14px;
+                                margin-top: 10px;
+                            }}
+                            .info-card {{
+                                background: #f8f9fa;
+                                border-left: 4px solid #6b1c3d;
+                                padding: 20px;
+                                border-radius: 6px;
+                                margin: 25px 0;
+                            }}
+                            .info-card h3 {{
+                                color: #6b1c3d;
+                                margin: 0 0 10px 0;
+                                font-size: 18px;
+                            }}
+                            .info-card p {{
+                                margin: 8px 0;
+                                color: #555;
+                            }}
+                            .tips-section {{
+                                background: #e8f5e9;
+                                border-left: 4px solid #4caf50;
+                                padding: 20px;
+                                border-radius: 6px;
+                                margin: 25px 0;
+                            }}
+                            .tips-section h3 {{
+                                color: #2e7d32;
+                                margin: 0 0 15px 0;
+                                font-size: 18px;
+                            }}
+                            .tip-item {{
+                                margin: 10px 0;
+                                padding-left: 25px;
+                                position: relative;
+                            }}
+                            .tip-item:before {{
+                                content: '✓';
+                                position: absolute;
+                                left: 0;
+                                color: #4caf50;
+                                font-weight: bold;
+                                font-size: 18px;
+                            }}
+                            .stats {{
+                                display: table;
+                                width: 100%;
+                                margin: 25px 0;
+                            }}
+                            .stat-item {{
+                                display: table-cell;
+                                text-align: center;
+                                padding: 20px;
+                                background: #f8f9fa;
+                                border-radius: 8px;
+                            }}
+                            .stat-item .number {{
+                                font-size: 32px;
+                                font-weight: bold;
+                                color: #6b1c3d;
+                            }}
+                            .stat-item .label {{
+                                font-size: 14px;
+                                color: #666;
+                                margin-top: 5px;
+                            }}
+                            .cta {{
+                                margin-top: 35px;
+                                text-align: center;
+                            }}
+                            .boton {{
+                                background-color: #6b1c3d;
+                                color: #ffffff;
+                                padding: 14px 40px;
+                                text-decoration: none;
+                                border-radius: 6px;
+                                font-weight: bold;
+                                display: inline-block;
+                                transition: background-color 0.3s;
+                            }}
+                            .boton:hover {{
+                                background-color: #8b2a52;
+                            }}
+                            .footer {{
+                                background-color: #6b1c3d;
+                                color: white;
+                                text-align: center;
+                                padding: 25px;
+                                font-size: 13px;
+                            }}
+                            .footer-links {{
+                                margin-top: 15px;
+                            }}
+                            .footer-links a {{
+                                color: white;
+                                text-decoration: none;
+                                margin: 0 10px;
+                            }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class='container'>
+                            <div class='header'>
+                                <div class='header-icon'>👁️</div>
+                                <div class='header-title'>¡Tu perfil está generando interés!</div>
+                                <div class='header-subtitle'>Una empresa ha visualizado tu CV</div>
+                            </div>
+
+                            <div class='content'>
+                                <div class='saludo'>¡Hola {WebUtility.HtmlEncode(nombreEgresado)}!</div>
+
+                                <div class='notification-box'>
+                                    <div class='icon'>🎯</div>
+                                    <h2>Visualización de CV</h2>
+                                    <div class='empresa'>{WebUtility.HtmlEncode(nombreEmpresa)}</div>
+                                    <p>ha revisado tu currículum vitae</p>
+                                    {(!string.IsNullOrEmpty(vacante) ?
+                                                $"<p style='margin-top: 15px; color: #6b1c3d;'><strong>📋 Vacante:</strong> {WebUtility.HtmlEncode(vacante)}</p>" : "")}
+                                    <div class='fecha'>📅 {DateTime.Now:dddd, dd 'de' MMMM 'de' yyyy 'a las' HH:mm}</div>
+                                </div>
+
+                                <p style='font-size: 16px; text-align: center; color: #555;'>
+                                    ¡Excelente noticia! Tu perfil profesional ha llamado la atención de 
+                                    <strong>{WebUtility.HtmlEncode(nombreEmpresa)}</strong>. 
+                                    Esto significa que tus habilidades y experiencia coinciden con lo que están buscando.
+                                </p>
+
+                                <div class='info-card'>
+                                    <h3>📌 ¿Qué significa esto?</h3>
+                                    <p>
+                                        Cuando una empresa visualiza tu CV, está evaluando tu perfil para una posible 
+                                        oportunidad laboral. Es un indicador de que tu experiencia y habilidades son 
+                                        relevantes para sus necesidades.
+                                    </p>
+                                </div>
+
+                                <div class='tips-section'>
+                                    <h3>💡 Consejos para aumentar tus oportunidades</h3>
+                                    <div class='tip-item'>
+                                        Mantén tu perfil actualizado con tu experiencia más reciente
+                                    </div>
+                                    <div class='tip-item'>
+                                        Asegúrate de que tu información de contacto esté correcta
+                                    </div>
+                                    <div class='tip-item'>
+                                        Agrega certificaciones o cursos que hayas completado recientemente
+                                    </div>
+                                    <div class='tip-item'>
+                                        Revisa que tus habilidades y competencias estén bien destacadas
+                                    </div>
+                                    <div class='tip-item'>
+                                        Mantente atento a tu correo para posibles mensajes de la empresa
+                                    </div>
+                                </div>                                
+
+                                <p style='margin-top: 30px; padding: 15px; background: #f0f0f0; border-radius: 6px; font-size: 14px; text-align: center;'>
+                                    💼 <strong>Tip profesional:</strong> Las empresas suelen contactar a los candidatos 
+                                    que mejor se ajustan a sus necesidades. ¡Mantén tu perfil completo y actualizado!
+                                </p>
+
+                                <p style='margin-top: 25px; text-align: center;'>
+                                    ¡Mucho éxito en tu búsqueda laboral!<br>
+                                    <strong style='color:#6b1c3d;'>Equipo del Sistema de Egresados – UTEC</strong>
+                                </p>
+                            </div>
+
+                            <div class='footer'>
+                                Universidad Tecnológica de El Salvador<br>
+                                Sistema de Egresados – Conectando talento con oportunidades<br>
+                                © {DateTime.Now.Year} Universidad Tecnológica de El Salvador
+                                
+                                <div class='footer-links'>
+                                    <a href='#'>Política de Privacidad</a> | 
+                                    <a href='#'>Términos de Uso</a> | 
+                                    <a href='#'>Contacto</a>
+                                </div>
+                            </div>
+                        </div>
+                    </body>
+                    </html>";
+
+                using (SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    cliente.Credentials = new NetworkCredential(remitente, contraseña);
+                    cliente.EnableSsl = true;
+
+                    using (MailMessage mensajeEmail = new MailMessage())
+                    {
+                        mensajeEmail.From = new MailAddress(remitente, "Sistema de Egresados UTEC");
+                        mensajeEmail.To.Add(emailEgresado);
+                        mensajeEmail.Subject = asuntoCompleto;
+                        mensajeEmail.Body = cuerpo;
+                        mensajeEmail.IsBodyHtml = true;
+
+                        cliente.Send(mensajeEmail);
+                    }
+                }
+
+                return Resultado.exito("Notificación enviada correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return Resultado.error("Error al enviar la notificación: " + ex.Message);
+            }
+        }
+
+        public Resultado EnviarCorreoRechazoPostulacion(
+        string emailEgresado,
+        string nombreEgresado,
+        string nombreEmpresa,
+        string tituloVacante,
+        string motivoRechazo = null,
+        bool incluirMotivo = false)
+        {
+            try
+            {
+                string asuntoCompleto = $"Actualización sobre tu postulación en {nombreEmpresa}";
+
+                string cuerpo = $@"
+                    <html>
+                    <head>
+                        <style>
+                            body {{
+                                font-family: 'Segoe UI', Arial, sans-serif;
+                                background-color: #f5f5f5;
+                                color: #2b2b2b;
+                                padding: 30px;
+                                margin: 0;
+                            }}
+                            .container {{
+                                max-width: 750px;
+                                margin: 0 auto;
+                                background: #ffffff;
+                                border-radius: 10px;
+                                border: 1px solid #e1e1e1;
+                                box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+                                overflow: hidden;
+                            }}
+                            .header {{
+                                background: linear-gradient(135deg, #6b1c3d 0%, #8b2a52 100%);
+                                color: #ffffff;
+                                padding: 35px 30px;
+                                text-align: center;
+                            }}
+                            .header-title {{
+                                font-size: 26px;
+                                font-weight: 600;
+                                margin: 0;
+                            }}
+                            .header-subtitle {{
+                                margin-top: 8px;
+                                font-size: 15px;
+                                opacity: 0.95;
+                            }}
+                            .content {{
+                                padding: 40px 35px;
+                                line-height: 1.6;
+                                font-size: 15px;
+                            }}
+                            .saludo {{
+                                font-size: 20px;
+                                color: #6b1c3d;
+                                font-weight: 600;
+                                margin-bottom: 20px;
+                            }}
+                            .info-box {{
+                                background: #f8f9fa;
+                                border-left: 4px solid #6b1c3d;
+                                padding: 20px;
+                                border-radius: 6px;
+                                margin: 25px 0;
+                            }}
+                            .info-box h3 {{
+                                color: #6b1c3d;
+                                margin: 0 0 10px 0;
+                                font-size: 18px;
+                            }}
+                            .info-box .empresa {{
+                                font-size: 20px;
+                                font-weight: bold;
+                                color: #6b1c3d;
+                                margin: 10px 0;
+                            }}
+                            .info-box .vacante {{
+                                font-size: 16px;
+                                color: #555;
+                                margin: 8px 0;
+                            }}
+                            .motivo-box {{
+                                background: #fff3cd;
+                                border: 1px solid #ffc107;
+                                border-left: 4px solid #ffc107;
+                                padding: 20px;
+                                border-radius: 6px;
+                                margin: 25px 0;
+                            }}
+                            .motivo-box h3 {{
+                                color: #856404;
+                                margin: 0 0 12px 0;
+                                font-size: 18px;
+                            }}
+                            .motivo-texto {{
+                                background: white;
+                                padding: 15px;
+                                border-radius: 6px;
+                                color: #333;
+                                white-space: pre-line;
+                            }}
+                            .encouragement-box {{
+                                background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+                                border-left: 4px solid #2196f3;
+                                padding: 25px;
+                                border-radius: 8px;
+                                margin: 30px 0;
+                                text-align: center;
+                            }}
+                            .encouragement-box h3 {{
+                                color: #1565c0;
+                                margin: 0 0 15px 0;
+                                font-size: 20px;
+                            }}
+                            .encouragement-box p {{
+                                margin: 10px 0;
+                                color: #333;
+                                font-size: 15px;
+                            }}
+                            .tips-section {{
+                                background: #e8f5e9;
+                                border-left: 4px solid #4caf50;
+                                padding: 20px;
+                                border-radius: 6px;
+                                margin: 25px 0;
+                            }}
+                            .tips-section h3 {{
+                                color: #2e7d32;
+                                margin: 0 0 15px 0;
+                                font-size: 18px;
+                            }}
+                            .tip-item {{
+                                margin: 10px 0;
+                                padding-left: 25px;
+                                position: relative;
+                                color: #333;
+                            }}
+                            .tip-item:before {{
+                                content: '💡';
+                                position: absolute;
+                                left: 0;
+                                font-size: 16px;
+                            }}
+                            .cta {{
+                                margin-top: 35px;
+                                text-align: center;
+                            }}
+                            .boton {{
+                                background-color: #6b1c3d;
+                                color: #ffffff;
+                                padding: 14px 40px;
+                                text-decoration: none;
+                                border-radius: 6px;
+                                font-weight: bold;
+                                display: inline-block;
+                                margin: 5px;
+                                transition: background-color 0.3s;
+                            }}
+                            .boton:hover {{
+                                background-color: #8b2a52;
+                            }}
+                            .boton-secondary {{
+                                background-color: #2196f3;
+                            }}
+                            .boton-secondary:hover {{
+                                background-color: #1976d2;
+                            }}
+                            .footer {{
+                                background-color: #6b1c3d;
+                                color: white;
+                                text-align: center;
+                                padding: 25px;
+                                font-size: 13px;
+                            }}
+                            .quote {{
+                                font-style: italic;
+                                color: #666;
+                                text-align: center;
+                                padding: 20px;
+                                margin: 25px 0;
+                                border-top: 1px solid #e0e0e0;
+                                border-bottom: 1px solid #e0e0e0;
+                            }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class='container'>
+                            <div class='header'>
+                                <div class='header-title'>Actualización de tu postulación</div>
+                                <div class='header-subtitle'>Información sobre el proceso de selección</div>
+                            </div>
+
+                            <div class='content'>
+                                <div class='saludo'>Estimado/a {WebUtility.HtmlEncode(nombreEgresado)},</div>
+
+                                <p style='font-size: 16px;'>
+                                    Agradecemos sinceramente tu interés en formar parte de nuestro equipo. 
+                                    Te escribimos para informarte sobre el estado de tu postulación.
+                                </p>
+
+                                <div class='info-box'>
+                                    <h3>📋 Detalles de la postulación</h3>
+                                    <div class='empresa'>{WebUtility.HtmlEncode(nombreEmpresa)}</div>
+                                    <div class='vacante'>📌 Vacante: <strong>{WebUtility.HtmlEncode(tituloVacante)}</strong></div>
+                                </div>
+
+                                <p style='font-size: 16px; margin: 25px 0;'>
+                                    Después de revisar cuidadosamente tu perfil profesional y experiencia, 
+                                    lamentamos informarte que en esta ocasión <strong>hemos decidido continuar 
+                                    el proceso con otros candidatos</strong> cuyo perfil se ajusta más específicamente 
+                                    a los requerimientos actuales de la posición.
+                                </p>
+
+                                {(incluirMotivo && !string.IsNullOrWhiteSpace(motivoRechazo) ?
+                                            $@"<div class='motivo-box'>
+                                        <h3>📝 Retroalimentación del proceso</h3>
+                                        <div class='motivo-texto'>{WebUtility.HtmlEncode(motivoRechazo)}</div>
+                                    </div>" : "")}
+
+                                <div class='encouragement-box'>
+                                    <h3>🌟 ¡No te desanimes!</h3>
+                                    <p>
+                                        Los procesos de selección son altamente competitivos y muchos factores 
+                                        influyen en las decisiones finales. Tu talento y experiencia son valiosos, 
+                                        y estamos seguros de que encontrarás la oportunidad ideal para ti.
+                                    </p>
+                                    <p style='margin-top: 15px; font-weight: 600; color: #1565c0;'>
+                                        ¡Sigue adelante, el éxito profesional está más cerca de lo que piensas!
+                                    </p>
+                                </div>
+
+                                <div class='tips-section'>
+                                    <h3>💼 Recomendaciones para futuras postulaciones</h3>
+                                    <div class='tip-item'>
+                                        Mantén actualizado tu perfil profesional con tu experiencia más reciente
+                                    </div>
+                                    <div class='tip-item'>
+                                        Destaca tus logros concretos y resultados medibles en tu CV
+                                    </div>
+                                    <div class='tip-item'>
+                                        Personaliza tu carta de presentación para cada oportunidad
+                                    </div>
+                                    <div class='tip-item'>
+                                        Continúa desarrollando tus habilidades mediante cursos y certificaciones
+                                    </div>
+                                    <div class='tip-item'>
+                                        Mantente activo en redes profesionales y amplía tu networking
+                                    </div>
+                                </div>
+
+                                <p style='font-size: 15px; margin: 25px 0;'>
+                                    Te invitamos a seguir explorando otras oportunidades en nuestra plataforma. 
+                                    Hay muchas empresas buscando talento como el tuyo, y tu próxima gran 
+                                    oportunidad podría estar a solo un clic de distancia.
+                                </p>
+
+                                <div class='cta'>
+                                    <a href='#' class='boton'>Ver Vacantes Disponibles</a>
+                                    <a href='#' class='boton boton-secondary'>Actualizar mi Perfil</a>
+                                </div>
+
+                                <div class='quote'>
+                                    &quot;El éxito no es definitivo, el fracaso no es fatal: 
+                                    lo que cuenta es el valor para continuar.&quot;
+                                    <br><strong>- Winston Churchill</strong>
+                                </div>
+
+                                <p style='margin-top: 30px; font-size: 14px; color: #666;'>
+                                    Valoramos el tiempo que dedicaste a tu postulación y te deseamos 
+                                    mucho éxito en tu búsqueda profesional. Mantente atento a nuevas 
+                                    oportunidades que puedan surgir en el futuro.
+                                </p>
+
+                                <p style='margin-top: 25px;'>
+                                    Con los mejores deseos,<br>
+                                    <strong style='color:#6b1c3d;'>{WebUtility.HtmlEncode(nombreEmpresa)}</strong><br>
+                                    <span style='font-size: 13px; color: #666;'>A través del Sistema de Egresados UTEC</span>
+                                </p>
+                            </div>
+
+                            <div class='footer'>
+                                Universidad Tecnológica de El Salvador<br>
+                                Sistema de Egresados – Conectando talento con oportunidades<br>
+                                © {DateTime.Now.Year} Universidad Tecnológica de El Salvador
+                            </div>
+                        </div>
+                    </body>
+                    </html>";
+
+                using (SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    cliente.Credentials = new NetworkCredential(remitente, contraseña);
+                    cliente.EnableSsl = true;
+
+                    using (MailMessage mensajeEmail = new MailMessage())
+                    {
+                        mensajeEmail.From = new MailAddress(remitente, "Sistema de Egresados UTEC");
+                        mensajeEmail.To.Add(emailEgresado);
+                        mensajeEmail.Subject = asuntoCompleto;
+                        mensajeEmail.Body = cuerpo;
+                        mensajeEmail.IsBodyHtml = true;
+
+                        cliente.Send(mensajeEmail);
+                    }
+                }
+
+                return Resultado.exito("Correo de rechazo enviado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return Resultado.error("Error al enviar el correo de rechazo: " + ex.Message);
+            }
+        }
+
+        public Resultado EnviarCorreoInvitacionRegistroEmpresa(string email, string nombreEmpresa, string urlRegistro)
+        {
+            try
+            {
+                string asunto = "Invitación para registrar su empresa en el Sistema de Egresados UTEC";
+
+                string cuerpo = $@"
+                <html>
+                <head>
+                    <style>
+                        body {{
+                            font-family: 'Segoe UI', Arial, sans-serif;
+                            background-color: #f8f9fa;
+                            color: #212529;
+                            padding: 30px;
+                        }}
+                        .container {{
+                            max-width: 600px;
+                            margin: 0 auto;
+                            background: #ffffff;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                            overflow: hidden;
+                        }}
+                        .header {{
+                            background: #5D0A28;
+                            color: white;
+                            padding: 25px;
+                            text-align: center;
+                        }}
+                        .logo {{
+                            font-size: 24px;
+                            font-weight: bold;
+                        }}
+                        .subtitle {{
+                            font-size: 16px;
+                            opacity: 0.9;
+                        }}
+                        .content {{
+                            padding: 30px;
+                            line-height: 1.6;
+                        }}
+                        .saludo {{
+                            font-size: 20px;
+                            color: #0d6efd;
+                            font-weight: bold;
+                        }}
+                        .boton {{
+                            display: inline-block;
+                            background: green;
+                            color: white;
+                            padding: 12px 30px;
+                            text-decoration: none;
+                            border-radius: 5px;
+                            font-weight: bold;
+                            margin-top: 20px;
+                        }}
+                        .nota {{
+                            font-size: 14px;
+                            color: #6c757d;
+                            margin-top: 15px;
+                            line-height: 1.5;
+                        }}
+                        .footer {{
+                            background: #f1f3f5;
+                            padding: 20px;
+                            text-align: center;
+                            font-size: 12px;
+                            color: #6c757d;
+                            line-height: 1.5;
+                        }}
+                        .empresa {{
+                            color: #8b1038;
+                            font-weight: bold;
+                        }}
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            <div class='logo'>Sistema de Egresados UTEC</div>
+                            <div class='subtitle'>Conectando empresas con el talento UTEC</div>
+                        </div>
+
+                        <div class='content'>
+                            <p class='saludo'>Estimado representante de <span class='empresa'>{WebUtility.HtmlEncode(nombreEmpresa)}</span>,</p>
+                            
+                            <p>La <strong>Universidad Tecnológica de El Salvador (UTEC)</strong> le invita a registrar su empresa en nuestra plataforma de empleabilidad y egresados.</p>
+                            
+                            <p>A través del <strong>Sistema de Egresados UTEC</strong>, podrá publicar vacantes, recibir postulaciones y contactar directamente con profesionales egresados de nuestra universidad.</p>
+
+                            <p>Para completar su registro, haga clic en el siguiente enlace seguro:</p>
+                            
+                            <div style='text-align:center;'>
+                                <a href='{urlRegistro}' class='boton'>Registrar mi empresa</a>
+                            </div>
+
+                            <p class='nota'>
+                                Si el botón no funciona, puede copiar y pegar este enlace en su navegador:<br/>
+                                <a href='{urlRegistro}'>{urlRegistro}</a>
+                            </p>
+
+                            <p class='nota'>
+                                <strong>Nota:</strong> Este enlace es personal y estará disponible por un tiempo limitado para garantizar la seguridad de su registro.
+                            </p>
+
+                            <p>¡Gracias por formar parte de la red de empleadores UTEC!</p>
+
+                            <p>Atentamente,<br/>
+                            <strong>Equipo del Sistema de Egresados UTEC</strong></p>
+                        </div>
+
+                        <div class='footer'>
+                            <strong>Universidad Tecnológica de El Salvador</strong><br/>
+                            Calle Arce 17 avenida Norte, edificio José Martí 2da. planta,
+                            San Salvador, El Salvador, CA.<br/>
+                            Teléfono: (503) 2275-8888 ext. 8816, 8723, 8702 | Email: egresados@utec.edu.sv<br/>
+                            © {DateTime.Now.Year} Universidad Tecnológica de El Salvador — Todos los derechos reservados.<br/>
+                            <small>Este es un mensaje automático, por favor no respondas a este correo.</small>
+                        </div>
+                    </div>
+                </body>
+                </html>";
+
+                using (SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    cliente.Credentials = new NetworkCredential(remitente, contraseña);
+                    cliente.EnableSsl = true;
+
+                    using (MailMessage mensaje = new MailMessage())
+                    {
+                        mensaje.From = new MailAddress(remitente, "Sistema de Egresados UTEC");
+                        mensaje.To.Add(email);
+                        mensaje.Subject = asunto;
+                        mensaje.Body = cuerpo;
+                        mensaje.IsBodyHtml = true;
+
+                        cliente.Send(mensaje);
+                    }
+                }
+
+                return Resultado.exito("Invitación enviada correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return Resultado.error("Error al enviar la invitación: " + ex.Message);
+            }
+        }
+
+        public Resultado EnviarCorreoBienvenidaEmpresa(string emailEmpresa, string nombreEmpresa, string nombreUsuario)
+        {
+            try
+            {
+                string asunto = "¡Bienvenido(a) al Sistema de Egresados UTEC!";
+
+                string cuerpo = $@"
+                    <html>
+                    <head>
+                        <style>
+                            body {{
+                                font-family: 'Segoe UI', Arial, sans-serif;
+                                background-color: #f8f9fa;
+                                color: #212529;
+                                padding: 30px;
+                            }}
+                            .container {{
+                                max-width: 600px;
+                                margin: 0 auto;
+                                background: #ffffff;
+                                border-radius: 8px;
+                                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                                overflow: hidden;
+                            }}
+                            .header {{
+                                background: #5D0A28;
+                                color: white;
+                                padding: 30px;
+                                text-align: center;
+                            }}
+                            .logo {{
+                                font-size: 28px;
+                                font-weight: bold;
+                                margin-bottom: 10px;
+                            }}
+                            .subtitle {{
+                                font-size: 18px;
+                                opacity: 0.9;
+                            }}
+                            .content {{
+                                padding: 30px;
+                                line-height: 1.6;
+                            }}
+                            .saludo {{
+                                font-size: 20px;
+                                color: #8b1038;
+                                margin-bottom: 20px;
+                                font-weight: bold;
+                            }}
+                            .empresa-nombre {{
+                                color: #0d6efd;
+                                font-weight: bold;
+                            }}
+                            .beneficios {{
+                                background: #f8f9fa;
+                                padding: 20px;
+                                border-radius: 8px;
+                                margin: 20px 0;
+                                border-left: 4px solid #8b1038;
+                            }}
+                            .beneficios h3 {{
+                                color: #8b1038;
+                                margin-top: 0;
+                            }}
+                            .beneficios ul {{
+                                margin: 10px 0;
+                                padding-left: 20px;
+                            }}
+                            .beneficios li {{
+                                margin-bottom: 8px;
+                            }}
+                            .acciones {{
+                                background: #e7f3ff;
+                                padding: 20px;
+                                border-radius: 8px;
+                                margin: 20px 0;
+                                border: 1px solid #0d6efd;
+                            }}
+                            .boton {{
+                                display: inline-block;
+                                background: #8b1038;
+                                color: white;
+                                padding: 12px 30px;
+                                text-decoration: none;
+                                border-radius: 5px;
+                                font-weight: bold;
+                                margin: 10px 0;
+                            }}
+                            .contacto {{
+                                background: #fff3cd;
+                                padding: 15px;
+                                border-radius: 5px;
+                                margin: 20px 0;
+                                border: 1px solid #ffc107;
+                            }}
+                            .footer {{
+                                background: #f1f3f5;
+                                padding: 20px;
+                                text-align: center;
+                                font-size: 12px;
+                                color: #6c757d;
+                                line-height: 1.5;
+                            }}
+                            .destacado {{
+                                color: #8b1038;
+                                font-weight: bold;
+                            }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class='container'>
+                            <div class='header'>
+                                <div class='logo'>Sistema de Egresados UTEC</div>
+                                <div class='subtitle'>Plataforma de Empleabilidad Empresarial</div>
+                            </div>
+                            
+                            <div class='content'>
+                                <div class='saludo'>¡Hola {WebUtility.HtmlEncode(nombreUsuario)}!</div>
+                                
+                                <p>Es un placer darle la más cordial bienvenida a <span class='empresa-nombre'>{WebUtility.HtmlEncode(nombreEmpresa)}</span> al <strong>Sistema de Egresados de la Universidad Tecnológica de El Salvador</strong>.</p>
+                                
+                                <p>Su registro ha sido completado exitosamente y ahora forma parte de nuestra red de empresas aliadas, donde podrá conectar con el mejor talento egresado de UTEC.</p>
+                                
+                                <div class='beneficios'>
+                                    <h3> ¿Qué puede hacer en nuestra plataforma?</h3>
+                                    <ul>
+                                        <li><strong>Publicar vacantes de empleo</strong> dirigidas exclusivamente a egresados UTEC</li>
+                                        <li><strong>Recibir postulaciones</strong> de profesionales calificados en tiempo real</li>
+                                        <li><strong>Acceder a perfiles profesionales</strong> de egresados con información actualizada</li>
+                                        <li><strong>Gestionar su proceso de reclutamiento</strong> desde una sola plataforma</li>
+                                        <li><strong>Fortalecer su marca empleadora</strong> entre la comunidad universitaria</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class='acciones'>
+                                    <h3> Comience ahora</h3>
+                                    <p>Le invitamos a iniciar sesión y publicar su primera vacante para comenzar a recibir candidatos:</p>
+                                    <a href='#' class='boton'>Ir al Sistema</a>
+                                    <p style='margin-top: 10px; font-size: 14px;'><em>Publique vacantes y encuentre al talento que su empresa necesita</em></p>
+                                </div>
+                                
+                                <div class='contacto'>
+                                    <h3>📞 ¿Necesita ayuda?</h3>
+                                    <p>Si tiene alguna pregunta o necesita asistencia con la plataforma, no dude en contactarnos:</p>
+                                    <ul>
+                                        <li><strong>Email:</strong> egresados@utec.edu.sv</li>
+                                        <li><strong>Teléfono:</strong> (503) 2275-8888</li>
+                                        <li><strong>Horario de atención:</strong> Lunes a Viernes de 8:00 AM a 5:00 PM</li>
+                                    </ul>
+                                </div>
+                                
+                                <p>Una vez más, <span class='destacado'>¡bienvenido(a) a la red de empresas UTEC!</span> Estamos emocionados de tenerlos con nosotros y esperamos que esta alianza sea de gran beneficio para su organización.</p>
+                                
+                                <p>Atentamente,<br>
+                                <strong>Equipo del Sistema de Egresados UTEC</strong></p>
+                            </div>
+                            
+                            <div class='footer'>
+                                <strong>Universidad Tecnológica de El Salvador</strong><br>
+                                Calle Arce 17 avenida Norte, edificio José Martí 2da. planta,
+                                San Salvador, El Salvador, CA.<br>
+                                © {DateTime.Now.Year} Universidad Tecnológica de El Salvador — Todos los derechos reservados.<br>
+                                <small>Este es un mensaje automático, por favor no respondas a este correo.</small>
+                            </div>
+                        </div>
+                    </body>
+                    </html>";
+
+                using (SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    cliente.Credentials = new NetworkCredential(remitente, contraseña);
+                    cliente.EnableSsl = true;
+
+                    using (MailMessage mensaje = new MailMessage())
+                    {
+                        mensaje.From = new MailAddress(remitente, "Sistema de Egresados UTEC");
+                        mensaje.To.Add(emailEmpresa);
+                        mensaje.Subject = asunto;
+                        mensaje.Body = cuerpo;
+                        mensaje.IsBodyHtml = true;
+
+                        cliente.Send(mensaje);
+                    }
+                }
+
+                return Resultado.exito("Correo de bienvenida enviado correctamente a la empresa.");
+            }
+            catch (Exception ex)
+            {
+                return Resultado.error("Error al enviar el correo de bienvenida a la empresa: " + ex.Message);
+            }
+        }
+
+        public Resultado EnviarCorreoEliminacionVacante(string emailEncargado, string nombreEncargado, string tituloVacante, string motivo)
+        {
+            try
+            {
+                string asunto = $"Notificación: Vacante \"{tituloVacante}\" eliminada del sistema";
+
+                string cuerpo = $@"
+                    <html>
+                    <head>
+                        <style>
+                            body {{
+                                font-family: 'Segoe UI', Arial, sans-serif;
+                                background-color: #f8f9fa;
+                                color: #212529;
+                                padding: 30px;
+                            }}
+                            .container {{
+                                max-width: 600px;
+                                margin: 0 auto;
+                                background: #ffffff;
+                                border-radius: 8px;
+                                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                                overflow: hidden;
+                            }}
+                            .header {{
+                                background: #8b1538;
+                                color: white;
+                                padding: 25px;
+                                text-align: center;
+                            }}
+                            .header h1 {{
+                                font-size: 24px;
+                                margin: 0;
+                            }}
+                            .content {{
+                                padding: 30px;
+                                line-height: 1.6;
+                            }}
+                            .saludo {{
+                                font-size: 18px;
+                                font-weight: bold;
+                                color: #0d6efd;
+                                margin-bottom: 15px;
+                            }}
+                            .detalle {{
+                                background: #f8f9fa;
+                                padding: 20px;
+                                border-left: 5px solid #8b1538;
+                                border-radius: 6px;
+                                margin-top: 15px;
+                            }}
+                            .detalle strong {{
+                                color: #8b1538;
+                            }}
+                            .footer {{
+                                background: #f1f3f5;
+                                padding: 15px;
+                                text-align: center;
+                                font-size: 12px;
+                                color: #6c757d;
+                                border-top: 1px solid #dee2e6;
+                            }}
+                            .footer small {{
+                                display: block;
+                                margin-top: 5px;
+                            }}
+                            .motivo {{
+                                font-style: italic;
+                                color: #333;
+                                background: #fff3cd;
+                                padding: 15px;
+                                border-radius: 6px;
+                                border: 1px solid #ffeeba;
+                                margin-top: 10px;
+                            }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class='container'>
+                            <div class='header'>
+                                <h1>Sistema de Egresados UTEC</h1>
+                                <p>Notificación de eliminación de vacante</p>
+                            </div>
+
+                            <div class='content'>
+                                <div class='saludo'>Estimado(a) {WebUtility.HtmlEncode(nombreEncargado)},</div>
+
+                                <p>Te informamos que la siguiente vacante ha sido <strong>eliminada</strong> del <strong>Sistema de Egresados de la Universidad Tecnológica de El Salvador</strong>:</p>
+                                
+                                <div class='detalle'>
+                                    <p><strong>Título de la vacante:</strong> {WebUtility.HtmlEncode(tituloVacante)}</p>
+                                    <p><strong>Fecha de eliminación:</strong> {DateTime.Now:dd/MM/yyyy hh:mm tt}</p>
+                                </div>
+
+                                <p style='margin-top:15px;'>El motivo de la eliminación proporcionado por el administrador fue:</p>
+                                <div class='motivo'>
+                                    {WebUtility.HtmlEncode(motivo)}
+                                </div>
+
+                                <p style='margin-top:20px;'>Si consideras que esta eliminación fue un error o necesitas más información, puedes comunicarte con el área de egresados.</p>
+
+                                <p>Atentamente,<br>
+                                <strong>Equipo del Sistema de Egresados UTEC</strong></p>
+                            </div>
+
+                            <div class='footer'>
+                                <strong>Universidad Tecnológica de El Salvador</strong><br>
+                                Calle Arce 17 avenida Norte, edificio José Martí 2da. planta,
+                                San Salvador, El Salvador, CA.<br>
+                                © {DateTime.Now.Year} Universidad Tecnológica de El Salvador<br>
+                                <small>Este es un mensaje automático, por favor no respondas a este correo.</small>
+                            </div>
+                        </div>
+                    </body>
+                    </html>";
+
+                using (SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    cliente.Credentials = new NetworkCredential(remitente, contraseña);
+                    cliente.EnableSsl = true;
+
+                    using (MailMessage mensaje = new MailMessage())
+                    {
+                        mensaje.From = new MailAddress(remitente, "Sistema de Egresados UTEC");
+                        mensaje.To.Add(emailEncargado);
+                        mensaje.Subject = asunto;
+                        mensaje.Body = cuerpo;
+                        mensaje.IsBodyHtml = true;
+
+                        cliente.Send(mensaje);
+                    }
+                }
+
+                return Resultado.exito("Correo de notificación de eliminación enviado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return Resultado.error("Error al enviar el correo de eliminación: " + ex.Message);
+            }
+        }
+        public Resultado EnviarCorreoEliminacionVacantePostulados(string emailPostulado, string nombrePostulado, string tituloVacante)
+        {
+            try
+            {
+                string asunto = $"Actualización sobre tu postulación a \"{tituloVacante}\"";
+
+                string cuerpo = $@"
+                    <html>
+                    <head>
+                        <style>
+                            body {{
+                                font-family: 'Segoe UI', Arial, sans-serif;
+                                background-color: #f8f9fa;
+                                color: #212529;
+                                padding: 30px;
+                            }}
+                            .container {{
+                                max-width: 600px;
+                                margin: 0 auto;
+                                background: #ffffff;
+                                border-radius: 8px;
+                                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                                overflow: hidden;
+                            }}
+                            .header {{
+                                background: #8b1538;
+                                color: white;
+                                padding: 25px;
+                                text-align: center;
+                            }}
+                            .header h1 {{
+                                font-size: 24px;
+                                margin: 0;
+                            }}
+                            .content {{
+                                padding: 30px;
+                                line-height: 1.6;
+                            }}
+                            .saludo {{
+                                font-size: 18px;
+                                font-weight: bold;
+                                color: #0d6efd;
+                                margin-bottom: 15px;
+                            }}
+                            .detalle {{
+                                background: #f8f9fa;
+                                padding: 20px;
+                                border-left: 5px solid #8b1538;
+                                border-radius: 6px;
+                                margin-top: 15px;
+                            }}
+                            .detalle strong {{
+                                color: #8b1538;
+                            }}
+                            .footer {{
+                                background: #f1f3f5;
+                                padding: 15px;
+                                text-align: center;
+                                font-size: 12px;
+                                color: #6c757d;
+                                border-top: 1px solid #dee2e6;
+                            }}
+                            .footer small {{
+                                display: block;
+                                margin-top: 5px;
+                            }}
+                            .boton {{
+                                display: inline-block;
+                                background: #0d6efd;
+                                color: white;
+                                padding: 12px 30px;
+                                text-decoration: none;
+                                border-radius: 5px;
+                                font-weight: bold;
+                                margin-top: 20px;
+                            }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class='container'>
+                            <div class='header'>
+                                <h1>Sistema de Egresados UTEC</h1>
+                                <p>Actualización de postulación</p>
+                            </div>
+
+                            <div class='content'>
+                                <div class='saludo'>Estimado(a) {WebUtility.HtmlEncode(nombrePostulado)},</div>
+
+                                <p>Te informamos que la vacante a la que aplicaste en el <strong>Sistema de Egresados de la Universidad Tecnológica de El Salvador</strong> ha sido <strong>eliminada por la empresa</strong>.</p>
+                                
+                                <div class='detalle'>
+                                    <p><strong>Título de la vacante:</strong> {WebUtility.HtmlEncode(tituloVacante)}</p>
+                                    <p><strong>Fecha de notificación:</strong> {DateTime.Now:dd/MM/yyyy hh:mm tt}</p>
+                                </div>
+
+                                <p style='margin-top:15px;'>Agradecemos tu interés en esta oportunidad y te invitamos a seguir explorando otras vacantes disponibles en la plataforma.</p>
+
+                                <a href='#' class='boton'>Ver otras vacantes</a>
+
+                                <p style='margin-top:20px;'>Recuerda mantener tu perfil actualizado para aumentar tus posibilidades de éxito laboral.</p>
+
+                                <p>Atentamente,<br>
+                                <strong>Equipo del Sistema de Egresados UTEC</strong></p>
+                            </div>
+
+                            <div class='footer'>
+                                <strong>Universidad Tecnológica de El Salvador</strong><br>
+                                Calle Arce 17 avenida Norte, edificio José Martí 2da. planta,
+                                San Salvador, El Salvador, CA.<br>
+                                © {DateTime.Now.Year} Universidad Tecnológica de El Salvador<br>
+                                <small>Este es un mensaje automático, por favor no respondas a este correo.</small>
+                            </div>
+                        </div>
+                    </body>
+                    </html>";
+
+                using (SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    cliente.Credentials = new NetworkCredential(remitente, contraseña);
+                    cliente.EnableSsl = true;
+
+                    using (MailMessage mensaje = new MailMessage())
+                    {
+                        mensaje.From = new MailAddress(remitente, "Sistema de Egresados UTEC");
+                        mensaje.To.Add(emailPostulado);
+                        mensaje.Subject = asunto;
+                        mensaje.Body = cuerpo;
+                        mensaje.IsBodyHtml = true;
+
+                        cliente.Send(mensaje);
+                    }
+                }
+
+                return Resultado.exito("Correo de notificación enviado correctamente al postulado.");
+            }
+            catch (Exception ex)
+            {
+                return Resultado.error("Error al enviar el correo al postulado: " + ex.Message);
+            }
+        }
+
+
         public Resultado ValidarMensajeAutentificacion(string email, string codigo)
         {
             try
@@ -474,10 +2692,10 @@ namespace SistemaEgresados.Servicios
                     return Resultado.error("El código ha expirado. Solicita uno nuevo.");
                 }
 
-                if (tokenSimple != codigo.ToUpper()) 
+                if (tokenSimple != codigo.ToUpper())
                     return Resultado.error("El código ingresado no es válido.");
 
-                return Resultado.exito("Código verificado correctamente", tokenJwt); 
+                return Resultado.exito("Código verificado correctamente", tokenJwt);
             }
             catch (Exception ex)
             {
@@ -489,7 +2707,7 @@ namespace SistemaEgresados.Servicios
         {
             try
             {
-                var resultado = _tokenService.ValidarTokenRecuperacion(tokenJwt,email);
+                var resultado = _tokenService.ValidarTokenRecuperacion(tokenJwt, email);
                 if (!resultado.Exito)
                     return Resultado.error(resultado.Mensaje);
 

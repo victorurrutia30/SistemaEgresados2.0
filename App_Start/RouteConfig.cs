@@ -18,6 +18,11 @@ namespace SistemaEgresados
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Bienvenido", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "NotFound",
+                url: "{*url}",
+                defaults: new { controller = "AccesoDenegado", action = "RecursoNoEncontrado" }
+            );
         }
     }
 }

@@ -17,13 +17,17 @@ namespace SistemaEgresados.Servicios
         {
             try
             {
-                var existeUsuario = _db.Usuarios.FirstOrDefault(u => u.email == email);
+                var existeUsuario = _db.Usuarios.FirstOrDefault(u => u.email == email && u.activo == true);
                 if (existeUsuario == null)
                 {
                     return Resultado.error("El usuario no existe.");
                 }
+                if(existeUsuario.activo == false)
+                {
+                    return Resultado.error("La cuenta de usuario está inactiva. Por favor, contacte al administrador.");
+                }
                 var passwordHash = _encriptar.VerificarContrasena(password, existeUsuario.password_hash);
-                if (!passwordHash.Mensaje.Equals("No verificado") && passwordHash.Exito == false)
+                if (passwordHash.Mensaje.Equals("No verificado") && passwordHash.Exito == false)
                 {
                     return Resultado.error("Contraseña incorrecta.");
                 }
@@ -48,6 +52,14 @@ namespace SistemaEgresados.Servicios
                         return Resultado.error("El Usuario de empresa no existe");
                     }
                 }
+                else if(existeUsuario.tipo_usuario == "Administrador")
+                {
+                    return Resultado.exito("Usuario autenticado",existeUsuario);
+                }
+                else
+                {
+                    return Resultado.error("El Usuario no existe");
+                }
 
                 return Resultado.exito("Usuario autenticado.", existeUsuario);
                 
@@ -61,7 +73,7 @@ namespace SistemaEgresados.Servicios
         {
             try
             {
-                var existeUsuario = _db.Usuarios.FirstOrDefault(u => u.email == email);
+                var existeUsuario = _db.Usuarios.FirstOrDefault(u => u.email == email && u.activo == true && u.tipo_usuario == "Egresado");
                 if(existeUsuario == null)
                 {
                     return Resultado.error("No se pudo encontrar el usuario");
@@ -127,7 +139,7 @@ namespace SistemaEgresados.Servicios
                         nombreCompleto = _servicioRegistrar.ObtenerPrimerNombreYApellido(existEgresado.nombres,existEgresado.apellidos);
                         break;
                     case "UsuarioEmpresa":
-                        var existUEmpresa = _db.Usuarios_Empresa.FirstOrDefault(u => u.email == email);
+                        var existUEmpresa = _db.Usuarios_Empresa.FirstOrDefault(u => u.email == email && u.activo == true);
                         nombreCompleto = existUEmpresa.nombre_completo;
                         break;
                     case "Administrador":

@@ -184,7 +184,7 @@ $(document).on('click', '.btnRemoveCertificacion', function () {
     const nombre = entry.find('.nombre-certificacion').val();
     const entidad = entry.find('.entidad-certificacion').val();
     certificacionesAgregadas = certificacionesAgregadas.filter(c =>
-        !(c.nombre === nombre && c.entidad === entidad)
+        !(c.nombre === nombre && c.entidad_emisora === entidad)
     );
     entry.remove();
 });
@@ -197,7 +197,7 @@ function guardarCertificaciones() {
         if (nombre) {
             certificacionesAgregadas.push({
                 nombre: nombre,
-                entidad: entidad
+                entidad_emisora: entidad
             });
         }
     });
@@ -647,9 +647,9 @@ function mostrarFormularioCV() {
             <label class="form-label fw-semibold">
                 <i class="fas fa-briefcase me-2"></i>Años de experiencia *
             </label>
-            <input type="number" step="0.5" min="0" class="form-control" id="experienciaAnos"
+            <input type="number" step="0.5" min="0" class="form-control" hidden id="experienciaAnos"
                    placeholder="Ej: 2.5" value="${nivelExperiencia}" required />
-            <small class="text-muted">Incluye experiencia laboral relevante</small>
+            <small class="text-muted" hidden>Incluye experiencia laboral relevante</small>
         </div>
         
         <div class="mb-3">

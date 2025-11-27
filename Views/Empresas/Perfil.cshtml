@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Perfil de Empresa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/CSS/Empresas.css" rel="stylesheet" />
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="header mb-4">
+                <div class="container">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="logo-utec">UTEC</div>
+                            <div>
+                                <h5 class="company-title mb-0">Perfil de Empresa</h5>
+                                <p class="company-subtitle mb-0">Gestión de informacin corporativa</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-light" onclick="window.location.href='/Empresas/Index'">
+                            <i class="fas fa-arrow-left me-2"></i>Regresar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">
+                        <i class="fas fa-building me-2"></i>Datos de la Empresa
+                    </h5>
+
+                    <form id="formPerfil">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="razonSocial" class="form-label">Razón Socal *</label>
+                                <input type="text" class="form-control" id="razonSocial" name="razon_social" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="nit" class="form-label">NIT *</label>
+                                <input type="text" class="form-control" id="nit" name="nit" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="emailContacto" class="form-label">Email de Contacto *</label>
+                                <input type="email" class="form-control" id="emailContacto" name="email_contacto" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="telefono" class="form-label">Teléfono *</label>
+                                <input type="text" class="form-control" id="telefono" name="telefono" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección *</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="sectorEconomico" class="form-label">Sector Económico *</label>
+                                <select class="form-select" id="sectorEconomico" name="sector_economico" required>
+                                    <option value="">Seleccione..</option>
+                                    <option value="Tecnología">Tecnología</option>
+                                    <option value="Servicios">Servicios</option>
+                                    <option value="Manufactura">Manufactura</option>
+                                    <option value="Comercio">Comercio</option>
+                                    <option value="Construcción">Construcción</option>
+                                    <option value="Educación">Educación</option>
+                                    <option value="Salud">Salud</option>
+                                    <option value="Finanzas">Finanzas</option>
+                                    <option value="Agricultura">Agricultura</option>
+                                    <option value="Turismo">Turismo</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="tamanoEmpresa" class="form-label">Tamaño de Empresa *</label>
+                                <select class="form-select" id="tamanoEmpresa" name="tamano_empresa" required>
+                                    <option value="">Seleccione.una</option>
+                                    <option value="Micro">Micro (110 empleados)</option>
+                                    <option value="Pequeña">Pequeña (11-50 empleados)</option>
+                                    <option value="Mediana">Mediana (51-200 empleados)</option>
+                                    <option value="Grande">Grande (200+ empleados)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-secondary" onclick="cargarDatosEmpresa()">
+                                <i class="fas fa-undo me-2"></i>Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-custom">
+                                <i class="fas fa-save me-2"></i>Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/JS/EmpresasPerfil.js"></script>
+}

@@ -1,0 +1,244 @@
+﻿@{
+    Layout = null;
+    string JWTToken = Session["TokenJWT"] as string ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="~/Utilidades/logoU.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administrador</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="~/CSS/Administracion.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="modal fade" id="modalPerfilEgresado" tabindex="-1" aria-labelledby="modalPerfilEgresadoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPerfilEgresadoLabel">Perfil del Egresado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="contenidoPerfil">
+                        <div class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                            <p>Cargando perfil...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="mb-2">
+                    <h4 class="mb-1 d-inline-flex align-items-center">
+                        Bienvenido <label class="text-white ms-1">@Session["UsuarioNombre"]</label>
+                        <img class="logo-utec ms-2" src="~/Utilidades/logoU.png" />
+                    </h4>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-vino btn-sm d-flex align-items-center gap-2 shadow-sm dropdown-toggle"
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-bars"></i> Opciones
+                    </button>
+                    <ul class="dropdown-menu animate__animated animate__fadeInDown dropdown-menu-end shadow border-0 rounded-3 animate-dropdown">
+                        <li>
+                            <a class="dropdown-item animate__animated animate__fadeIn d-flex align-items-center gap-2" href="#" id="AdministrarEmpresas">
+                                <i class="bi bi-building"></i> Administrar Empresas
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item animate__animated animate__fadeIn d-flex align-items-center gap-2" href="#" id="AdministrarEgresados">
+                                <i class="bi bi-people"></i> Administrar Egresados
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item animate__animated animate__fadeIn d-flex align-items-center gap-2" href="#" id="AdministrarVacantes">
+                                <i class="bi bi-people"></i> Administrar Vacantes
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item animate__animated animate__fadeIn d-flex align-items-center gap-2" href="#" id="InvitarEmpresa">
+                                <i class="bi bi-plus-circle"></i> Enviar Invitacion
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item animate__animated animate__fadeIn d-flex align-items-center gap-2" href="#" id="EnviarMensajeTodos">
+                                <i class="bi bi-plus-circle"></i> Enviar Notificacion General
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item animate__animated animate__fadeIn d-flex align-items-center gap-2"
+                               href="@Url.Action("DescargarEgresados", "Administracion")">
+                                <i class="bi bi-plus-circle"></i> Descargar Reporte de Egresados
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item animate__animated animate__fadeIn d-flex align-items-center gap-2"
+                               href="@Url.Action("DescargarEmpresasActivas", "Administracion")">
+                                <i class="bi bi-plus-circle"></i> Descargar Reportes de Empresas Activas
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item animate__animated animate__fadeIn d-flex align-items-center gap-2"
+                               href="@Url.Action("DescargarEmpresasTOP", "Administracion")">
+                                <i class="bi bi-plus-circle"></i> Descargar Reporte de Empresas TOP
+                            </a>
+                        </li>
+
+                        <li><hr class="animate__animated animate__fadeInRight dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item animate__animated animate__fadeIn text-danger fw-semibold d-flex align-items-center gap-2"
+                               href="@Url.Action("CerrarSesion","Administracion")">
+                                <i class="bi bi-box-arrow-left"></i> Cerrar Sesión
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row mb-4" id="estadisticas-container">
+            <div class="col-lg-2 col-md-4 col-6">
+                <div class="stats-card">
+                    <h6>Vacantes activas</h6>
+                    <div class="number">--</div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <div class="stats-card">
+                    <h6>Aplicaciones (30d)</h6>
+                    <div class="number">--</div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <div class="stats-card">
+                    <h6>Contrataciones (YTD)</h6>
+                    <div class="number">--</div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <div class="stats-card">
+                    <h6>Prom. evaluación</h6>
+                    <div class="number">--</div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <div class="stats-card">
+                    <h6>CVs vistos</h6>
+                    <div class="number">--</div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <div class="stats-card">
+                    <h6>Time-to-hire</h6>
+                    <div class="number">--</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-7 mb-4">
+                <div class="section-header d-flex justify-content-between align-items-center">
+                    <span>Pipeline de procesos</span>
+                    <button class="btn btn-sm btn-primary" onclick="cargarPipelineProcesos()" title="Refrescar">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="section-content" id="pipeline-container">
+                    <div class="text-center p-4">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                        <p class="mt-2">Cargando pipeline...</p>
+                    </div>
+                </div>
+            </div>   
+            <div class="col-lg-5 mb-4">
+                <div class="section-header d-flex justify-content-between align-items-center">
+                    <span>Tendencias</span>
+                    <button class="btn btn-sm btn-primary" onclick="cargarTendencias()" title="Refrescar">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="section-content">
+                    <div class="chart-placeholder" id="tendencias-container">
+                        <div class="text-center">
+                            <i class="fas fa-chart-line fa-3x mb-3 text-muted"></i>
+                            <p>Gráfico de tendencias de aplicaciones</p>
+                            <small class="text-muted">Se mostrará un gráfico con las métricas de CV recibidos, entrevistas y ofertas a lo largo del tiempo</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <div class="section-header d-flex justify-content-between align-items-center">
+                    <span>Aplicaciones recientes</span>
+                    <button class="btn btn-sm btn-primary" onclick="cargarAplicacionesRecientes()" title="Refrescar">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="section-content">
+                    <div class="table-responsive">
+                        <table class="applications-table" id="aplicacionesRecientes">
+                            <thead>
+                                <tr>
+                                    <th>Candidato</th>
+                                    <th>Vacante</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                    <th>Punt.</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center">
+                                        <i class="fas fa-spinner fa-spin"></i> Cargando aplicaciones...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>            
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <button class="btn btn-primary" onclick="refrescarDashboard()">
+                    <i class="fas fa-sync-alt me-2"></i> Actualizar Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const JWT_TOKEN = '@JWTToken';
+    </script>
+    <script src="~/JS/Administracion.js"></script>
+</body>
+</html>

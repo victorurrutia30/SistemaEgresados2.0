@@ -14,7 +14,7 @@
           <Property Name="facultad" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="duracion_semestres" Type="int" Nullable="false" />
           <Property Name="activo" Type="bit" />
-          <Property Name="fecha_creacion" Type="datetime2" Precision="7" />
+          <Property Name="fecha_creacion" Type="datetime" />
         </EntityType>
         <EntityType Name="Certificaciones">
           <Key>
@@ -24,7 +24,7 @@
           <Property Name="id_egresado" Type="int" Nullable="false" />
           <Property Name="nombre" Type="nvarchar" MaxLength="200" />
           <Property Name="entidad_emisora" Type="nvarchar" MaxLength="200" />
-          <Property Name="fecha_emision" Type="date" />
+          <Property Name="fecha_emision" Type="datetime" />
         </EntityType>
         <EntityType Name="CVs_Egresados">
           <Key>
@@ -43,8 +43,8 @@
           <Property Name="disponible_busqueda" Type="bit" />
           <Property Name="privacidad" Type="nvarchar" MaxLength="20" />
           <Property Name="veces_visualizado" Type="int" />
-          <Property Name="fecha_subida" Type="datetime2" Precision="7" />
-          <Property Name="fecha_actualizacion" Type="datetime2" Precision="7" />
+          <Property Name="fecha_subida" Type="datetime" />
+          <Property Name="fecha_actualizacion" Type="datetime" />
           <Property Name="CartaPresentacion" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Egresado_Idiomas">
@@ -67,7 +67,7 @@
           <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="telefono" Type="nvarchar" MaxLength="15" />
           <Property Name="id_carrera" Type="int" Nullable="false" />
-          <Property Name="fecha_graduacion" Type="date" />
+          <Property Name="fecha_graduacion" Type="datetime" />
           <Property Name="promedio_academico" Type="decimal" Precision="3" Scale="2" />
           <Property Name="nivel_experiencia" Type="nvarchar" MaxLength="50" />
           <Property Name="puntuacion_global" Type="decimal" Precision="4" Scale="2" />
@@ -75,7 +75,7 @@
           <Property Name="password_hash" Type="nvarchar" MaxLength="255" />
           <Property Name="consentimiento_datos" Type="bit" />
           <Property Name="estado_activo" Type="bit" />
-          <Property Name="fecha_registro" Type="datetime2" Precision="7" />
+          <Property Name="fecha_registro" Type="datetime" />
           <Property Name="Trabaja" Type="bit" />
         </EntityType>
         <EntityType Name="Empresas">
@@ -93,7 +93,7 @@
           <Property Name="vinculada_universidad" Type="bit" />
           <Property Name="puntuacion_empresa" Type="decimal" Precision="4" Scale="2" />
           <Property Name="estado_activo" Type="bit" />
-          <Property Name="fecha_registro" Type="datetime2" Precision="7" />
+          <Property Name="fecha_registro" Type="datetime" />
         </EntityType>
         <EntityType Name="Encuestas">
           <Key>
@@ -103,7 +103,7 @@
           <Property Name="tipo" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="titulo" Type="nvarchar" MaxLength="200" />
           <Property Name="descripcion" Type="nvarchar(max)" />
-          <Property Name="fecha_creacion" Type="datetime2" Precision="7" />
+          <Property Name="fecha_creacion" Type="datetime" />
           <Property Name="activa" Type="bit" />
         </EntityType>
         <EntityType Name="Idiomas">
@@ -125,7 +125,7 @@
           <Property Name="id_registro" Type="int" />
           <Property Name="detalles" Type="nvarchar(max)" />
           <Property Name="ip_address" Type="nvarchar" MaxLength="45" />
-          <Property Name="fecha_accion" Type="datetime2" Precision="7" />
+          <Property Name="fecha_accion" Type="datetime" />
         </EntityType>
         <EntityType Name="Notificaciones">
           <Key>
@@ -138,7 +138,7 @@
           <Property Name="mensaje" Type="nvarchar(max)" />
           <Property Name="tipo" Type="nvarchar" MaxLength="50" />
           <Property Name="leida" Type="bit" />
-          <Property Name="fecha_creacion" Type="datetime2" Precision="7" />
+          <Property Name="fecha_creacion" Type="datetime" />
         </EntityType>
         <EntityType Name="Postulaciones">
           <Key>
@@ -148,10 +148,10 @@
           <Property Name="id_vacante" Type="int" Nullable="false" />
           <Property Name="id_egresado" Type="int" Nullable="false" />
           <Property Name="id_cv" Type="int" />
-          <Property Name="fecha_postulacion" Type="datetime2" Precision="7" />
+          <Property Name="fecha_postulacion" Type="datetime" />
           <Property Name="estado" Type="nvarchar" MaxLength="30" />
           <Property Name="motivo_rechazo" Type="nvarchar(max)" />
-          <Property Name="fecha_actualizacion" Type="datetime2" Precision="7" />
+          <Property Name="fecha_actualizacion" Type="datetime" />
           <Property Name="fue_contactado" Type="bit" />
         </EntityType>
         <EntityType Name="Preferencias_Egresado">
@@ -168,7 +168,7 @@
           <Property Name="salario_min" Type="decimal" Precision="12" Scale="2" />
           <Property Name="salario_max" Type="decimal" Precision="12" Scale="2" />
           <Property Name="notificar" Type="bit" />
-          <Property Name="fecha_actualizacion" Type="datetime2" Precision="7" />
+          <Property Name="fecha_actualizacion" Type="datetime" />
         </EntityType>
         <EntityType Name="Preguntas_Encuesta">
           <Key>
@@ -200,6 +200,17 @@
           <Property Name="personalizada" Type="bit" />
           <Property Name="texto_personalizado" Type="nvarchar" MaxLength="300" />
         </EntityType>
+        <EntityType Name="Puntuaciones_Empresas">
+          <Key>
+            <PropertyRef Name="id_puntuacion" />
+          </Key>
+          <Property Name="id_puntuacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Egresado" Type="int" />
+          <Property Name="Puntuacion" Type="decimal" Precision="3" Scale="1" Nullable="false" />
+          <Property Name="comentario" Type="nvarchar" MaxLength="250" />
+          <Property Name="id_empresa" Type="int" />
+          <Property Name="FechaPuntuacion" Type="datetime" />
+        </EntityType>
         <EntityType Name="Respuestas_Encuesta">
           <Key>
             <PropertyRef Name="id_respuesta_encuesta" />
@@ -208,7 +219,7 @@
           <Property Name="id_pregunta_encuesta" Type="int" Nullable="false" />
           <Property Name="id_egresado" Type="int" />
           <Property Name="respuesta" Type="nvarchar(max)" />
-          <Property Name="fecha_respuesta" Type="datetime2" Precision="7" />
+          <Property Name="fecha_respuesta" Type="datetime" />
         </EntityType>
         <EntityType Name="Respuestas_Postulante">
           <Key>
@@ -241,7 +252,7 @@
           <Property Name="referencia_id" Type="int" />
           <Property Name="nombre_completo" Type="nvarchar" MaxLength="200" />
           <Property Name="activo" Type="bit" />
-          <Property Name="fecha_creacion" Type="datetime2" Precision="7" />
+          <Property Name="fecha_creacion" Type="datetime" />
         </EntityType>
         <EntityType Name="Usuarios_Empresa">
           <Key>
@@ -256,7 +267,7 @@
           <Property Name="password_hash" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="rol" Type="nvarchar" MaxLength="30" />
           <Property Name="activo" Type="bit" />
-          <Property Name="fecha_creacion" Type="datetime2" Precision="7" />
+          <Property Name="fecha_creacion" Type="datetime" />
         </EntityType>
         <EntityType Name="Vacantes">
           <Key>
@@ -274,8 +285,8 @@
           <Property Name="tipo_contrato" Type="nvarchar" MaxLength="50" />
           <Property Name="ubicacion" Type="nvarchar" MaxLength="150" />
           <Property Name="area" Type="nvarchar" MaxLength="100" />
-          <Property Name="fecha_publicacion" Type="datetime2" Precision="7" />
-          <Property Name="fecha_cierre" Type="datetime2" Precision="7" />
+          <Property Name="fecha_publicacion" Type="datetime" />
+          <Property Name="fecha_cierre" Type="datetime" />
           <Property Name="estado" Type="nvarchar" MaxLength="20" />
           <Property Name="creado_por" Type="int" />
         </EntityType>
@@ -287,7 +298,7 @@
           <Property Name="id_cv" Type="int" Nullable="false" />
           <Property Name="id_empresa" Type="int" />
           <Property Name="id_usuario_empresa" Type="int" />
-          <Property Name="fecha_visualizacion" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="fecha_visualizacion" Type="datetime" Nullable="false" />
           <Property Name="ip_address" Type="nvarchar" MaxLength="45" />
           <Property Name="navegador" Type="nvarchar" MaxLength="200" />
           <Property Name="observaciones" Type="nvarchar" MaxLength="300" />
@@ -436,6 +447,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Puntuacio__id_Eg__4F47C5E3">
+          <End Role="Egresados" Type="Self.Egresados" Multiplicity="0..1" />
+          <End Role="Puntuaciones_Empresas" Type="Self.Puntuaciones_Empresas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresados">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Puntuaciones_Empresas">
+              <PropertyRef Name="id_Egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Puntuacio__id_em__503BEA1C">
+          <End Role="Empresas" Type="Self.Empresas" Multiplicity="0..1" />
+          <End Role="Puntuaciones_Empresas" Type="Self.Puntuaciones_Empresas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresas">
+              <PropertyRef Name="id_empresa" />
+            </Principal>
+            <Dependent Role="Puntuaciones_Empresas">
+              <PropertyRef Name="id_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Respuesta__id_eg__114A936A">
           <End Role="Egresados" Type="Self.Egresados" Multiplicity="0..1" />
           <End Role="Respuestas_Encuesta" Type="Self.Respuestas_Encuesta" Multiplicity="*" />
@@ -546,50 +581,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_PostularVacante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id_vacante" Type="int" Mode="In" />
-          <Parameter Name="id_egresado" Type="int" Mode="In" />
-          <Parameter Name="id_cv" Type="int" Mode="In" />
-        </Function>
         <Function Name="SP_RegistrarVisualizacionCV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdCV" Type="int" Mode="In" />
-          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
-          <Parameter Name="IdUsuarioEmpresa" Type="int" Mode="In" />
-          <Parameter Name="IpAddress" Type="nvarchar" Mode="In" />
-          <Parameter Name="Navegador" Type="nvarchar" Mode="In" />
-          <Parameter Name="Observaciones" Type="nvarchar" Mode="In" />
+          <Parameter Name="id_cv" Type="int" Mode="In" />
+          <Parameter Name="id_empresa" Type="int" Mode="In" />
+          <Parameter Name="id_usuario_empresa" Type="int" Mode="In" />
+          <Parameter Name="ip_address" Type="nvarchar" Mode="In" />
+          <Parameter Name="navegador" Type="nvarchar" Mode="In" />
+          <Parameter Name="observaciones" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="SistemaEgresadosUtecModelStoreContainer">
           <EntitySet Name="Carreras" EntityType="Self.Carreras" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Certificaciones" EntityType="Self.Certificaciones" Schema="dbo" store:Type="Tables" />
@@ -606,6 +605,7 @@
           <EntitySet Name="Preguntas_Encuesta" EntityType="Self.Preguntas_Encuesta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Preguntas_Predefinidas" EntityType="Self.Preguntas_Predefinidas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Preguntas_Vacante" EntityType="Self.Preguntas_Vacante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Puntuaciones_Empresas" EntityType="Self.Puntuaciones_Empresas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Respuestas_Encuesta" EntityType="Self.Respuestas_Encuesta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Respuestas_Postulante" EntityType="Self.Respuestas_Postulante" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -661,6 +661,14 @@
             <End Role="Vacantes" EntitySet="Vacantes" />
             <End Role="Preguntas_Vacante" EntitySet="Preguntas_Vacante" />
           </AssociationSet>
+          <AssociationSet Name="FK__Puntuacio__id_Eg__4F47C5E3" Association="Self.FK__Puntuacio__id_Eg__4F47C5E3">
+            <End Role="Egresados" EntitySet="Egresados" />
+            <End Role="Puntuaciones_Empresas" EntitySet="Puntuaciones_Empresas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Puntuacio__id_em__503BEA1C" Association="Self.FK__Puntuacio__id_em__503BEA1C">
+            <End Role="Empresas" EntitySet="Empresas" />
+            <End Role="Puntuaciones_Empresas" EntitySet="Puntuaciones_Empresas" />
+          </AssociationSet>
           <AssociationSet Name="FK__Respuesta__id_eg__114A936A" Association="Self.FK__Respuesta__id_eg__114A936A">
             <End Role="Egresados" EntitySet="Egresados" />
             <End Role="Respuestas_Encuesta" EntitySet="Respuestas_Encuesta" />
@@ -711,7 +719,7 @@
           <Property Name="facultad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="duracion_semestres" Type="Int32" Nullable="false" />
           <Property Name="activo" Type="Boolean" />
-          <Property Name="fecha_creacion" Type="DateTime" Precision="7" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Egresados" Relationship="Self.FK__Egresados__id_ca__3D5E1FD2" FromRole="Carreras" ToRole="Egresados" />
         </EntityType>
         <EntityType Name="Certificacione">
@@ -722,7 +730,7 @@
           <Property Name="id_egresado" Type="Int32" Nullable="false" />
           <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="entidad_emisora" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="fecha_emision" Type="DateTime" Precision="0" />
+          <Property Name="fecha_emision" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Egresado" Relationship="Self.FK__Certifica__id_eg__7F2BE32F" FromRole="Certificaciones" ToRole="Egresados" />
         </EntityType>
         <EntityType Name="CVs_Egresados">
@@ -742,8 +750,8 @@
           <Property Name="disponible_busqueda" Type="Boolean" />
           <Property Name="privacidad" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="veces_visualizado" Type="Int32" />
-          <Property Name="fecha_subida" Type="DateTime" Precision="7" />
-          <Property Name="fecha_actualizacion" Type="DateTime" Precision="7" />
+          <Property Name="fecha_subida" Type="DateTime" Precision="3" />
+          <Property Name="fecha_actualizacion" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Egresado" Relationship="Self.FK__CVs_Egres__id_eg__571DF1D5" FromRole="CVs_Egresados" ToRole="Egresados" />
           <NavigationProperty Name="Postulaciones" Relationship="Self.FK__Postulaci__id_cv__66603565" FromRole="CVs_Egresados" ToRole="Postulaciones" />
           <NavigationProperty Name="Visualizaciones_CV" Relationship="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_CV" FromRole="CVs_Egresados" ToRole="Visualizaciones_CV" />
@@ -771,7 +779,7 @@
           <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="id_carrera" Type="Int32" Nullable="false" />
-          <Property Name="fecha_graduacion" Type="DateTime" Precision="0" />
+          <Property Name="fecha_graduacion" Type="DateTime" Precision="3" />
           <Property Name="promedio_academico" Type="Decimal" Precision="3" Scale="2" />
           <Property Name="nivel_experiencia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="puntuacion_global" Type="Decimal" Precision="4" Scale="2" />
@@ -779,7 +787,7 @@
           <Property Name="password_hash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="consentimiento_datos" Type="Boolean" />
           <Property Name="estado_activo" Type="Boolean" />
-          <Property Name="fecha_registro" Type="DateTime" Precision="7" />
+          <Property Name="fecha_registro" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Carrera" Relationship="Self.FK__Egresados__id_ca__3D5E1FD2" FromRole="Egresados" ToRole="Carreras" />
           <NavigationProperty Name="Certificaciones" Relationship="Self.FK__Certifica__id_eg__7F2BE32F" FromRole="Egresados" ToRole="Certificaciones" />
           <NavigationProperty Name="CVs_Egresados" Relationship="Self.FK__CVs_Egres__id_eg__571DF1D5" FromRole="Egresados" ToRole="CVs_Egresados" />
@@ -788,6 +796,7 @@
           <NavigationProperty Name="Preferencias_Egresado" Relationship="Self.FK__Preferenc__id_eg__02084FDA" FromRole="Egresados" ToRole="Preferencias_Egresado" />
           <NavigationProperty Name="Respuestas_Encuesta" Relationship="Self.FK__Respuesta__id_eg__114A936A" FromRole="Egresados" ToRole="Respuestas_Encuesta" />
           <Property Name="Trabaja" Type="Boolean" />
+          <NavigationProperty Name="Puntuaciones_Empresas" Relationship="SistemaEgresadosUtecModel.FK__Puntuacio__id_Eg__4F47C5E3" FromRole="Egresado" ToRole="Puntuaciones_Empresas" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -804,10 +813,11 @@
           <Property Name="vinculada_universidad" Type="Boolean" />
           <Property Name="puntuacion_empresa" Type="Decimal" Precision="4" Scale="2" />
           <Property Name="estado_activo" Type="Boolean" />
-          <Property Name="fecha_registro" Type="DateTime" Precision="7" />
+          <Property Name="fecha_registro" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Usuarios_Empresa" Relationship="Self.FK__Usuarios___id_em__5165187F" FromRole="Empresas" ToRole="Usuarios_Empresa" />
           <NavigationProperty Name="Vacantes" Relationship="Self.FK__Vacantes__id_emp__5EBF139D" FromRole="Empresas" ToRole="Vacantes" />
           <NavigationProperty Name="Visualizaciones_CV" Relationship="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_Empresa" FromRole="Empresa" ToRole="Visualizaciones_CV" />
+          <NavigationProperty Name="Puntuaciones_Empresas" Relationship="SistemaEgresadosUtecModel.FK__Puntuacio__id_em__503BEA1C" FromRole="Empresa" ToRole="Puntuaciones_Empresas" />
         </EntityType>
         <EntityType Name="Encuesta">
           <Key>
@@ -817,7 +827,7 @@
           <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="titulo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="fecha_creacion" Type="DateTime" Precision="7" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
           <Property Name="activa" Type="Boolean" />
           <NavigationProperty Name="Preguntas_Encuesta" Relationship="Self.FK__Preguntas__id_en__0B91BA14" FromRole="Encuestas" ToRole="Preguntas_Encuesta" />
         </EntityType>
@@ -841,7 +851,7 @@
           <Property Name="id_registro" Type="Int32" />
           <Property Name="detalles" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
-          <Property Name="fecha_accion" Type="DateTime" Precision="7" />
+          <Property Name="fecha_accion" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Notificacione">
           <Key>
@@ -854,7 +864,7 @@
           <Property Name="mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="leida" Type="Boolean" />
-          <Property Name="fecha_creacion" Type="DateTime" Precision="7" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Postulacione">
           <Key>
@@ -864,10 +874,10 @@
           <Property Name="id_vacante" Type="Int32" Nullable="false" />
           <Property Name="id_egresado" Type="Int32" Nullable="false" />
           <Property Name="id_cv" Type="Int32" />
-          <Property Name="fecha_postulacion" Type="DateTime" Precision="7" />
+          <Property Name="fecha_postulacion" Type="DateTime" Precision="3" />
           <Property Name="estado" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="motivo_rechazo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="fecha_actualizacion" Type="DateTime" Precision="7" />
+          <Property Name="fecha_actualizacion" Type="DateTime" Precision="3" />
           <Property Name="fue_contactado" Type="Boolean" />
           <NavigationProperty Name="CVs_Egresados" Relationship="Self.FK__Postulaci__id_cv__66603565" FromRole="Postulaciones" ToRole="CVs_Egresados" />
           <NavigationProperty Name="Egresado" Relationship="Self.FK__Postulaci__id_eg__656C112C" FromRole="Postulaciones" ToRole="Egresados" />
@@ -888,7 +898,7 @@
           <Property Name="salario_min" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="salario_max" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="notificar" Type="Boolean" />
-          <Property Name="fecha_actualizacion" Type="DateTime" Precision="7" />
+          <Property Name="fecha_actualizacion" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Egresado" Relationship="Self.FK__Preferenc__id_eg__02084FDA" FromRole="Preferencias_Egresado" ToRole="Egresados" />
         </EntityType>
         <EntityType Name="Preguntas_Encuesta">
@@ -935,7 +945,7 @@
           <Property Name="id_pregunta_encuesta" Type="Int32" Nullable="false" />
           <Property Name="id_egresado" Type="Int32" />
           <Property Name="respuesta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="fecha_respuesta" Type="DateTime" Precision="7" />
+          <Property Name="fecha_respuesta" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Egresado" Relationship="Self.FK__Respuesta__id_eg__114A936A" FromRole="Respuestas_Encuesta" ToRole="Egresados" />
           <NavigationProperty Name="Preguntas_Encuesta" Relationship="Self.FK__Respuesta__id_pr__10566F31" FromRole="Respuestas_Encuesta" ToRole="Preguntas_Encuesta" />
         </EntityType>
@@ -962,7 +972,7 @@
           <Property Name="referencia_id" Type="Int32" />
           <Property Name="nombre_completo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="activo" Type="Boolean" />
-          <Property Name="fecha_creacion" Type="DateTime" Precision="7" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Usuarios_Empresa">
           <Key>
@@ -977,7 +987,7 @@
           <Property Name="password_hash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="rol" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="activo" Type="Boolean" />
-          <Property Name="fecha_creacion" Type="DateTime" Precision="7" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Empresa" Relationship="Self.FK__Usuarios___id_em__5165187F" FromRole="Usuarios_Empresa" ToRole="Empresas" />
           <NavigationProperty Name="Visualizaciones_CV" Relationship="SistemaEgresadosUtecModel.FK_Visualizaciones_CV_UsuarioEmpresa" FromRole="Usuarios_Empresa" ToRole="Visualizaciones_CV" />
         </EntityType>
@@ -997,8 +1007,8 @@
           <Property Name="tipo_contrato" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ubicacion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="area" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="fecha_publicacion" Type="DateTime" Precision="7" />
-          <Property Name="fecha_cierre" Type="DateTime" Precision="7" />
+          <Property Name="fecha_publicacion" Type="DateTime" Precision="3" />
+          <Property Name="fecha_cierre" Type="DateTime" Precision="3" />
           <Property Name="estado" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="creado_por" Type="Int32" />
           <NavigationProperty Name="Empresa" Relationship="Self.FK__Vacantes__id_emp__5EBF139D" FromRole="Vacantes" ToRole="Empresas" />
@@ -1371,7 +1381,24 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-        </EntityContainer>
+          <EntitySet Name="Puntuaciones_Empresas" EntityType="SistemaEgresadosUtecModel.Puntuaciones_Empresas" />
+          <AssociationSet Name="FK__Puntuacio__id_Eg__4F47C5E3" Association="SistemaEgresadosUtecModel.FK__Puntuacio__id_Eg__4F47C5E3">
+            <End Role="Egresado" EntitySet="Egresados" />
+            <End Role="Puntuaciones_Empresas" EntitySet="Puntuaciones_Empresas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Puntuacio__id_em__503BEA1C" Association="SistemaEgresadosUtecModel.FK__Puntuacio__id_em__503BEA1C">
+            <End Role="Empresa" EntitySet="Empresas" />
+            <End Role="Puntuaciones_Empresas" EntitySet="Puntuaciones_Empresas" />
+          </AssociationSet>
+          <FunctionImport Name="SP_RegistrarVisualizacionCV1" ReturnType="Collection(SistemaEgresadosUtecModel.SP_RegistrarVisualizacionCV1_Result)">
+            <Parameter Name="id_cv" Mode="In" Type="Int32" />
+            <Parameter Name="id_empresa" Mode="In" Type="Int32" />
+            <Parameter Name="id_usuario_empresa" Mode="In" Type="Int32" />
+            <Parameter Name="ip_address" Mode="In" Type="String" />
+            <Parameter Name="navegador" Mode="In" Type="String" />
+            <Parameter Name="observaciones" Mode="In" Type="String" />
+          </FunctionImport>
+          </EntityContainer>
         <EntityType Name="sysdiagram">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -1390,7 +1417,7 @@
           <Property Name="id_cv" Type="Int32" Nullable="false" />
           <Property Name="id_empresa" Type="Int32" />
           <Property Name="id_usuario_empresa" Type="Int32" />
-          <Property Name="fecha_visualizacion" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="fecha_visualizacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="navegador" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="observaciones" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
@@ -1447,7 +1474,48 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-      </Schema>
+        <EntityType Name="Puntuaciones_Empresas">
+          <Key>
+            <PropertyRef Name="id_puntuacion" />
+          </Key>
+          <Property Name="id_puntuacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Egresado" Type="Int32" />
+          <Property Name="Puntuacion" Type="Decimal" Nullable="false" Precision="3" Scale="1" />
+          <Property Name="comentario" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="id_empresa" Type="Int32" />
+          <NavigationProperty Name="Egresado" Relationship="SistemaEgresadosUtecModel.FK__Puntuacio__id_Eg__4F47C5E3" FromRole="Puntuaciones_Empresas" ToRole="Egresado" />
+          <NavigationProperty Name="Empresa" Relationship="SistemaEgresadosUtecModel.FK__Puntuacio__id_em__503BEA1C" FromRole="Puntuaciones_Empresas" ToRole="Empresa" />
+          <Property Name="FechaPuntuacion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK__Puntuacio__id_Eg__4F47C5E3">
+          <End Type="SistemaEgresadosUtecModel.Egresado" Role="Egresado" Multiplicity="0..1" />
+          <End Type="SistemaEgresadosUtecModel.Puntuaciones_Empresas" Role="Puntuaciones_Empresas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Egresado">
+              <PropertyRef Name="id_egresado" />
+            </Principal>
+            <Dependent Role="Puntuaciones_Empresas">
+              <PropertyRef Name="id_Egresado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Puntuacio__id_em__503BEA1C">
+          <End Type="SistemaEgresadosUtecModel.Empresa" Role="Empresa" Multiplicity="0..1" />
+          <End Type="SistemaEgresadosUtecModel.Puntuaciones_Empresas" Role="Puntuaciones_Empresas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="id_empresa" />
+            </Principal>
+            <Dependent Role="Puntuaciones_Empresas">
+              <PropertyRef Name="id_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SP_RegistrarVisualizacionCV1_Result">
+          <Property Type="Int32" Name="Resultado" Nullable="false" />
+          <Property Type="String" Name="Mensaje" Nullable="false" MaxLength="37" />
+        </ComplexType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1737,7 +1805,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_PostularVacante" FunctionName="SistemaEgresadosUtecModel.Store.sp_PostularVacante" />
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -1763,31 +1830,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SistemaEgresadosUtecModel.Store.sp_helpdiagramdefinition">
+          <EntitySetMapping Name="Puntuaciones_Empresas">
+            <EntityTypeMapping TypeName="SistemaEgresadosUtecModel.Puntuaciones_Empresas">
+              <MappingFragment StoreEntitySet="Puntuaciones_Empresas">
+                <ScalarProperty Name="FechaPuntuacion" ColumnName="FechaPuntuacion" />
+                <ScalarProperty Name="id_empresa" ColumnName="id_empresa" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="Puntuacion" ColumnName="Puntuacion" />
+                <ScalarProperty Name="id_Egresado" ColumnName="id_Egresado" />
+                <ScalarProperty Name="id_puntuacion" ColumnName="id_puntuacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_RegistrarVisualizacionCV1" FunctionName="SistemaEgresadosUtecModel.Store.SP_RegistrarVisualizacionCV">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="SistemaEgresadosUtecModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+              <ComplexTypeMapping TypeName="SistemaEgresadosUtecModel.SP_RegistrarVisualizacionCV1_Result">
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SistemaEgresadosUtecModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SistemaEgresadosUtecModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_RegistrarVisualizacionCV" FunctionName="SistemaEgresadosUtecModel.Store.SP_RegistrarVisualizacionCV" />
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SistemaEgresadosUtecModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SistemaEgresadosUtecModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
